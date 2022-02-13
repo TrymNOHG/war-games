@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2001.simulation;
+package edu.ntnu.trym.simulation;
 
 public abstract class Unit {
     private String name;
