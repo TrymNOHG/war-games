@@ -14,7 +14,9 @@ public abstract class Unit {
     }
 
     public void attack(Unit opponent){
-
+        int thisDamage = this.getAttack() + this.getAttackBonus();
+        int opponentResistance = opponent.getArmor() + opponent.getResistBonus();
+        opponent.setHealth(opponent.getHealth() - opponentResistance + opponentResistance);
     }
 
     public String getName() {
@@ -39,15 +41,16 @@ public abstract class Unit {
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name).append("'s Stats:\nUnit Type: ").append(this.getClass())
+                .append("\nHealth: ").append(this.health).append("\nAttack: ").append(this.attack)
+                .append("\nAttack Bonus: ").append(this.getAttackBonus()).append("\nArmor: ").append(this.armor)
+                .append("\nResistance Bonus: ").append(this.getResistBonus()).append(this.getClass());
+        return sb.toString();
     }
 
-    public int getAttackBonus(){
-        return 0;
-    }
+    public abstract int getAttackBonus();
 
-    public int getResistBonus(){
-        return 0;
-    }
+    public abstract int getResistBonus();
 
 }
