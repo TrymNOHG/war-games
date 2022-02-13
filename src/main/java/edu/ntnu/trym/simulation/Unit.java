@@ -33,7 +33,7 @@ public abstract class Unit {
     public void attack(Unit opponent){
         int thisDamage = this.getAttack() + this.getAttackBonus();
         int opponentResistance = opponent.getArmor() + opponent.getResistBonus();
-        opponent.setHealth(opponent.getHealth() - opponentResistance + opponentResistance);
+        opponent.setHealth(opponent.getHealth() - thisDamage + opponentResistance);
     }
 
     /**
