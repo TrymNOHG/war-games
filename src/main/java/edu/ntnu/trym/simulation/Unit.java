@@ -1,11 +1,23 @@
 package edu.ntnu.trym.simulation;
 
+/**
+ * This is a class which creates the general structure of a militant unit. It, therefore, contains the vital information
+ * such as name, health, attack, and armor stats. Additionally, the class outlines how attacks against another Unit are
+ * calculated and allows for a description in the form of a String to be created.
+ */
 public abstract class Unit {
     private String name;
     private int health;
     private int attack;
     private int armor;
 
+    /**
+     * This constructor allows for a Unit Object to be initialized with the information intrinsic to a military Unit.
+     * @param name The name of the Unit, represented as a String.
+     * @param health The health of the Unit, represented as an int.
+     * @param attack The attack value (damage) of the Unit, represented as an int.
+     * @param armor The armor value (resistance) of the Unit, represented as an int.
+     */
     public Unit(String name, int health, int attack, int armor) {
         this.name = name;
         this.health = health;
@@ -13,32 +25,61 @@ public abstract class Unit {
         this.armor = armor;
     }
 
+    /**
+     * This method simulates the unit attacking another opponent. Therefore, the purpose of this method is to show how
+     * this Unit damages/affects the health of the opponent Unit.
+     * @param opponent This is a Unit of the opposing side.
+     */
     public void attack(Unit opponent){
         int thisDamage = this.getAttack() + this.getAttackBonus();
         int opponentResistance = opponent.getArmor() + opponent.getResistBonus();
         opponent.setHealth(opponent.getHealth() - opponentResistance + opponentResistance);
     }
 
+    /**
+     * This method retrieves the name of the given Unit.
+     * @return String containing the name of the Unit.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * This method retrieves the health value of the given Unit.
+     * @return Health value represented as int.
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * This method retrieves the attack value of the given Unit.
+     * @return Attack value represented as int.
+     */
     public int getAttack() {
         return attack;
     }
 
+    /**
+     * This method retrieves the armor value of the given Unit.
+     * @return Armor value represented as an int.
+     */
     public int getArmor() {
         return armor;
     }
 
+    /**
+     * This method changes this Unit's health value to the input value.
+     * @param health The new health of the Unit, represented as an int.
+     */
     public void setHealth(int health) {
         this.health = health;
     }
 
+    /**
+     * This method gives a description of the Unit, containing useful information/stats.
+     * @return Description in the form of a String.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -49,8 +90,16 @@ public abstract class Unit {
         return sb.toString();
     }
 
+    /**
+     * This method will return the attack bonus when a Unit attacks an opposing Unit.
+     * @return Attack bonus represented as an int.
+     */
     public abstract int getAttackBonus();
 
+    /**
+     * This method will return the resistance bonus when a Unit is attacked by an opposing Unit.
+     * @return Resistance bonus represented as an int.
+     */
     public abstract int getResistBonus();
 
 }
