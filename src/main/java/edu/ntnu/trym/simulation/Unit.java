@@ -4,6 +4,8 @@ package edu.ntnu.trym.simulation;
  * This is a class which creates the general structure of a militant unit. It, therefore, contains the vital information
  * such as name, health, attack, and armor stats. Additionally, the class outlines how attacks against another Unit are
  * calculated and allows for a description in the form of a String to be created.
+ *
+ * @author Trym
  */
 public abstract class Unit {
     private String name;
