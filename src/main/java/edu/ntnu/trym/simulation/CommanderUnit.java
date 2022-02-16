@@ -13,10 +13,10 @@ public class CommanderUnit extends CavalryUnit{
      * This constructor allows for a CommanderUnit Object to be initialized with the information that defines a
      * commander unit. It uses the CavalryUnit constructor in order to instantiate an object
      * {@link CavalryUnit#CavalryUnit(String, int, int, int)}.
-     * @param name The name of the CommanderUnit, represented as a String
+     * @param name   The name of the CommanderUnit, represented as a String
      * @param health The health value of the CommanderUnit, represented as an int
      * @param attack The attack value of the CommanderUnit, represented as an int
-     * @param armor The armor value of the CommanderUnit, represented as an int
+     * @param armor  The armor value of the CommanderUnit, represented as an int
      */
     public CommanderUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
@@ -26,7 +26,7 @@ public class CommanderUnit extends CavalryUnit{
      * This is a simplified constructor with a pre-set attack (25) and armor (15) value for the CommanderUnit. It uses
      * the CavalryUnit constructor in order to instantiate an object
      * {@link CavalryUnit#CavalryUnit(String, int, int, int)}.
-     * @param name The name of the CommanderUnit, represented as a String
+     * @param name   The name of the CommanderUnit, represented as a String
      * @param health The health value of the CommanderUnit, represented as an int
      */
     public CommanderUnit(String name, int health) {

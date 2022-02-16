@@ -15,10 +15,10 @@ public class RangedUnit extends Unit{
      * This constructor allows for a RangedUnit Object to be initialized with the information that defines a
      * ranged unit. It uses the Unit constructor in order to instantiate an object
      * {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the RangedUnit, represented as a String
+     * @param name   The name of the RangedUnit, represented as a String
      * @param health The health value of the RangedUnit, represented as an int
      * @param attack The attack value of the RangedUnit, represented as an int
-     * @param armor The armor value of the RangedUnit, represented as an int
+     * @param armor  The armor value of the RangedUnit, represented as an int
      */
     public RangedUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
@@ -27,7 +27,7 @@ public class RangedUnit extends Unit{
     /**
      * This is a simplified constructor with a pre-set attack (15) and armor (8) value for the RangedUnit. It uses
      * the Unit constructor in order to instantiate an object {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the RangedUnit, represented as a String
+     * @param name   The name of the RangedUnit, represented as a String
      * @param health The health value of the RangedUnit, represented as an int
      */
     public RangedUnit(String name, int health) {

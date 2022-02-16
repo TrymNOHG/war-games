@@ -15,10 +15,10 @@ public abstract class Unit {
 
     /**
      * This constructor allows for a Unit Object to be initialized with the information intrinsic to a military Unit.
-     * @param name The name of the Unit, represented as a String.
-     * @param health The health of the Unit, represented as an int.
-     * @param attack The attack value (damage) of the Unit, represented as an int.
-     * @param armor The armor value (resistance) of the Unit, represented as an int.
+     * @param name                      The name of the Unit, represented as a String.
+     * @param health                    The health of the Unit, represented as an int.
+     * @param attack                    The attack value (damage) of the Unit, represented as an int.
+     * @param armor                     The armor value (resistance) of the Unit, represented as an int.
      * @throws IllegalArgumentException If health, attack, or armor are below 0
      */
     public Unit(String name, int health, int attack, int armor) throws IllegalArgumentException{

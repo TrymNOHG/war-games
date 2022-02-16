@@ -15,10 +15,10 @@ public class CavalryUnit extends Unit{
      * This constructor allows for a CavalryUnit Object to be initialized with the information that defines a
      * cavalry unit. It uses the Unit constructor in order to instantiate an object
      * {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the CavalryUnit, represented as a String
+     * @param name   The name of the CavalryUnit, represented as a String
      * @param health The health value of the CavalryUnit, represented as an int
      * @param attack The attack value of the CavalryUnit, represented as an int
-     * @param armor The armor value of the CavalryUnit, represented as an int
+     * @param armor  The armor value of the CavalryUnit, represented as an int
      */
     public CavalryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
@@ -27,7 +27,7 @@ public class CavalryUnit extends Unit{
     /**
      * This is a simplified constructor with a pre-set attack (20) and armor (12) value for the CavalryUnit. It uses
      * the Unit constructor in order to instantiate an object {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the CavalryUnit, represented as a String
+     * @param name   The name of the CavalryUnit, represented as a String
      * @param health The health value of the CavalryUnit, represented as an int
      */
     public CavalryUnit(String name, int health) {

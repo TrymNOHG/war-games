@@ -12,10 +12,10 @@ public class InfantryUnit extends Unit{
      * This constructor allows for an InfantryUnit Object to be initialized with the information that defines an
      * infantry unit. It uses the Unit constructor in order to instantiate an object
      * {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the InfantryUnit, represented as a String
+     * @param name   The name of the InfantryUnit, represented as a String
      * @param health The health value of the InfantryUnit, represented as an int
      * @param attack The attack value of the InfantryUnit, represented as an int
-     * @param armor The armor value of the InfantryUnit, represented as an int
+     * @param armor  The armor value of the InfantryUnit, represented as an int
      */
     public InfantryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
@@ -24,7 +24,7 @@ public class InfantryUnit extends Unit{
     /**
      * This is a simplified constructor with a pre-set attack (15) and armor (10) value for the InfantryUnit. It uses
      * the Unit constructor in order to instantiate an object {@link Unit#Unit(String, int, int, int)}.
-     * @param name The name of the InfantryUnit, represented as a String
+     * @param name   The name of the InfantryUnit, represented as a String
      * @param health The health value of the InfantryUnit, represented as an int
      */
     public InfantryUnit(String name, int health) {
