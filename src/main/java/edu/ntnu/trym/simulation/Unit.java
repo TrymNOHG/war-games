@@ -22,6 +22,7 @@ public abstract class Unit {
      * @throws IllegalArgumentException If health, attack, or armor are below 0
      */
     public Unit(String name, int health, int attack, int armor) throws IllegalArgumentException{
+        if(name.isBlank() || name.isEmpty()) throw new IllegalArgumentException("Name is invalid");
         this.name = name;
         if(health < 0) throw new IllegalArgumentException("Health cannot be below 0");
         this.health = health;
