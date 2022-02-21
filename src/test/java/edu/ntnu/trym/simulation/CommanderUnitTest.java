@@ -7,11 +7,58 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CommanderUnitTest {
 
     @Nested
     public class An_CommanderUnit_with_valid_input_values{
+
+        @Test
+        void instantiates_properly_with_preset_constructor() {
+            //Given/Arrange
+            String name = "King";
+            int health = 10;
+            int expectedAttack = 25;
+            int expectedArmor = 15;
+
+            //When/Act
+            CommanderUnit presetCommanderUnit = null;
+            try {
+                presetCommanderUnit = new CommanderUnit(name, health);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, presetCommanderUnit.getName());
+            Assertions.assertEquals(health, presetCommanderUnit.getHealth());
+            Assertions.assertEquals(expectedAttack, presetCommanderUnit.getAttack());
+            Assertions.assertEquals(expectedArmor, presetCommanderUnit.getArmor());
+        }
+
+        @Test
+        void instantiates_properly_with_manually_set_constructor(){
+            //Given/Arrange
+            String name = "King";
+            int health = 10;
+            int attack = 20;
+            int armor = 15;
+
+            //When/Act
+            CommanderUnit specialCommanderUnit = null;
+            try {
+                specialCommanderUnit = new CommanderUnit("King", health, attack, armor);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, specialCommanderUnit.getName());
+            Assertions.assertEquals(health, specialCommanderUnit.getHealth());
+            Assertions.assertEquals(attack, specialCommanderUnit.getAttack());
+            Assertions.assertEquals(armor, specialCommanderUnit.getArmor());
+        }
 
         @Test
         void returns_correct_name(){
@@ -68,68 +115,66 @@ public class CommanderUnitTest {
         @Test
         void reduces_an_Opponents_Health(){
             //Given/Arrange
-            CommanderUnit specialCommanderUnit = new CommanderUnit("King", 10, 17, 10);
             CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
-            Unit Opponent1 = new InfantryUnit("Pikeman", 100);
-            Unit Opponent2 = new InfantryUnit("Pikeman", 100);
-            int opponent1ExpectedHealth = 88; //FILL IN
-            int opponent2ExpectedHealth = 80; //FILL IN
+            Unit opponent = new InfantryUnit("Pikeman", 100);
+            int opponentExpectedHealth = 80;
 
             //When/Act
-            specialCommanderUnit.attack(Opponent1);
-            presetCommanderUnit.attack(Opponent2);
+            presetCommanderUnit.attack(opponent);
 
 
             //Then/Assert
-            Assertions.assertEquals(opponent1ExpectedHealth, Opponent1.getHealth());
-            Assertions.assertEquals(opponent2ExpectedHealth, Opponent2.getHealth());
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
         }
 
         @Test
-        void gets_decreasing_attack_bonus_based_on_number_of_attacks(){
+        void gets_6_attack_bonus_from_first_attack(){
             //Given/Arrange
-            CommanderUnit specialCommanderUnit = new CommanderUnit("Archer", 10, 17, 10);
             CommanderUnit presetCommanderUnit = new CommanderUnit("Crossbowman", 10);
             int expectedAttackBonusAfter1Attack = 6;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+
+        }
+
+        @Test
+        void gets_2_attack_bonus_from_the_second_or_later_attack(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("Crossbowman", 10);
             int expectedAttackBonusAfter2OrMoreAttacks = 2;
 
             //When/Act
             //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
             //bonus.
-            int actualAttackBonusAfter1AttackSpecialUnit = specialCommanderUnit.getAttackBonus();
-            int actualAttackBonusAfter1AttackPresetUnit = presetCommanderUnit.getAttackBonus();
-
-            int actualAttackBonusAfter2AttackSpecialUnit = specialCommanderUnit.getAttackBonus();
+            presetCommanderUnit.getAttackBonus();
             int actualAttackBonusAfter2AttackPresetUnit = presetCommanderUnit.getAttackBonus();
-
-            int actualAttackBonusAfter3AttackSpecialUnit = specialCommanderUnit.getAttackBonus();
             int actualAttackBonusAfter3AttackPresetUnit = presetCommanderUnit.getAttackBonus();
 
             //Then/Assert
-            //First attack
-            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackSpecialUnit);
-            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
             //Second attack
-            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackSpecialUnit);
             Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
             //Third attack
-            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackSpecialUnit);
             Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+
         }
 
         @Test
         void gets_1_resistance_bonus(){
             //Given/Arrange
-            CommanderUnit specialCommanderUnit = new CommanderUnit("King", 10, 17, 10);
             CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
             int expectedResistBonus = 1;
 
             //When/Act
-            int actualResistBonusFromSpecialUnit = specialCommanderUnit.getResistBonus();
             int actualResistBonusFromPresetUnit = presetCommanderUnit.getResistBonus();
 
             //Then/Assert
-            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromSpecialUnit);
             Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
         }
 

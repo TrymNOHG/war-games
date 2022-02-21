@@ -14,6 +14,52 @@ class InfantryUnitTest {
     public class An_InfantryUnit_with_valid_input_values{
 
         @Test
+        void instantiates_properly_with_preset_constructor() {
+            //Given/Arrange
+            String name = "Pikeman";
+            int health = 10;
+            int expectedAttack = 15;
+            int expectedArmor = 10;
+
+            //When/Act
+             InfantryUnit presetInfantryUnit = null;
+            try {
+                presetInfantryUnit = new InfantryUnit(name, health);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, presetInfantryUnit.getName());
+            Assertions.assertEquals(health, presetInfantryUnit.getHealth());
+            Assertions.assertEquals(expectedAttack, presetInfantryUnit.getAttack());
+            Assertions.assertEquals(expectedArmor, presetInfantryUnit.getArmor());
+        }
+
+        @Test
+        void instantiates_properly_with_manually_set_constructor(){
+            //Given/Arrange
+            String name = "Pikeman";
+            int health = 10;
+            int attack = 17;
+            int armor = 10;
+
+            //When/Act
+            InfantryUnit specialInfantryUnit = null;
+            try {
+                specialInfantryUnit = new InfantryUnit(name, health, attack, armor);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, specialInfantryUnit.getName());
+            Assertions.assertEquals(health, specialInfantryUnit.getHealth());
+            Assertions.assertEquals(attack, specialInfantryUnit.getAttack());
+            Assertions.assertEquals(armor, specialInfantryUnit.getArmor());
+        }
+
+        @Test
         void returns_correct_name(){
             //Given/Arrange
             InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);
@@ -68,52 +114,41 @@ class InfantryUnitTest {
         @Test
         void reduces_an_Opponents_Health(){
             //Given/Arrange
-            InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);
             InfantryUnit presetInfantryUnit = new InfantryUnit("Pikeman", 10);
-            Unit Opponent1 = new InfantryUnit("Pikeman", 100);
-            Unit Opponent2 = new InfantryUnit("Pikeman", 100);
-            int opponent1ExpectedHealth = 92; //FILL IN
-            int opponent2ExpectedHealth = 94; //FILL IN
+            Unit opponent = new InfantryUnit("Pikeman", 100);
+            int opponentExpectedHealth = 94;
 
             //When/Act
-            specialInfantryUnit.attack(Opponent1);
-            presetInfantryUnit.attack(Opponent2);
+            presetInfantryUnit.attack(opponent);
 
 
             //Then/Assert
-            Assertions.assertEquals(opponent1ExpectedHealth, Opponent1.getHealth());
-            Assertions.assertEquals(opponent2ExpectedHealth, Opponent2.getHealth());
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
         }
 
         @Test
         void gets_2_attack_bonus(){
             //Given/Arrange
-            InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);
             InfantryUnit presetInfantryUnit = new InfantryUnit("Pikeman", 10);
             int expectedResistBonus = 1;
 
             //When/Act
-            int actualResistBonusFromSpecialUnit = specialInfantryUnit.getResistBonus();
             int actualResistBonusFromPresetUnit = presetInfantryUnit.getResistBonus();
 
             //Then/Assert
-            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromSpecialUnit);
             Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
         }
 
         @Test
         void gets_1_resistance_bonus(){
             //Given/Arrange
-            InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);
             InfantryUnit presetInfantryUnit = new InfantryUnit("Pikeman", 10);
             int expectedResistBonus = 1;
 
             //When/Act
-            int actualResistBonusFromSpecialUnit = specialInfantryUnit.getResistBonus();
             int actualResistBonusFromPresetUnit = presetInfantryUnit.getResistBonus();
 
             //Then/Assert
-            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromSpecialUnit);
             Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
         }
 

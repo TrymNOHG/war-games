@@ -14,6 +14,52 @@ class CavalryUnitTest {
     public class An_CavalryUnit_with_valid_input_values{
 
         @Test
+        void instantiates_properly_with_preset_constructor() {
+            //Given/Arrange
+            String name = "Knight";
+            int health = 10;
+            int expectedAttack = 20;
+            int expectedArmor = 12;
+
+            //When/Act
+            CavalryUnit presetCavalryUnit  = null;
+            try {
+                presetCavalryUnit = new CavalryUnit(name, health);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, presetCavalryUnit.getName());
+            Assertions.assertEquals(health, presetCavalryUnit.getHealth());
+            Assertions.assertEquals(expectedAttack, presetCavalryUnit.getAttack());
+            Assertions.assertEquals(expectedArmor, presetCavalryUnit.getArmor());
+        }
+
+        @Test
+        void instantiates_properly_with_manually_set_constructor(){
+            //Given/Arrange
+            String name = "Knight";
+            int health = 10;
+            int attack = 17;
+            int armor = 13;
+
+            //When/Act
+            CavalryUnit specialCavalryUnit = null;
+            try {
+                specialCavalryUnit = new CavalryUnit(name, health, attack, armor);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, specialCavalryUnit.getName());
+            Assertions.assertEquals(health, specialCavalryUnit.getHealth());
+            Assertions.assertEquals(attack, specialCavalryUnit.getAttack());
+            Assertions.assertEquals(armor, specialCavalryUnit.getArmor());
+        }
+
+        @Test
         void returns_correct_name(){
             //Given/Arrange
             CavalryUnit specialCavalryUnit = new CavalryUnit("Knight", 10, 17, 10);
@@ -68,68 +114,63 @@ class CavalryUnitTest {
         @Test
         void reduces_an_Opponents_Health(){
             //Given/Arrange
-            CavalryUnit specialCavalryUnit = new CavalryUnit("Knight", 10, 17, 10);
             CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
-            Unit Opponent1 = new InfantryUnit("Pikeman", 100);
-            Unit Opponent2 = new InfantryUnit("Pikeman", 100);
-            int opponent1ExpectedHealth = 88; //FILL IN
-            int opponent2ExpectedHealth = 85; //FILL IN
+            Unit opponent = new InfantryUnit("Pikeman", 100);
+            int opponentExpectedHealth = 85;
 
             //When/Act
-            specialCavalryUnit.attack(Opponent1);
-            presetCavalryUnit.attack(Opponent2);
+            presetCavalryUnit.attack(opponent);
 
 
             //Then/Assert
-            Assertions.assertEquals(opponent1ExpectedHealth, Opponent1.getHealth());
-            Assertions.assertEquals(opponent2ExpectedHealth, Opponent2.getHealth());
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
         }
 
         @Test
-        void gets_decreasing_attack_bonus_based_on_number_of_attacks(){
+        void gets_6_attack_bonus_during_first_attack(){
             //Given/Arrange
-            CavalryUnit specialCavalryUnit = new CavalryUnit("Archer", 10, 17, 10);
-            CavalryUnit presetCavalryUnit = new CavalryUnit("Crossbowman", 10);
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
             int expectedAttackBonusAfter1Attack = 6;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+        }
+
+        @Test
+        void gets_2_attack_bonus_from_the_second_or_later_attack(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
             int expectedAttackBonusAfter2OrMoreAttacks = 2;
 
             //When/Act
             //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
             //bonus.
-            int actualAttackBonusAfter1AttackSpecialUnit = specialCavalryUnit.getAttackBonus();
-            int actualAttackBonusAfter1AttackPresetUnit = presetCavalryUnit.getAttackBonus();
-
-            int actualAttackBonusAfter2AttackSpecialUnit = specialCavalryUnit.getAttackBonus();
+            presetCavalryUnit.getAttackBonus();
             int actualAttackBonusAfter2AttackPresetUnit = presetCavalryUnit.getAttackBonus();
-
-            int actualAttackBonusAfter3AttackSpecialUnit = specialCavalryUnit.getAttackBonus();
             int actualAttackBonusAfter3AttackPresetUnit = presetCavalryUnit.getAttackBonus();
 
-            //Then/Assert
-            //First attack
-            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackSpecialUnit);
-            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
             //Second attack
-            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackSpecialUnit);
             Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
             //Third attack
-            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackSpecialUnit);
             Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
         }
 
         @Test
         void gets_1_resistance_bonus(){
             //Given/Arrange
-            CavalryUnit specialCavalryUnit = new CavalryUnit("Knight", 10, 17, 10);
             CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
             int expectedResistBonus = 1;
 
             //When/Act
-            int actualResistBonusFromSpecialUnit = specialCavalryUnit.getResistBonus();
             int actualResistBonusFromPresetUnit = presetCavalryUnit.getResistBonus();
 
             //Then/Assert
-            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromSpecialUnit);
             Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
         }
 
