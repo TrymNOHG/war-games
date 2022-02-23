@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Army {
     private String name;
@@ -21,35 +22,39 @@ public class Army {
     }
 
     public void add(Unit unit){
-
+        this.units.add(unit);
     }
 
     public void addAll(List<Unit> units){
-
+        this.units.addAll(units);
     }
 
     public void remove(Unit unit){
-
+        this.units.removeIf(unitInQuestion -> unitInQuestion.equals(unit));
     }
 
     public boolean hasUnits(){
-        return true;
+        return this.units.size() > 0;
     }
 
     public List<Unit> getAllUnits(){
-        //Do we care about deep copies here?
-        return units; //Wrong but just to have correct
+       return this.units;
     }
 
     public Unit getRandom(){
-        //Returns a random unit from the list
-        //Use java.util.Random to generate the random index
-        return units.get(0); //Wrong but just to have correct
+        int randomIndex = new Random().nextInt(this.units.size());
+        return this.units.get(randomIndex);
     }
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name).append("'s Army:\n");
+        for (Unit unit:this.units) {
+            sb.append(unit.toString()).append("\n");
+
+        }
+        return sb.toString();
     }
 
     @Override
