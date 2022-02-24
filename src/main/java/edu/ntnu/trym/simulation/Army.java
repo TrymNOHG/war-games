@@ -53,19 +53,22 @@ public class Army {
     }
 
     /**
-     * This method adds a new Unit to the army list.
+     * This method adds a new Unit to the army list, if it is not null.
      * @param unit A new militant unit, given as a Unit object
      */
     public void add(Unit unit){
-        this.units.add(unit);
+        if(unit != null){
+            this.units.add(unit);
+        }
     }
 
     /**
-     * This method takes a list of units as an input and places all of them within the Army's list.
+     * This method takes a list of units as an input and places all of them within the Army's list, as long as the
+     * list is not empty.
      * @param units List of Units
      */
     public void addAll(List<Unit> units){
-        this.units.addAll(units);
+            this.units.addAll(units); //Test list with null unit in it!!!
     }
 
     /**
