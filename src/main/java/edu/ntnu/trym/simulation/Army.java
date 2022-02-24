@@ -18,20 +18,26 @@ public class Army {
 
     /**
      * This constructor creates an Army object which represents a list over what units are contained. Here,
-     * the Army is only named and there are no Units in the List.
+     * the Army is only named and there are no Units in the List. It is instantiated through the use of the two-argument
+     * constructor {@link #Army(String, List)}.
      * @param name Name of the army, represented as a String
      */
-    public Army(String name) {
-        this.name = name;
+    public Army(String name){
+        this(name, null);
     }
 
     /**
-     * This constructor creates an Army object which represents a list over what units are contained. Here,
-     * the Army is only named and there are no Units in the List.
-     * @param name Name of the army, represented as a String
+     * This constructor creates an Army object which represents a list over what units are contained. The two instance
+     * variables, name and units, are set according to the parameters.
+     * @param name                      Name of the army, represented as a String
+     * @param units                     List of militant units that create the army
+     * @throws IllegalArgumentException If the name, String, is empty or blank, this exception is thrown.
      */
-    public Army(String name, List<Unit> units) {
-        this.name = name;
+    public Army(String name, List<Unit> units) throws IllegalArgumentException{
+        if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name is invalid");
+        if(units == null){
+            this.units = new ArrayList<>();
+        }
         this.units = units;
     }
 
