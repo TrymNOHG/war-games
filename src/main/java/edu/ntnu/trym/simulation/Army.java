@@ -39,7 +39,9 @@ public class Army {
         if(units == null){
             this.units = new ArrayList<>();
         }
-        this.units = units;
+        else {
+            this.units = units;
+        }
     }
 
     /**
