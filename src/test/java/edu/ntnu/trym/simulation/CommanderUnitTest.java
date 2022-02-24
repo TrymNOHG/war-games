@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class CommanderUnitTest {
 
     @Nested
-    public class An_CommanderUnit_with_valid_input_values{
+    public class A_CommanderUnit_with_valid_input_values{
 
         @Test
         void instantiates_properly_with_preset_constructor() {
