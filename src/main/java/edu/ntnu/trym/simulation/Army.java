@@ -35,6 +35,7 @@ public class Army {
      */
     public Army(String name, List<Unit> units) throws IllegalArgumentException{
         if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name is invalid");
+        this.name = name;
         if(units == null){
             this.units = new ArrayList<>();
         }
