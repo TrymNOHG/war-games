@@ -36,7 +36,7 @@ public class Army {
     public Army(String name, List<Unit> units) throws IllegalArgumentException{
         if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name is invalid");
         this.name = name;
-        if(units == null){
+        if(units == null){ //If there are null units in the list, it could also break. Should I throw exception for that?
             this.units = new ArrayList<>();
         }
         else {
@@ -64,11 +64,15 @@ public class Army {
 
     /**
      * This method takes a list of units as an input and places all of them within the Army's list, as long as the
-     * list is not empty.
+     * list is not empty. It does not add null units.
      * @param units List of Units
      */
     public void addAll(List<Unit> units){
-            this.units.addAll(units); //Test list with null unit in it!!!
+        for(Unit unit : units){
+            if(unit != null){
+                this.units.add(unit);
+            }
+        }
     }
 
     /**
