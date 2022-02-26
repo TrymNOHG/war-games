@@ -20,7 +20,7 @@ public class RangedUnit extends Unit{
      * @param attack The attack value of the RangedUnit, represented as an int
      * @param armor  The armor value of the RangedUnit, represented as an int
      */
-    public RangedUnit(String name, int health, int attack, int armor) {
+    public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException{
         super(name, health, attack, armor);
     }
 
@@ -30,7 +30,7 @@ public class RangedUnit extends Unit{
      * @param name   The name of the RangedUnit, represented as a String
      * @param health The health value of the RangedUnit, represented as an int
      */
-    public RangedUnit(String name, int health) {
+    public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
     }
 
