@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RangedUnitTest {
 
+    //Make sure you test both positive and negative. For example, creating constructor with positive health, positive attack
+    //Check different states of attacking, for example, when the opponent health would go negative.
+
     @Nested
     public class A_RangedUnit_with_valid_input_values{
 
@@ -36,6 +39,7 @@ class RangedUnitTest {
             Assertions.assertEquals(expectedArmor, presetRangedUnit.getArmor());
         }
 
+        //Maybe test attack and armor equal to 0, to show that this is a possibility
         @Test
         void instantiates_properly_with_manually_set_constructor(){
             //Given/Arrange
@@ -112,7 +116,7 @@ class RangedUnitTest {
         }
 
         @Test
-        void reduces_an_Opponents_Health(){
+        void reduces_an_Opponents_Health_above_0(){
             //Given/Arrange
             RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
             Unit opponent = new InfantryUnit("Pikeman", 100);
@@ -125,6 +129,38 @@ class RangedUnitTest {
             //Then/Assert
             Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
         }
+
+        @Test
+        void reduces_an_Opponents_Health_below_0(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
+            Unit opponent = new InfantryUnit("Pikeman", 7);
+            int opponentExpectedHealth = 0; //FILL IN
+
+            //When/Act
+            presetRangedUnit.attack(opponent);
+
+
+            //Then/Assert
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
+        }
+
+        @Test
+        void reduces_an_Opponents_Health_equal_to_0(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
+            Unit opponent = new InfantryUnit("Pikeman", 7);
+            int opponentExpectedHealth = 0; //FILL IN
+
+            //When/Act
+            presetRangedUnit.attack(opponent);
+
+
+            //Then/Assert
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
+        }
+        //Make a reduces_Opponents_Health for a null opponent. Maybe change attack method to not all opponent
+        //to be null.
         
 
         @Test
@@ -141,7 +177,7 @@ class RangedUnitTest {
         }
 
         @Test
-        void gets_decreasing_resistance_bonus_based_on_number_of_attacks(){
+        void gets_6_resistance_bonus_based_on_first_attack(){
             //Given/Arrange
             RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
             int expectedResistanceBonusAfter1Defense = 6;
@@ -207,8 +243,8 @@ class RangedUnitTest {
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {-1, -99999}) //Arrange
-        void if_health_input_is_less_than_0(int healthValue){
+        @ValueSource(ints = {0, -1, Integer.MIN_VALUE}) //Arrange
+        void if_health_input_is_less_than_or_equal_to_0(int healthValue){
             assertThrows(IllegalArgumentException.class, ()->{
                 RangedUnit specialRangedUnit = new RangedUnit("Archer", healthValue, 17, 10);
                 //Act and assert
@@ -216,7 +252,7 @@ class RangedUnitTest {
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {-1, -99999}) //Arrange
+        @ValueSource(ints = {-1, Integer.MIN_VALUE}) //Arrange
         void if_attack_input_is_less_than_0(int attackValue){
             assertThrows(IllegalArgumentException.class, ()->{
                 RangedUnit specialRangedUnit = new RangedUnit("Archer", 10, attackValue, 10);
@@ -225,7 +261,7 @@ class RangedUnitTest {
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {-1, -99999}) //Arrange
+        @ValueSource(ints = {-1, Integer.MIN_VALUE}) //Arrange
         void if_armor_input_is_less_than_0(int armorValue){
             assertThrows(IllegalArgumentException.class, ()->{
                 RangedUnit specialRangedUnit = new RangedUnit("Archer", 10, 17, armorValue);

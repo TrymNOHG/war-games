@@ -112,7 +112,7 @@ class CavalryUnitTest {
         }
 
         @Test
-        void reduces_an_Opponents_Health(){
+        void reduces_an_Opponents_Health_above_0(){
             //Given/Arrange
             CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
             Unit opponent = new InfantryUnit("Pikeman", 100);
@@ -125,6 +125,38 @@ class CavalryUnitTest {
             //Then/Assert
             Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
         }
+
+        @Test
+        void reduces_an_Opponents_Health_below_0(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            Unit opponent = new InfantryUnit("Pikeman", 15);
+            int opponentExpectedHealth = 0;
+
+            //When/Act
+            presetCavalryUnit.attack(opponent);
+
+
+            //Then/Assert
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
+        }
+
+        @Test
+        void reduces_an_Opponents_Health_equal_to_0(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            Unit opponent = new InfantryUnit("Pikeman", 15);
+            int opponentExpectedHealth = 0;
+
+            //When/Act
+            presetCavalryUnit.attack(opponent);
+
+
+            //Then/Assert
+            Assertions.assertEquals(opponentExpectedHealth, opponent.getHealth());
+        }
+        //Make a reduces_Opponents_Health for a null opponent. Maybe change attack method to not all opponent
+        //to be null.
 
         @Test
         void gets_6_attack_bonus_during_first_attack(){
