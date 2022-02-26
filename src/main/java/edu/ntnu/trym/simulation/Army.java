@@ -40,7 +40,7 @@ public class Army {
             this.units = new ArrayList<>();
         }
         else {
-            this.units = units;
+            this.units = units; //Should this be a deep copy so the lists aren't linked?
         }
     }
 
@@ -68,9 +68,11 @@ public class Army {
      * @param units List of Units
      */
     public void addAll(List<Unit> units){
-        for(Unit unit : units){
-            if(unit != null){
-                this.units.add(unit);
+        if(units != null) {
+            for (Unit unit : units) {
+                if (unit != null) {
+                    this.units.add(unit);
+                }
             }
         }
     }
@@ -100,6 +102,9 @@ public class Army {
     }
 
     public Unit getRandom(){
+        if(this.units.size() == 0){
+            return null;
+        }
         int randomIndex = new Random().nextInt(this.units.size());
         return this.units.get(randomIndex);
     }
