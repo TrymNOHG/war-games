@@ -32,14 +32,6 @@ public class Battle {
     }
 
     /**
-     * This method checks that both sides have units before the battle.
-     * @return State of battle, true if both armies have units and false if not
-     */
-    private boolean bothSidesReadyForBattle(){
-        return armyOne.hasUnits() && armyTwo.hasUnits();
-    }
-
-    /**
      * This method enacts a battle between two armies. The armies take turns fighting and the two opponents are chosen
      * at random from both armies. Once a Unit's health goes below 0, it is removed from its respective army. Once an
      * army has lost all of its Units, the other army is declared the winner.
@@ -47,41 +39,31 @@ public class Battle {
      */
     public Army simulate(){
         //Checks that both sides have units to begin with
-        if(!bothSidesReadyForBattle()){
-            //If one of them doesn't, check armyOne
-            if(armyOne.hasUnits()){
+        while(armyOne.hasUnits() && armyTwo.hasUnits()) {
+            //Choosing fighters
+            Unit fightingOpponent = armyArr[armyFightCount % 2].getRandom();
+            Unit defendingOpponent = armyArr[(armyFightCount + 1) % 2].getRandom();
+
+            //The fight
+            fightingOpponent.attack(defendingOpponent);
+
+            //Checking health of defender
+            if (defendingOpponent.getHealth() == 0) {
+                armyArr[(armyFightCount + 1) % 2].remove(defendingOpponent);
+            }
+            this.armyFightCount++;
+        }
+        
+            //Check if armyOne has units
+            if (armyOne.hasUnits()) {
                 return armyOne;
             }
             //If armyOne doesn't have any, check armyTwo
-            else if(armyTwo.hasUnits()){
+            else if (armyTwo.hasUnits()) {
                 return armyTwo;
             }
-            //Return null if neither has any units
+            //Return null if neither has any units, this would mean no battle was engaged.
             return null;
-        }
-
-        //Choosing fighters
-        Unit fightingOpponent = armyArr[armyFightCount % 2].getRandom();
-        Unit defendingOpponent = armyArr[(armyFightCount + 1) % 2].getRandom();
-
-        //The fight
-        fightingOpponent.attack(defendingOpponent);
-
-        //Checking health of defender
-        if(defendingOpponent.getHealth() == 0){
-            armyArr[(armyFightCount + 1) % 2].remove(defendingOpponent);
-        }
-
-        //Check if the defendingOpponent Army still has units
-        if(armyArr[(armyFightCount + 1) % 2].hasUnits()){
-            //Allowing next army to fight
-            this.armyFightCount++;
-            return simulate();
-        }
-        else{
-            System.out.println("Army" + ((armyFightCount % 2) + 1) + " won!");
-            return armyArr[armyFightCount % 2];
-        }
     }
 
     @Override
