@@ -101,6 +101,10 @@ public class Army {
        return this.units;
     }
 
+    /**
+     * This method returns a random unit, if the units List is not empty/
+     * @return A random unit, represented as a Unit object
+     */
     public Unit getRandom(){
         if(this.units.size() == 0){
             return null;
