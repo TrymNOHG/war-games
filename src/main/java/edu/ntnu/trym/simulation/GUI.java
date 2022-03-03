@@ -15,6 +15,12 @@ public class GUI {
 
     }
 
+    /**
+     * This method constructs an army, with special names for the different units if the name of the Army
+     * is 'Human' or 'Orc'.
+     * @param nameOfArmy The name of the army, represented as a String
+     * @return           An Army object filled with units
+     */
     private static Army constructArmy(String nameOfArmy){
         String infantryName = "";
         String cavalryName = "";
