@@ -53,17 +53,17 @@ public class Battle {
             }
             this.armyFightCount++;
         }
-        
-            //Check if armyOne has units
-            if (armyOne.hasUnits()) {
-                return armyOne;
-            }
-            //If armyOne doesn't have any, check armyTwo
-            else if (armyTwo.hasUnits()) {
-                return armyTwo;
-            }
-            //Return null if neither has any units, this would mean no battle was engaged.
-            return null;
+
+        //Check if armyOne has units
+        if (armyOne.hasUnits()) {
+            return armyOne;
+        }
+        //If armyOne doesn't have any, check armyTwo
+        else if (armyTwo.hasUnits()) {
+            return armyTwo;
+        }
+        //Return null if neither has any units, this would mean no battle was engaged.
+        return null;
     }
 
     @Override
