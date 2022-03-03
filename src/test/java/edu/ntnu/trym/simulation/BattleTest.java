@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class BattleTest {
     Army fillArmy1(){
         List<Unit> filledArmyList = new ArrayList<>();
@@ -25,6 +27,29 @@ public class BattleTest {
         filledArmyList.add(new RangedUnit("Crossbowman", 10));
         Army army = new Army("Eirik's Army", filledArmyList);
         return army;
+    }
+
+    @Test
+    void A_Battle_Object_can_be_constructed(){
+        //Given/Arrange
+        Army army1 = fillArmy1();
+        Army army2 = fillArmy2();
+
+        //When/Act
+        Battle battle = null;
+        try {
+            battle = new Battle(army1, army2);
+        }
+        catch (Exception e){
+            fail("The constructor was not instantiated properly");
+        }
+
+        //Then/Assert
+        //Since no errors were thrown during the instantiation of the constructor,
+        //it is assumed that it is functioning properly.
+        Assertions.assertTrue(true);
+
+
     }
 
     //When a unit has max int health and is attacked by a unit who has less damage than their resistance,
@@ -66,7 +91,7 @@ public class BattleTest {
             Assertions.assertTrue(true);
         }
         else{
-            Assertions.fail("Neither army won, error!");
+            fail("Neither army won, error!");
         }
     }
 
