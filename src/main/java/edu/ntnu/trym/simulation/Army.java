@@ -110,29 +110,48 @@ public class Army {
         return this.units.get(randomIndex);
     }
 
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of InfantryUnits.
+     * @return The filtered list of solely InfantryUnits, represented as a List of Units
+     */
     public List<Unit> getInfantryUnits(){
         return getUnitsByType("InfantryUnit");
     }
 
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CavalryUnits.
+     * @return The filtered list of solely CavalryUnits, represented as a List of Units
+     */
     public List<Unit> getCavalryUnits(){
         return getUnitsByType("CavalryUnit");
     }
 
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of RangedUnits.
+     * @return The filtered list of solely RangedUnits, represented as a List of Units
+     */
     public List<Unit> getRangedUnits(){
         return getUnitsByType("RangedUnit");
     }
 
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CommanderUnits.
+     * @return The filtered list of solely CommanderUnits, represented as a List of Units
+     */
     public List<Unit> getCommanderUnits(){
         return getUnitsByType("CommanderUnit");
     }
 
-    private List<Unit> getUnitsByType(String type){
+    /**
+     * This method uses a stream to filter through all the units in the list and based on the class to create
+     * a new list containing solely the unit desired.
+     * @param className The name of the class that the unit belongs to, represented as a String
+     * @return          A list of all the units of the given type found in the Army's unit list
+     */
+    private List<Unit> getUnitsByType(String className){
         return this.units.stream().filter(unit -> Arrays.asList(unit.getClass().toString()
-                .split("\\.")).contains(type)).toList();
+                .split("\\.")).contains(className)).toList();
     }
-
-    //TODO: Check if the get classes are valid when I use getUnitsByType
-    //TODO: Write JavaDocs and Unit Tests for each method
 
     @Override
     public String toString() {
