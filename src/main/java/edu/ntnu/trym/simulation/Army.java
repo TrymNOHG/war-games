@@ -1,9 +1,6 @@
 package edu.ntnu.trym.simulation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This is a class forming the structure of an army. It, therefore, contains the vital information
@@ -114,23 +111,24 @@ public class Army {
     }
 
     public List<Unit> getInfantryUnits(){
-        return getUnitsByType("Infantry");
+        return getUnitsByType("InfantryUnit");
     }
 
     public List<Unit> getCavalryUnits(){
-        return getUnitsByType("Cavalry");
+        return getUnitsByType("CavalryUnit");
     }
 
     public List<Unit> getRangedUnits(){
-        return getUnitsByType("Ranged");
+        return getUnitsByType("RangedUnit");
     }
 
     public List<Unit> getCommanderUnits(){
-        return getUnitsByType("Commander");
+        return getUnitsByType("CommanderUnit");
     }
 
-    public List<Unit> getUnitsByType(String type){
-        return this.units.stream().filter(unit -> unit.getClass().toString().equals(type)).toList();
+    private List<Unit> getUnitsByType(String type){
+        return this.units.stream().filter(unit -> Arrays.asList(unit.getClass().toString()
+                .split("\\.")).contains(type)).toList();
     }
 
     //TODO: Check if the get classes are valid when I use getUnitsByType
