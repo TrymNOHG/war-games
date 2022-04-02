@@ -362,9 +362,9 @@ public class ArmyTest {
             Army army = new Army("Trym's Army", filledArmyList);
 
             List<Unit> rangedList = new ArrayList<>();
-            filledArmyList.add(new RangedUnit("Crossbowman", 10));
-            filledArmyList.add(new RangedUnit("Crossbowman", 20));
-            filledArmyList.add(new RangedUnit("Crossbowman", 30));
+            rangedList.add(new RangedUnit("Crossbowman", 10));
+            rangedList.add(new RangedUnit("Crossbowman", 20));
+            rangedList.add(new RangedUnit("Crossbowman", 30));
 
             //rangedList contains all the Ranged Units that are in the army
             army.addAll(rangedList);
@@ -422,9 +422,9 @@ public class ArmyTest {
             Army army = new Army("Trym's Army", filledArmyList);
 
             List<Unit> commanderList = new ArrayList<>();
-            filledArmyList.add(new CommanderUnit("King", 10));
-            filledArmyList.add(new CommanderUnit("Commander Trym", 20));
-            filledArmyList.add(new CommanderUnit("General", 30));
+            commanderList.add(new CommanderUnit("King", 10));
+            commanderList.add(new CommanderUnit("Commander Trym", 20));
+            commanderList.add(new CommanderUnit("General", 30));
 
             //commanderList contains all the Commander Units that are in the army
             army.addAll(commanderList);
