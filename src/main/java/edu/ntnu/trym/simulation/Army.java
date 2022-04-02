@@ -113,6 +113,29 @@ public class Army {
         return this.units.get(randomIndex);
     }
 
+    public List<Unit> getInfantryUnits(){
+        return getUnitsByType("Infantry");
+    }
+
+    public List<Unit> getCavalryUnits(){
+        return getUnitsByType("Cavalry");
+    }
+
+    public List<Unit> getRangedUnits(){
+        return getUnitsByType("Ranged");
+    }
+
+    public List<Unit> getCommanderUnits(){
+        return getUnitsByType("Commander");
+    }
+
+    public List<Unit> getUnitsByType(String type){
+        return this.units.stream().filter(unit -> unit.getClass().toString().equals(type)).toList();
+    }
+
+    //TODO: Check if the get classes are valid when I use getUnitsByType
+    //TODO: Write JavaDocs and Unit Tests for each method
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
