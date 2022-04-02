@@ -98,7 +98,7 @@ public abstract class Unit {
         sb.append(this.name).append("'s Stats:\nUnit Type: ").append(this.getClass())
                 .append("\nHealth: ").append(this.health).append("\nAttack: ").append(this.attack)
                 .append("\nAttack Bonus: ").append(this.getAttackBonus()).append("\nArmor: ").append(this.armor)
-                .append("\nResistance Bonus: ").append(this.getResistBonus()).append(this.getClass());
+                .append("\nResistance Bonus: ").append(this.getResistBonus()).append("\n");
         return sb.toString();
     }
 
