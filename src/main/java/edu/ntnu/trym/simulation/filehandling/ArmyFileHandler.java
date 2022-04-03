@@ -4,6 +4,7 @@ import edu.ntnu.trym.simulation.Army;
 import edu.ntnu.trym.simulation.units.Unit;
 
 import java.io.*;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,15 +19,15 @@ public class ArmyFileHandler {
     //TODO: Check that all the logic in a method belongs to that method solely and not a more general method
 
     //Makes sure no file exists with that name, creates a new file, and writes out the army to that file
-    public void createAndWriteNewArmyFile(Army army, String fileName) throws IOException {
-        if(statusOnFileExistence(createValidFile(fileName))) throw new IOException("A file with that name already exists.");
-        writeToArmyFile(army, createValidFile(fileName));
+    public void createAndWriteNewArmyFile(Army army, File file) throws IOException {
+        if(fileExists(file)) throw new IOException("A file with that name already exists.");
+        writeToArmyFile(army, file);
     }
 
     //Requirement: File must already exist for
-    public boolean overwriteExistingArmyFile(Army army, String fileName) throws IOException {
-        if(!statusOnFileExistence(createValidFile(fileName))) return false;
-        writeToArmyFile(army, createValidFile(fileName));
+    public boolean overwriteExistingArmyFile(Army army, File file) throws IOException {
+        if(fileExists(file)) return false;
+        writeToArmyFile(army, file);
         return true;
     }
 
@@ -34,6 +35,20 @@ public class ArmyFileHandler {
 
     //Does this method pose any threats?
     //Do I need to test this method or can I indirectly test it through the other two?
+
+    /**
+     * This method takes an army, given as input, and records its information in the form of a csv file (also given
+     * as input). Through a writer, the army information is transcribed with the following format:
+     * <pre>
+     *     Army name
+     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
+     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
+     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
+     * </pre>
+     * @param army         The army that will be saved, represented using an Army object
+     * @param armyFile     The file which the information will be saved, represented using a File object
+     * @throws IOException Input-Output exception from the writer, in case there is something wrong with the file
+     */
     private void writeToArmyFile(Army army, File armyFile) throws IOException{
         Objects.requireNonNull(army, "Army cannot be null");
         try(BufferedWriter armyBufferedWriter = new BufferedWriter(new FileWriter(armyFile))){
@@ -57,29 +72,27 @@ public class ArmyFileHandler {
     }
 
     //Create own exception for certain things, new file
-    //Split up methods into smaller methods, perhaps
 
     //TODO: make sure file only contains one army (throw exception if another army is trying to be added)
-    //TODO: Update file method?
     //TODO: Check for duplicates (so it isn't doubled) and maybe throw specific exception
 
 
     //TODO: When reading the files maybe catch changes?
 
-    public Army readFromArmyFile(String fileName) throws IOException {
+    public Army readFromArmyFile(File file) throws IOException {
         String armyName = "";
         List<Unit> unitList = new ArrayList<>();
 
         //Maybe only throw if file contains info already
-        if(!statusOnFileExistence(createValidFile(fileName)))
-            throw new FileNotFoundException("A file with the name " + fileName + " does not exist");
+        if(!fileExists(file))
+            throw new FileNotFoundException("A file with that name does not exist");
 
-        try(BufferedReader armyBufferedReader = new BufferedReader(new FileReader(getFileSourcePath(fileName)))){
+        try(BufferedReader armyBufferedReader = new BufferedReader(new FileReader(file))){
             armyName = armyBufferedReader.readLine();
-            armyBufferedReader.lines().skip(1).forEach(unitInfo ->{
+            armyBufferedReader.lines().forEach(unitInfo ->{
                 String[] splitUnitInfo = unitInfo.split(",");
                 try {
-                    Class unitConstruct = Class.forName("edu.ntnu.trym.simulation." + splitUnitInfo[0]);
+                    Class unitConstruct = Class.forName("edu.ntnu.trym.simulation.units." + splitUnitInfo[0]);
                     unitList.add((Unit) unitConstruct
                             .getDeclaredConstructor(String.class, int.class, int.class, int.class)
                             .newInstance(splitUnitInfo[1], Integer.valueOf(splitUnitInfo[2]),
@@ -104,19 +117,18 @@ public class ArmyFileHandler {
         if(!matcher.matches()) throw new IOException("The file name contains illegal characters.");
     }
 
-    public File createValidFile(String fileName) throws IOException {
-        isFileNameValid(fileName);
-        return new File("src/main/resources/army-files/" + fileName + ".csv");
-    }
+//    public File createValidFile(String fileName) throws IOException {
+//        isFileNameValid(fileName);
+//        return new File("src/main/resources/army-files/" + fileName + ".csv");
+//    }
 
     //Should this method exist
-    //Change inputs to be more general
-    public boolean statusOnFileExistence(File fileInQuestion){
+    public boolean fileExists(File fileInQuestion){
         return fileInQuestion.length() > 0;
     }
 
     public String getFileSourcePath(String fileName){
-        return "src/main/resources/army-files/" + fileName + ".csv";
+        return FileSystems.getDefault().getPath("src", "main", "resources", "army-files") + fileName + ".csv";
     }
 }
 
