@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation;
 
+import edu.ntnu.trym.simulation.units.Unit;
 import java.util.*;
 
 /**
@@ -149,8 +150,7 @@ public class Army {
      * @return          A list of all the units of the given type found in the Army's unit list
      */
     private List<Unit> getUnitsByType(String className){
-        return this.units.stream().filter(unit -> Arrays.asList(unit.getClass().toString()
-                .split("\\.")).contains(className)).toList();
+        return this.units.stream().filter(unit -> unit.getClass().getSimpleName().equals(className)).toList();
     }
 
     @Override

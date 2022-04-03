@@ -1,11 +1,14 @@
 package edu.ntnu.trym.simulation;
 
+import edu.ntnu.trym.simulation.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -517,6 +520,8 @@ public class ArmyTest {
             Assertions.assertTrue(armyList.contains(actualUnit));
         }
     }
+
+
 
     @Nested
     public class An_Army_with_invalid_input_values{
