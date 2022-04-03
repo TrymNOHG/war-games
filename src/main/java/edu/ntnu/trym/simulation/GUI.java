@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation;
 
+import edu.ntnu.trym.simulation.units.*;
+
 import java.util.ArrayList;
 import java.util.List;
 

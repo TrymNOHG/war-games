@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation;
 
+import edu.ntnu.trym.simulation.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
