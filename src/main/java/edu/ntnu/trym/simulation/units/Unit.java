@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
 
 /**
  * This is a class which creates the general structure of a militant unit. It, therefore, contains the vital information

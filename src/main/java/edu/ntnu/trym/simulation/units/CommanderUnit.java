@@ -1,4 +1,6 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
+
+import edu.ntnu.trym.simulation.units.CavalryUnit;
 
 /**
  * This class represents a commander unit, which is a subclass or "promotion" from the cavalry unit.
@@ -7,7 +9,7 @@ package edu.ntnu.trym.simulation;
  *
  * @author Trym
  */
-public class CommanderUnit extends CavalryUnit{
+public class CommanderUnit extends CavalryUnit {
 
     /**
      * This constructor allows for a CommanderUnit Object to be initialized with the information that defines a

@@ -1,4 +1,6 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
+
+import edu.ntnu.trym.simulation.units.Unit;
 
 /**
  * This class represents an infantry unit. An infantry unit has medium base stats for both attack (15) and armor
@@ -6,7 +8,7 @@ package edu.ntnu.trym.simulation;
  *
  * @author Trym
  */
-public class InfantryUnit extends Unit{
+public class InfantryUnit extends Unit {
 
     /**
      * This constructor allows for an InfantryUnit Object to be initialized with the information that defines an

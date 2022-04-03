@@ -1,4 +1,6 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
+
+import edu.ntnu.trym.simulation.units.Unit;
 
 /**
  * This class represents a ranged unit. A ranged unit has medium-low base stats for attack (15) and low for armor (12).
@@ -8,7 +10,7 @@ package edu.ntnu.trym.simulation;
  *
  * @author Trym
  */
-public class RangedUnit extends Unit{
+public class RangedUnit extends Unit {
     private int numAttackedByOpponent = 0;
 
     /**
