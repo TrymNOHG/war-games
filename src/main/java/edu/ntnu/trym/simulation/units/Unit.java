@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation.units;
 
+import java.util.Objects;
+
 /**
  * This is a class which creates the general structure of a militant unit. It, therefore, contains the vital information
  * such as name, health, attack, and armor stats. Additionally, the class outlines how attacks against another Unit are
@@ -100,6 +102,19 @@ public abstract class Unit {
                 .append("\nAttack Bonus: ").append(this.getAttackBonus()).append("\nArmor: ").append(this.armor)
                 .append("\nResistance Bonus: ").append(this.getResistBonus()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Unit)) return false;
+
+        Unit unit = (Unit) o;
+
+        if (health != unit.health) return false;
+        if (attack != unit.attack) return false;
+        if (armor != unit.armor) return false;
+        return Objects.equals(name, unit.name);
     }
 
     /**
