@@ -172,7 +172,10 @@ public class Army {
         Army army = (Army) object;
 
         if (!Objects.equals(name, army.name)) return false;
-        return Objects.equals(units, army.units);
+        for(Unit unit : units){
+            if(army.units.stream().noneMatch(unit::equals)) return false;
+        }
+        return true;
     }
 
     @Override
