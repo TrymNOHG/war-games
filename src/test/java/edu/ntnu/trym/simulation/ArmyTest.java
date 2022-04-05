@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ArmyTest {
 
+    //TODO: Test that the stream for sorting doesn't get Commander Units when looking for Cavalry
+
     static List<Unit> fillArmyList(){
         List<Unit> filledArmyList = new ArrayList<>();
         filledArmyList.add(new CommanderUnit("King", 10));
@@ -471,6 +473,33 @@ public class ArmyTest {
 
             //Then/Assert
             Assertions.assertTrue(actualReturnedCommanderList.isEmpty());
+        }
+
+        @Test
+        void doesnt_return_Commander_Units_when_filtering_for_Cavalry(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new CommanderUnit("Queen", 10));
+            filledArmyList.add(new CommanderUnit("General", 10));
+
+            //Creates an army without any cavalry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> cavalryList = new ArrayList<>();
+            cavalryList.add(new CavalryUnit("Knight", 10));
+            cavalryList.add(new CavalryUnit("Knight", 20));
+            cavalryList.add(new CavalryUnit("Knight", 30));
+
+            //cavalryList contains all the Cavalry Units that are in the army
+            army.addAll(cavalryList);
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCavalryList.stream().noneMatch(cavalryUnit ->
+                    cavalryUnit.getClass().getSimpleName() == "CommanderUnit"));
         }
 
     }
