@@ -111,6 +111,8 @@ public class Army {
         return this.units.get(randomIndex);
     }
 
+
+    //TODO: Is it better to use InfantryUnit.getClass().getSimpleName() since the class name could change? Ask studass
     /**
      * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of InfantryUnits.
      * @return The filtered list of solely InfantryUnits, represented as a List of Units
