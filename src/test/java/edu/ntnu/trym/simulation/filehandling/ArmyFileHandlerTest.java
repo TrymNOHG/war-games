@@ -25,7 +25,7 @@ class ArmyFileHandlerTest{
 //    @Test
 //    void presetClasses() throws IOException {
 //        Army army = new Army("Trym's Army", fillArmyList());
-//        armyFileHandler.createAndWriteNewArmyFile(army, createValidFile("Tryms Army"));
+//        armyFileHandler.createAndWriteNewArmyFile(army, createValidFile("Corrupt Attributes"));
 //    }
 
     //TODO: fix the regex file error
@@ -286,13 +286,12 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void a_null_army_when_overwriting_file_will_throw_NullPointerException(){
+        void a_null_army_when_overwriting_file_will_throw_NullPointerException() throws IOException {
             //Given/Arrange
             Army army = null;
-
             Assertions.assertThrows(NullPointerException.class, () ->{
                 //When/Act
-                armyFileHandler.overwriteExistingArmyFile(army, createValidFile("Tryms army"));
+                armyFileHandler.overwriteExistingArmyFile(army, createValidFile("Tryms Army"));
             }); //Then/Assert
         }
 
@@ -302,8 +301,7 @@ class ArmyFileHandlerTest{
             Army changedArmy = new Army("Sarahs Army", fillArmyList());
 
             //When/Act
-            boolean canOverwrite = armyFileHandler.overwriteExistingArmyFile(changedArmy, createValidFile("Tryms Army"));
-
+            boolean canOverwrite = armyFileHandler.overwriteExistingArmyFile(changedArmy, createValidFile("Non Existent"));
             //Then/Assert
             Assertions.assertFalse(canOverwrite);
 
@@ -335,11 +333,17 @@ class ArmyFileHandlerTest{
 
         }
 
-        //This is kind of to be expected?
-//        @Test
-//        void it_saves_to_the_correct_location(){
-//
-//        }
+        @Test
+        void throws_NumberFormatException_when_attribute_info_is_wrong_and_is_read(){
+            //Given/Arrange
+            Army expectedArmy = new Army("Trym's Army", fillArmyList());
+
+            Assertions.assertThrows(NumberFormatException.class, () -> {
+                //When/Act
+                Army actualArmy = armyFileHandler.readFromArmyFile(createValidFile("Corrupt Attributes"));
+
+            });//Then/Assert
+        }
 
         //TODO: Organize better
         //Check it contains the correct information
