@@ -1,9 +1,7 @@
 package edu.ntnu.trym.simulation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import edu.ntnu.trym.simulation.units.Unit;
+import java.util.*;
 
 /**
  * This is a class forming the structure of an army. It, therefore, contains the vital information
@@ -113,6 +111,50 @@ public class Army {
         return this.units.get(randomIndex);
     }
 
+
+    //TODO: Is it better to use InfantryUnit.getClass().getSimpleName() since the class name could change? Ask studass
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of InfantryUnits.
+     * @return The filtered list of solely InfantryUnits, represented as a List of Units
+     */
+    public List<Unit> getInfantryUnits(){
+        return getUnitsByType("InfantryUnit");
+    }
+
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CavalryUnits.
+     * @return The filtered list of solely CavalryUnits, represented as a List of Units
+     */
+    public List<Unit> getCavalryUnits(){
+        return getUnitsByType("CavalryUnit");
+    }
+
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of RangedUnits.
+     * @return The filtered list of solely RangedUnits, represented as a List of Units
+     */
+    public List<Unit> getRangedUnits(){
+        return getUnitsByType("RangedUnit");
+    }
+
+    /**
+     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CommanderUnits.
+     * @return The filtered list of solely CommanderUnits, represented as a List of Units
+     */
+    public List<Unit> getCommanderUnits(){
+        return getUnitsByType("CommanderUnit");
+    }
+
+    /**
+     * This method uses a stream to filter through all the units in the list and based on the class to create
+     * a new list containing solely the unit desired.
+     * @param className The name of the class that the unit belongs to, represented as a String
+     * @return          A list of all the units of the given type found in the Army's unit list
+     */
+    private List<Unit> getUnitsByType(String className){
+        return this.units.stream().filter(unit -> unit.getClass().getSimpleName().equals(className)).toList();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -132,7 +174,10 @@ public class Army {
         Army army = (Army) object;
 
         if (!Objects.equals(name, army.name)) return false;
-        return Objects.equals(units, army.units);
+        for(Unit unit : units){
+            if(army.units.stream().noneMatch(unit::equals)) return false;
+        }
+        return true;
     }
 
     @Override

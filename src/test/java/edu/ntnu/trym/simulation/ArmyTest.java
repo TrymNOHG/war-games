@@ -1,19 +1,22 @@
 package edu.ntnu.trym.simulation;
 
+import edu.ntnu.trym.simulation.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ArmyTest {
+
+    //TODO: Test that the stream for sorting doesn't get Commander Units when looking for Cavalry
 
     static List<Unit> fillArmyList(){
         List<Unit> filledArmyList = new ArrayList<>();
@@ -230,6 +233,278 @@ public class ArmyTest {
     }
 
     @Nested
+    public class An_Army_filters_correctly_if_it{
+
+        @Test
+        void returns_units_list_by_Infantry_unit_when_filled(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+
+            //Creates an army without any infantry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> infantryList = new ArrayList<>();
+            infantryList.add(new InfantryUnit("Pikeman", 10));
+            infantryList.add(new InfantryUnit("Pikeman", 20));
+            infantryList.add(new InfantryUnit("Pikeman", 30));
+
+            //infantryList contains all the Infantry Units that are in the army
+            army.addAll(infantryList);
+
+            //When/Act
+            List<Unit> actualReturnedInfantryList = army.getInfantryUnits();
+
+            //Then/Assert
+            actualReturnedInfantryList.stream().forEach(infantryUnit ->{
+                Assertions.assertTrue(infantryList.contains(infantryUnit));
+            });
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_units_list_without_Infantry_units(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+
+            //Creates an army without any infantry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            //When/Act
+            List<Unit> actualReturnedInfantryList = army.getInfantryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedInfantryList.isEmpty());
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_empty_units_list_by_Infantry(){
+            //Given/Arrange
+
+            //Creates an army without units.
+            Army army = new Army("Trym's Army", new ArrayList<>());
+
+            //When/Act
+            List<Unit> actualReturnedInfantryList = army.getInfantryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedInfantryList.isEmpty());
+        }
+
+        @Test
+        void returns_units_list_by_Cavalry_unit_when_filled(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+
+            //Creates an army without any cavalry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> cavalryList = new ArrayList<>();
+            cavalryList.add(new CavalryUnit("Knight", 10));
+            cavalryList.add(new CavalryUnit("Knight", 20));
+            cavalryList.add(new CavalryUnit("Knight", 30));
+
+            //cavalryList contains all the Cavalry Units that are in the army
+            army.addAll(cavalryList);
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            actualReturnedCavalryList.stream().forEach(cavalryUnit ->{
+                Assertions.assertTrue(cavalryList.contains(cavalryUnit));
+            });
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_units_list_without_Cavalry_units(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+
+            //Creates an army without any cavalry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCavalryList.isEmpty());
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_empty_units_list_by_Cavalry(){
+            //Given/Arrange
+
+            //Creates an army without any units.
+            Army army = new Army("Trym's Army", new ArrayList<>());
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCavalryList.isEmpty());
+        }
+
+        @Test
+        void returns_units_list_by_Ranged_unit_when_filled(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+
+            //Creates an army without any ranged units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> rangedList = new ArrayList<>();
+            rangedList.add(new RangedUnit("Crossbowman", 10));
+            rangedList.add(new RangedUnit("Crossbowman", 20));
+            rangedList.add(new RangedUnit("Crossbowman", 30));
+
+            //rangedList contains all the Ranged Units that are in the army
+            army.addAll(rangedList);
+
+            //When/Act
+            List<Unit> actualReturnedRangedList = army.getRangedUnits();
+
+            //Then/Assert
+            actualReturnedRangedList.stream().forEach(rangedUnit ->{
+                Assertions.assertTrue(rangedList.contains(rangedUnit));
+            });
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_units_list_without_Ranged_units(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+
+            //Creates an army without any ranged units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            //When/Act
+            List<Unit> actualReturnedRangedList = army.getRangedUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedRangedList.isEmpty());
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_empty_units_list_by_Ranged(){
+            //Given/Arrange
+
+            //Creates an army without units.
+            Army army = new Army("Trym's Army", new ArrayList<>());
+
+            //When/Act
+            List<Unit> actualReturnedRangedList = army.getRangedUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedRangedList.isEmpty());
+        }
+
+        @Test
+        void returns_units_list_by_Commander_unit_when_filled(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+
+            //Creates an army without any commander units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> commanderList = new ArrayList<>();
+            commanderList.add(new CommanderUnit("King", 10));
+            commanderList.add(new CommanderUnit("Commander Trym", 20));
+            commanderList.add(new CommanderUnit("General", 30));
+
+            //commanderList contains all the Commander Units that are in the army
+            army.addAll(commanderList);
+
+            //When/Act
+            List<Unit> actualReturnedCommanderList = army.getCommanderUnits();
+
+            //Then/Assert
+            actualReturnedCommanderList.stream().forEach(commanderUnit ->{
+                Assertions.assertTrue(commanderList.contains(commanderUnit));
+            });
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_units_list_without_Commander_units(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new CavalryUnit("Knight", 10));
+
+            //Creates an army without any commander units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            //When/Act
+            List<Unit> actualReturnedCommanderList = army.getCommanderUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCommanderList.isEmpty());
+        }
+
+        @Test
+        void returns_empty_list_when_filtering_empty_units_list_by_Commander(){
+            //Given/Arrange
+
+            //Creates an army without any units.
+            Army army = new Army("Trym's Army", new ArrayList<>());
+
+            //When/Act
+            List<Unit> actualReturnedCommanderList = army.getCommanderUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCommanderList.isEmpty());
+        }
+
+        @Test
+        void doesnt_return_Commander_Units_when_filtering_for_Cavalry(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new CommanderUnit("Queen", 10));
+            filledArmyList.add(new CommanderUnit("General", 10));
+
+            //Creates an army without any cavalry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> cavalryList = new ArrayList<>();
+            cavalryList.add(new CavalryUnit("Knight", 10));
+            cavalryList.add(new CavalryUnit("Knight", 20));
+            cavalryList.add(new CavalryUnit("Knight", 30));
+
+            //cavalryList contains all the Cavalry Units that are in the army
+            army.addAll(cavalryList);
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCavalryList.stream().noneMatch(cavalryUnit ->
+                    cavalryUnit.getClass().getSimpleName() == "CommanderUnit"));
+        }
+
+    }
+
+    @Nested
     public class An_Armys_random_function{
         @Test
         void returns_no_random_unit_when_list_is_empty(){
@@ -274,6 +549,8 @@ public class ArmyTest {
             Assertions.assertTrue(armyList.contains(actualUnit));
         }
     }
+
+
 
     @Nested
     public class An_Army_with_invalid_input_values{

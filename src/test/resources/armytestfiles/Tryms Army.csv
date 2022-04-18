@@ -1,0 +1,5 @@
+Trym's Army
+CommanderUnit,King,10,25,15
+CavalryUnit,Knight,10,20,12
+InfantryUnit,Pikeman,10,15,10
+RangedUnit,Crossbowman,10,15,8

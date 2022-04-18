@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
 
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).
@@ -8,7 +8,7 @@ package edu.ntnu.trym.simulation;
  *
  * @author Trym
  */
-public class CavalryUnit extends Unit{
+public class CavalryUnit extends Unit {
     private int numAttack = 0;
 
     /**

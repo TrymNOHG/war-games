@@ -1,4 +1,6 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.units;
+
+import java.util.Objects;
 
 /**
  * This is a class which creates the general structure of a militant unit. It, therefore, contains the vital information
@@ -95,11 +97,24 @@ public abstract class Unit {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append("'s Stats:\nUnit Type: ").append(this.getClass())
+        sb.append(this.name).append("'s Stats:\nUnit Type: ").append(this.getClass().getSimpleName())
                 .append("\nHealth: ").append(this.health).append("\nAttack: ").append(this.attack)
                 .append("\nAttack Bonus: ").append(this.getAttackBonus()).append("\nArmor: ").append(this.armor)
-                .append("\nResistance Bonus: ").append(this.getResistBonus()).append(this.getClass());
+                .append("\nResistance Bonus: ").append(this.getResistBonus()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Unit)) return false;
+
+        Unit unit = (Unit) o;
+
+        if (health != unit.health) return false;
+        if (attack != unit.attack) return false;
+        if (armor != unit.armor) return false;
+        return Objects.equals(name, unit.name);
     }
 
     /**
