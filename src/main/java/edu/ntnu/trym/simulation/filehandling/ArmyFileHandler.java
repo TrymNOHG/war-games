@@ -11,7 +11,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * This class handles the storage and retrieval of Army objects from files. It handles these files through buffered
+ * writers and readers. The army object is stored using the army name first and then the information of all the units
+ * contained.
+ */
 public class ArmyFileHandler {
     private final Pattern validFileCharacters = Pattern.compile("^[\\w- ]*$");
     private final String DELIMITER = ",";
