@@ -161,7 +161,6 @@ public class Army {
         sb.append(this.name).append("'s Army:\n");
         for (Unit unit:this.units) {
             sb.append(unit.toString()).append("\n");
-
         }
         return sb.toString();
     }
