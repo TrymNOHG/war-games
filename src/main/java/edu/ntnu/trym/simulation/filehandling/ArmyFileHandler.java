@@ -122,9 +122,6 @@ public class ArmyFileHandler {
 
 
     //TODO: Write test for extracting the correct UnitType
-    /*TODO: Test that if splitUnitInfo[1], Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3],
-        Integer.parseInt(splitUnitInfo[4]) are invalid that the proper exceptions are thrown.
-     */
     //TODO: Check if comma in unit name breaks code
     //TODO: Add exception handling to the method below
 
@@ -147,11 +144,11 @@ public class ArmyFileHandler {
     /**
      * This method takes in a file name and checks whether it is valid using a pre-set regex pattern.
      * @param fileName Name of the file to be created, represented as a String
-     * @throws IOException If the file name sent in is invalid, then an IOException is thrown
+     * @throws IllegalArgumentException If the file name sent in is invalid, then an IllegalArgumentException is thrown
      */
-    public void isFileNameValid(String fileName) throws IOException{
+    public void isFileNameValid(String fileName) throws IllegalArgumentException{
         Matcher matcher = validFileCharacters.matcher(fileName);
-        if(!matcher.matches()) throw new IOException("The file name contains illegal characters.");
+        if(!matcher.matches()) throw new IllegalArgumentException("The file name contains illegal characters.");
     }
     //TODO: Should the exception thrown above be IllegalArgumentException
 
