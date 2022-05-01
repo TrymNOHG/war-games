@@ -55,14 +55,6 @@ public class UnitFactory {
 
     //Use this when actually generating the army
 
-//    public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type, String name, int healthValue){
-//        List<Unit> listToBeReturned = new ArrayList<>();
-//        IntStream.range(0, numberOfUnits).forEach(i -> listToBeReturned.add(getUnit(type, name, healthValue)));
-//        return listToBeReturned;
-//    }
-
-    //Use this when actually generating the army
-
     /**
      * This method creates a list of simplified units with the information below. The list will contain the amount
      * specified in the parameters of the same unit.
@@ -73,6 +65,7 @@ public class UnitFactory {
      * @return                  An arrayList filled with the same unit with the given length
      */
     public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type, String name, int healthValue){
+        if(numberOfUnits < 0) throw new IllegalArgumentException("The desired amount of units is invalid.");
         List<Unit> listToBeReturned = new ArrayList<>();
         IntStream.range(0, numberOfUnits).forEach(i -> listToBeReturned.add(getUnit(type, name, healthValue)));
         return listToBeReturned;
@@ -91,15 +84,13 @@ public class UnitFactory {
      */
     public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type, String name, int healthValue,
                                               int attackValue, int armorValue){
+        if(numberOfUnits < 0) throw new IllegalArgumentException("The desired amount of units is invalid.");
         List<Unit> listToBeReturned = new ArrayList<>();
         IntStream.range(0, numberOfUnits).forEach(i -> listToBeReturned.add(getUnit(type, name, healthValue,
                 attackValue, armorValue)));
         return listToBeReturned;
     }
 
-    /*TODO: test that the getUnit works with the armyFileHandler
-        Check that multipleUnits actually returns a list the correct size
-        Check that multipleUnits returns the correct units
-     */
+    //TODO: test that the getUnit works with the armyFileHandler
 
 }
