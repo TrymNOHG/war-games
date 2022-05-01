@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * This class represents a factory for producing Unit objects. It, therefore, has methods for instantiating a single
+ * object from the information provided and methods for mass-producing a given unit.
+ */
 public class UnitFactory {
 
 
