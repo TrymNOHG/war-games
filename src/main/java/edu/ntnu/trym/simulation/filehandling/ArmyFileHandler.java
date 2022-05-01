@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation.filehandling;
 
 import edu.ntnu.trym.simulation.Army;
+import edu.ntnu.trym.simulation.UnitFactory;
+import edu.ntnu.trym.simulation.UnitType;
 import edu.ntnu.trym.simulation.units.*;
 
 import java.io.*;
@@ -19,8 +21,6 @@ import java.util.regex.Pattern;
 public class ArmyFileHandler {
     private final Pattern validFileCharacters = Pattern.compile("^[\\w- ]*$");
     private final String DELIMITER = ",";
-
-    //TODO: Check that all the logic in a method belongs to that method solely and not a more general method
 
     /**
      * This method checks whether a file with a given name already exists. If it does exist, then an IOException is
@@ -102,7 +102,8 @@ public class ArmyFileHandler {
     /**
      * This method takes a given army file and initializes an Army object with the correct information. This is done
      * by taking the first line of the file, which contains the army name, and filling an army list with the appropriate
-     * units. The Units are correctly initialized {@link #extractUnitFromInfo(String[])} and placed in the list.
+     * units. The UnitTypes are correctly chosen {@link #extractUnitTypeFromInfo(String)} and used to initialize the
+     * units {@link UnitFactory#getUnit(UnitType, String, int, int, int)}.
      * @param file         The army file to be read, represented as an Army
      * @return             The army that was saved in the file, represented using an Army object
      * @throws IOException Input-output exception can be thrown by the reader
@@ -120,7 +121,9 @@ public class ArmyFileHandler {
             armyBufferedReader.lines().forEach(unitInfo ->{
                 String[] splitUnitInfo = unitInfo.split(",");
                 try {
-                    unitList.add(extractUnitFromInfo(splitUnitInfo));
+                    unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
+                            Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
+                            Integer.parseInt(splitUnitInfo[4])));
                 } catch (Exception e) {
                     if(e.getClass() == NumberFormatException.class){
                         throw new NumberFormatException("The health, attack, or armor value is corrupted in the CSV file");
@@ -145,22 +148,20 @@ public class ArmyFileHandler {
 //                        Integer.valueOf(unitInfo[3]), Integer.valueOf(unitInfo[4]));
 //    }
 
+    //TODO: Write test for extracting the correct UnitType
+
     /**
-     * This method takes in all the info of a unit, given as a String array. The first index of that array contains the
-     * Class name of unit. This method checks what class the unit belongs to and initializes it accordingly.
-     * @param unitInfo                Information of a unit from an Army File, represented as a String array
-     * @return                        The unit from extracted from the String array, given as a Unit object
+     * This method takes in the Unit Class info, given as a String. This method checks what UnitType the information
+     * belongs to.
+     * @param unitTypeInfo            Information of a unit's class from an Army File, represented as a String
+     * @return                        The type of unit extracted from the String, given as a UnitType enumeration
      * @throws InstantiationException This exception is thrown if the unit type information is corrupt
      */
-    public Unit extractUnitFromInfo(String[] unitInfo) throws InstantiationException {
-        if(unitInfo[0].contains("Infantry")) return new InfantryUnit(unitInfo[1], Integer.parseInt(unitInfo[2]),
-                Integer.parseInt(unitInfo[3]), Integer.parseInt(unitInfo[4]));
-        else if(unitInfo[0].contains("Ranged")) return new RangedUnit(unitInfo[1], Integer.parseInt(unitInfo[2]),
-                Integer.parseInt(unitInfo[3]), Integer.parseInt(unitInfo[4]));
-        else if(unitInfo[0].contains("Cavalry")) return new CavalryUnit(unitInfo[1], Integer.parseInt(unitInfo[2]),
-                Integer.parseInt(unitInfo[3]), Integer.parseInt(unitInfo[4]));
-        else if(unitInfo[0].contains("Commander")) return new CommanderUnit(unitInfo[1], Integer.parseInt(unitInfo[2]),
-                Integer.parseInt(unitInfo[3]), Integer.parseInt(unitInfo[4]));
+    public UnitType extractUnitTypeFromInfo(String unitTypeInfo) throws InstantiationException{
+        if(unitTypeInfo.contains("Infantry")) return UnitType.INFANTRY;
+        else if(unitTypeInfo.contains("Ranged")) return UnitType.RANGED;
+        else if(unitTypeInfo.contains("Cavalry")) return UnitType.CAVALRY;
+        else if(unitTypeInfo.contains("Commander")) return UnitType.COMMANDER;
         throw new InstantiationException("The Unit type information is corrupt");
     }
 
