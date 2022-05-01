@@ -36,8 +36,6 @@ public class ArmyFileHandler {
         writeToArmyFile(army, file);
     }
 
-    //Requirement: File must already exist for
-
     /**
      * This method has the requirement that the given file already exists. If it does, the given army overwrites
      * the pre-existing information in the file given.
@@ -53,8 +51,6 @@ public class ArmyFileHandler {
     }
 
     //Make sure I don't allow two armies to be saved in one
-
-    //Does this method pose any threats?
     //Do I need to test this method or can I indirectly test it through the other two?
 
     /**
@@ -75,19 +71,14 @@ public class ArmyFileHandler {
             //Adding the army's name to the first line
             armyBufferedWriter.write(army.getName());
 
-            army.getAllUnits().stream().forEach(unit ->{
-                try {
-                    armyBufferedWriter.newLine();
-                    armyBufferedWriter.write(unit.getClass().getSimpleName() + DELIMITER + unit.getName() +
-                            DELIMITER + unit.getHealth() + DELIMITER + unit.getAttack() + DELIMITER + unit.getArmor());
-                } catch (IOException e) {
-                    throw new UncheckedIOException(e);
-                    //How would I send message to the User and is it ok to use two try and catch?
-                }
-            });
+            for(Unit unit : army.getAllUnits()){
+                armyBufferedWriter.newLine();
+                armyBufferedWriter.write(unit.getClass().getSimpleName() + DELIMITER + unit.getName() +
+                        DELIMITER + unit.getHealth() + DELIMITER + unit.getAttack() + DELIMITER + unit.getArmor());
+            }
         }
         catch (IOException e){
-            throw new UncheckedIOException(e);
+            e.printStackTrace();
         }
     }
 
@@ -112,43 +103,30 @@ public class ArmyFileHandler {
         String armyName = "";
         List<Unit> unitList = new ArrayList<>();
 
-        //Maybe only throw if file contains info already
-        if(!fileExists(file))
-            throw new FileNotFoundException("A file with that name does not exist");
+        if(!fileExists(file)) throw new FileNotFoundException("A file with that name does not exist");
 
         try(BufferedReader armyBufferedReader = new BufferedReader(new FileReader(file))){
             armyName = armyBufferedReader.readLine();
-            armyBufferedReader.lines().forEach(unitInfo ->{
-                String[] splitUnitInfo = unitInfo.split(",");
-                try {
-                    unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
-                            Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
-                            Integer.parseInt(splitUnitInfo[4])));
-                } catch (Exception e) {
-                    if(e.getClass() == NumberFormatException.class){
-                        throw new NumberFormatException("The health, attack, or armor value is corrupted in the CSV file");
-                    }
-                    e.printStackTrace();
-                } //Change catch
-            });
+            while(armyBufferedReader.ready()){
+                String[] splitUnitInfo = armyBufferedReader.readLine().split(",");
+                unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
+                        Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
+                        Integer.parseInt(splitUnitInfo[4])));
+            }
         }
-        catch (IOException e){
+        catch (IOException | InstantiationException e){
             e.printStackTrace();
         }
         return new Army(armyName, unitList);
     }
 
-    //Which is better this or the method below?
-
-    //Getting warnings on this one maybe don't use
-//    public Unit extractUnitFromInfo(String[] unitInfo) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-//        Class unitConstruct = Class.forName("edu.ntnu.trym.simulation.units." + unitInfo[0]);
-//        return (Unit) unitConstruct.getDeclaredConstructor(String.class, int.class, int.class, int.class)
-//                .newInstance(unitInfo[1], Integer.valueOf(unitInfo[2]),
-//                        Integer.valueOf(unitInfo[3]), Integer.valueOf(unitInfo[4]));
-//    }
 
     //TODO: Write test for extracting the correct UnitType
+    /*TODO: Test that if splitUnitInfo[1], Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3],
+        Integer.parseInt(splitUnitInfo[4]) are invalid that the proper exceptions are thrown.
+     */
+    //TODO: Check if comma in unit name breaks code
+    //TODO: Add exception handling to the method below
 
     /**
      * This method takes in the Unit Class info, given as a String. This method checks what UnitType the information
@@ -165,10 +143,6 @@ public class ArmyFileHandler {
         throw new InstantiationException("The Unit type information is corrupt");
     }
 
-    //Is it better to just use four if's?
-    //TODO: Add exception handling to the method above \
-    //TODO: Check if health,name,etc. blank throw exception
-    //TODO: Check if comma in unit name breaks code
 
     /**
      * This method takes in a file name and checks whether it is valid using a pre-set regex pattern.
@@ -180,13 +154,6 @@ public class ArmyFileHandler {
         if(!matcher.matches()) throw new IOException("The file name contains illegal characters.");
     }
     //TODO: Should the exception thrown above be IllegalArgumentException
-
-//    public File createValidFile(String fileName) throws IOException {
-//        isFileNameValid(fileName);
-//        return new File("src/main/resources/army-files/" + fileName + ".csv");
-//    }
-
-    //Should this method exist
 
     /**
      * This method checks if a file with a given directory path already exists and if it contains any information.
@@ -207,7 +174,6 @@ public class ArmyFileHandler {
     }
 }
 
-//TODO: Make GUI, following guidelines
 //TODO: Ask about formatting of information
 //TODO: Read through tips
 //TODO: Check that tests directly address requirements: (e.g. only one army per CSV)
