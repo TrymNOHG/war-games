@@ -63,7 +63,7 @@ class ArmyFileHandlerTest{
             //When/Act
             try{
                 armyFileHandler.isFileNameValid(fileName);
-            }catch (IOException e){
+            }catch (IllegalArgumentException e){
                 //Then/Assert
                 Assertions.assertEquals(expectedExceptionMessage, e.getMessage());
             }
