@@ -82,14 +82,6 @@ public class Battle {
         return battleTerrain;
     }
 
-    /**
-     * This method allows for the alteration/setting of the battleTerrain variable.
-     * @param battleTerrain The new terrain of the battle, represented as a TerrainType enum.
-     */
-    public void setBattleTerrain(TerrainType battleTerrain) {
-        this.battleTerrain = battleTerrain;
-    }
-
     @Override
     public String toString() {
         return "\tBattle of the ages\n" +
