@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.model;
+package edu.ntnu.trym.simulation.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
