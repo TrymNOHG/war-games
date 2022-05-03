@@ -7,7 +7,7 @@ import edu.ntnu.trym.simulation.units.CavalryUnit;
  * A commander unit has high base stats for both attack (25) and armor (15). The commander unit inherits the same
  * advantages as the cavalry unit in battle, with increased attack bonus in charges for example.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public class CommanderUnit extends CavalryUnit {
 

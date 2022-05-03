@@ -6,7 +6,7 @@ import edu.ntnu.trym.simulation.units.Unit;
  * This class represents an infantry unit. An infantry unit has medium base stats for both attack (15) and armor
  * (10). The class shows the different offensive and defensive advantages that an infantry unit would have in a battle.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public class InfantryUnit extends Unit {
 

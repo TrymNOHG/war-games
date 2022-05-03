@@ -8,7 +8,7 @@ import java.util.*;
  * such as name of the army and the List which holds the militant units in the army. Additionally, the class allows
  * for the manipulation of the list and units within it.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public class Army {
     private String name;

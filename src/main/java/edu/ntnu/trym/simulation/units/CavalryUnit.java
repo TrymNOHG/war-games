@@ -1,12 +1,14 @@
 package edu.ntnu.trym.simulation.units;
 
+import edu.ntnu.trym.simulation.TerrainType;
+
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).
  * A cavalry unit excels in charges, which is shown through the additional attack bonus that the unit gets during the
  * first attack. Other than that, the class shows the general offensive and defensive advantages that a cavalry unit
  * would have.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public class CavalryUnit extends Unit {
     private int numAttack = 0;

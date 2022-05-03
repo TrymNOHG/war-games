@@ -7,7 +7,7 @@ import java.util.Objects;
  * such as name, health, attack, and armor stats. Additionally, the class outlines how attacks against another Unit are
  * calculated and allows for a description in the form of a String to be created.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public abstract class Unit {
     private String name;

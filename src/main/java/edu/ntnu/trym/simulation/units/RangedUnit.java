@@ -8,7 +8,7 @@ import edu.ntnu.trym.simulation.units.Unit;
  * The ranged unit is also good at defending incoming (distanced) attacks. Therefore, the initial defense gives the
  * ranged unit a higher resistance bonus of 6, decreasing to 4 and then 2 as the Opponent comes closer.
  *
- * @author Trym
+ * @author Trym Hamer Gudvangen
  */
 public class RangedUnit extends Unit {
     private int numAttackedByOpponent = 0;
