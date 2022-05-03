@@ -19,6 +19,10 @@ import java.util.Objects;
  * Since it handles scenes, it also opens the starting scene.
  */
 public class SceneHandler {
+    private static Parent root;
+    private static Scene scene;
+    private static Stage stage;
+
     private static final Dimension maxWindowDimension = Toolkit.getDefaultToolkit().getScreenSize();
     /**
      * This method provides a way for the scene builder to create a new scene/open a new FXML file.
@@ -27,10 +31,10 @@ public class SceneHandler {
      * @throws IOException An Input-Output exception is thrown if the path to the directory does not exist
      */
     public static void switchScene(String location, ActionEvent actionEvent) throws IOException {
-        Parent viewPage = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/" + location + ".fxml")));
-        Scene page = new Scene(viewPage, maxWindowDimension.width, maxWindowDimension.height);
-        Stage window = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        addStageProperties(window, page);
+        root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/" + location + ".fxml")));
+        scene = new Scene(root);
+        stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        addStageProperties(stage, scene);
     }
 
     /**
@@ -40,11 +44,11 @@ public class SceneHandler {
      * @throws IOException  This exception is thrown if the fxml file is invalid
      */
     public static void openStartScene(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SceneHandler.class.getResource("/view/MainMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), maxWindowDimension.width, maxWindowDimension.height);
+        root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/MainMenu.fxml")));
+        scene = new Scene(root);
         stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
-        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initStyle(StageStyle.UNIFIED);
         addStageProperties(stage, scene);
         stage.setFullScreenExitHint("");
     }
@@ -58,9 +62,19 @@ public class SceneHandler {
     private static void addStageProperties(Stage stage, Scene scene){
         stage.setTitle("War Games");
         stage.setScene(scene);
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.show();
     }
 
 }
+
+
+/*
+In order to have the black screen sweep effect use stage.initStyle(StageStyle.TRANSPARENT);
+However, it also kinda breaks the smoothness of scene switches
+ */
+
+/*
+For fullscreen use, scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
+ */

@@ -1,6 +1,5 @@
 package edu.ntnu.trym.simulation.controller;
 
-import edu.ntnu.trym.simulation.model.SceneHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
