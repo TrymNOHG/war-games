@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
@@ -24,6 +23,7 @@ public class SceneHandler {
     private static Stage stage;
 
     private static final Dimension maxWindowDimension = Toolkit.getDefaultToolkit().getScreenSize();
+
     /**
      * This method provides a way for the scene builder to create a new scene/open a new FXML file.
      * @param location     The directory location of the scene that will be switched to, represented as a String

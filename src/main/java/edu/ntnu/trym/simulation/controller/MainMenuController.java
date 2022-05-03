@@ -26,8 +26,8 @@ public class MainMenuController extends Application {
     }
 
     @FXML
-    void openSettings(ActionEvent event) {
-
+    void openSettings(ActionEvent event) throws IOException {
+        SceneHandler.switchScene("Settings", event);
     }
 
     @FXML
