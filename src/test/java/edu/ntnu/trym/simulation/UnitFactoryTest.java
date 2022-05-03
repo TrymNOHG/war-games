@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnitFactoryTest{
+class UnitFactoryTest{
 
     @Nested
     class Factory_for_default_units{

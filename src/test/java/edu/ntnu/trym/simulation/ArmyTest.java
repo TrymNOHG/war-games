@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ArmyTest {
+class ArmyTest {
 
     //TODO: Test that the stream for sorting doesn't get Commander Units when looking for Cavalry
 

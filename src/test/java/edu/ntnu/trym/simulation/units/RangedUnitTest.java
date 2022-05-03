@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO: Write tests for the different terrain!
+
 class RangedUnitTest {
 
     //Make sure you test both positive and negative. For example, creating constructor with positive health, positive attack

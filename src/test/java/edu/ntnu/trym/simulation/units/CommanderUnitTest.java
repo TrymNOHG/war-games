@@ -12,7 +12,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class CommanderUnitTest {
+//TODO: Write tests for the different terrain!
+
+class CommanderUnitTest {
 
     @Nested
     public class A_CommanderUnit_with_valid_input_values{

@@ -9,7 +9,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class BattleTest {
+//TODO: Write tests for the different terrain!
+
+class BattleTest {
     Army fillArmy1(){
         List<Unit> filledArmyList = new ArrayList<>();
         filledArmyList.add(new CommanderUnit("King", 10));
@@ -35,11 +37,12 @@ public class BattleTest {
         //Given/Arrange
         Army army1 = fillArmy1();
         Army army2 = fillArmy2();
+        TerrainType terrainType = TerrainType.DEFAULT;
 
         //When/Act
         Battle battle = null;
         try {
-            battle = new Battle(army1, army2);
+            battle = new Battle(army1, army2, terrainType);
         }
         catch (Exception e){
             fail("The constructor was not instantiated properly");
@@ -67,7 +70,9 @@ public class BattleTest {
         army2List.add(new CommanderUnit("King", 1, 0, 0));
         Army expectedToLose = new Army("Eirik's Army", army2List);
 
-        Battle battle = new Battle(expectedToWin, expectedToLose);
+        TerrainType terrainType = TerrainType.DEFAULT;
+
+        Battle battle = new Battle(expectedToWin, expectedToLose, terrainType);
 
         //When/Act
         Army actualVictor = battle.simulate();
@@ -81,8 +86,9 @@ public class BattleTest {
         //Given/Arrange
         Army armyOne = fillArmy1();
         Army armyTwo = fillArmy2();
+        TerrainType terrainType = TerrainType.DEFAULT;
 
-        Battle battle = new Battle(armyOne, armyTwo);
+        Battle battle = new Battle(armyOne, armyTwo, terrainType);
 
         //When/Act
         Army actualVictor = battle.simulate();
@@ -99,11 +105,12 @@ public class BattleTest {
     @Test
     void if_only_one_army_has_units_it_wins(){
         //Given/Arrange
+        TerrainType terrainType = TerrainType.DEFAULT;
         Army expectedToWin = fillArmy1();
 
         Army expectedToLose = new Army("Eirik's Army", null);
 
-        Battle battle = new Battle(expectedToWin, expectedToLose);
+        Battle battle = new Battle(expectedToWin, expectedToLose, terrainType);
 
         //When/Act
         Army actualVictor = battle.simulate();
@@ -115,11 +122,12 @@ public class BattleTest {
     @Test
     void if_neither_army_has_units_then_no_battle(){
         //Given/Arrange
+        TerrainType terrainType = TerrainType.DEFAULT;
         Army armyOne = new Army("Trym's Army", null);
         Army armyTwo = new Army("Eirik's Army", null);
         Army expectedResult = null;
 
-        Battle battle = new Battle(armyOne, armyTwo);
+        Battle battle = new Battle(armyOne, armyTwo, terrainType);
 
         //When/Act
         Army actualVictor = battle.simulate();
