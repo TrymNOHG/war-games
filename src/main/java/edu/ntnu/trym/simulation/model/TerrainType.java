@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.model;
 
 /**
  * This enum class represents different types of terrains that a Unit may fight on; each yielding different advantages

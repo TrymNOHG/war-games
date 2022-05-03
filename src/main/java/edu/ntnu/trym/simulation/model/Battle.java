@@ -1,6 +1,6 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.model;
 
-import edu.ntnu.trym.simulation.units.Unit;
+import edu.ntnu.trym.simulation.model.units.Unit;
 
 /**
  * This class represents a battle between two armies. It, therefore, thoroughly defines a simulation what

@@ -1,14 +1,13 @@
 package edu.ntnu.trym.simulation;
 
-import edu.ntnu.trym.simulation.units.*;
+import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package edu.ntnu.trym.simulation.filehandling;
+package edu.ntnu.trym.simulation.model.filehandling;
 
-import edu.ntnu.trym.simulation.Army;
-import edu.ntnu.trym.simulation.units.*;
+import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

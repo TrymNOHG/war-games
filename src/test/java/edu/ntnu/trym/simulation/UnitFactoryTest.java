@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation;
 
-import edu.ntnu.trym.simulation.units.*;
+import edu.ntnu.trym.simulation.model.UnitFactory;
+import edu.ntnu.trym.simulation.model.UnitType;
+import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

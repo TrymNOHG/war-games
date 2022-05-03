@@ -1,9 +1,9 @@
-package edu.ntnu.trym.simulation.filehandling;
+package edu.ntnu.trym.simulation.model.filehandling;
 
-import edu.ntnu.trym.simulation.Army;
-import edu.ntnu.trym.simulation.UnitFactory;
-import edu.ntnu.trym.simulation.UnitType;
-import edu.ntnu.trym.simulation.units.*;
+import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.UnitFactory;
+import edu.ntnu.trym.simulation.model.UnitType;
+import edu.ntnu.trym.simulation.model.units.*;
 
 import java.io.*;
 import java.nio.file.FileSystems;

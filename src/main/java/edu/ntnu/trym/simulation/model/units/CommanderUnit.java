@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.units;
+package edu.ntnu.trym.simulation.model.units;
 
 /**
  * This class represents a commander unit, which is a subclass or "promotion" from the cavalry unit.
