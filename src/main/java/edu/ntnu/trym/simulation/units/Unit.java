@@ -85,12 +85,7 @@ public abstract class Unit {
      * @param health The new health of the Unit, represented as an int.
      */
     public void setHealth(int health) {
-        if(health < 0){
-            this.health = 0;
-        }
-        else{
-            this.health = health;
-        }
+        this.health = Math.max(health, 0);
     }
 
     /**
@@ -126,9 +121,7 @@ public abstract class Unit {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Unit)) return false;
-
-        Unit unit = (Unit) o;
+        if (!(o instanceof Unit unit)) return false;
 
         if (health != unit.health) return false;
         if (attack != unit.attack) return false;
