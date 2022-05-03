@@ -1,11 +1,13 @@
 package edu.ntnu.trym.simulation.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,6 +31,11 @@ public class HelpPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentPage = 1;
 
+    }
+
+    @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        SceneHandler.switchScene("MainMenu", event);
     }
 
     @FXML
