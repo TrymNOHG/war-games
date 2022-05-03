@@ -19,7 +19,7 @@ import java.util.Objects;
  * Since it handles scenes, it also opens the starting scene.
  */
 public class SceneHandler {
-    public static final Dimension maxWindowDimension = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Dimension maxWindowDimension = Toolkit.getDefaultToolkit().getScreenSize();
     /**
      * This method provides a way for the scene builder to create a new scene/open a new FXML file.
      * @param location     The directory location of the scene that will be switched to, represented as a String
@@ -30,12 +30,7 @@ public class SceneHandler {
         Parent viewPage = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/" + location + ".fxml")));
         Scene page = new Scene(viewPage, maxWindowDimension.width, maxWindowDimension.height);
         Stage window = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        window.setTitle("War Games");
-        window.setScene(page);
-        window.setFullScreen(true);
-        window.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
-        window.setResizable(false);
-        window.show();
+        addStageProperties(window, page);
     }
 
     /**
@@ -47,12 +42,23 @@ public class SceneHandler {
     public static void openStartScene(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SceneHandler.class.getResource("/view/MainMenu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), maxWindowDimension.width, maxWindowDimension.height);
-        stage.setTitle("War Games");
-        stage.setScene(scene);
-        stage.setFullScreen(true);
         stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
         stage.initStyle(StageStyle.TRANSPARENT);
+        addStageProperties(stage, scene);
+        stage.setFullScreenExitHint("");
+    }
+
+    /**
+     * This method adds the stage properties that every stage should have. This includes settings for fullscreen,
+     * and resizability.
+     * @param stage The window of the application, represented as a Stage object
+     * @param scene The current page/scene of the application, represented as a Scene object
+     */
+    private static void addStageProperties(Stage stage, Scene scene){
+        stage.setTitle("War Games");
+        stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.show();
     }
