@@ -53,7 +53,7 @@ class ArmyFileHandlerTest{
         //Check that file is saved to right directory
         //Do not make ArmyFileHandler static
 
-        @ParameterizedTest (name = "{index}. File was named {0}")
+        @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource(strings = {"$123test", "50%Off", "***army***", "Army?", "Orc Army!",
                 "Human Army > Orc Army", "Army/military", "[ArmyFile]", "{ArmyFile}", "Trym's : Army"})
         void names_with_special_characters_cannot_be_used_in_file_name(String fileName){
@@ -69,7 +69,7 @@ class ArmyFileHandlerTest{
             }
         }
 
-        @ParameterizedTest (name = "{index}. File was named {0}")
+        @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
         void names_with_valid_characters_can_be_used_as_file_name(String fileName) {
             //Given/Arrange
@@ -91,7 +91,7 @@ class ArmyFileHandlerTest{
         }
 
         //TODO: Use this:
-        @ParameterizedTest (name = "{index}. File was named {0}")
+        @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
         void valid_files_created_can_be_accessed_and_read(String fileName) {
             //Given/Arrange
@@ -111,7 +111,7 @@ class ArmyFileHandlerTest{
             expectedFileCreated.delete();
         }
 
-        @ParameterizedTest (name = "{index}. File was named {0}")
+        @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
         void the_pathing_is_correctly_set(String fileName) {
             //Given/Arrange

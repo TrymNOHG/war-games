@@ -5,12 +5,17 @@ import edu.ntnu.trym.simulation.units.Unit;
 /**
  * This class represents a battle between two armies. It, therefore, thoroughly defines a simulation what
  * this battle would look like and who the winner is.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class Battle {
     private Army armyOne;
     private Army armyTwo;
     private Army[] armyArr;
     private int armyFightCount;
+    private TerrainType battleTerrain;
+
+    //TODO: Create tests for battleTerrain variable. Does it need exception handling?
 
     /**
      * This constructor creates a Battle object, with the necessary information such as what two armies are
@@ -18,10 +23,11 @@ public class Battle {
      * @param armyOne An army participating in the battle, represented as the object Army
      * @param armyTwo Another army participating in the battle, represented as the object Army
      */
-    public Battle(Army armyOne, Army armyTwo) {
+    public Battle(Army armyOne, Army armyTwo, TerrainType battleTerrain) {
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
         this.armyArr = new Army[]{armyOne, armyTwo};
+        this.battleTerrain = battleTerrain;
         this.armyFightCount = randomStartArmy();
     }
 
@@ -66,6 +72,22 @@ public class Battle {
         }
         //Return null if neither has any units, this would mean no battle was engaged.
         return null;
+    }
+
+    /**
+     * This method retrieves the terrain that the battle is currently set to occur in.
+     * @return The terrain of the battle, represented as a TerrainType enum.
+     */
+    public TerrainType getBattleTerrain() {
+        return battleTerrain;
+    }
+
+    /**
+     * This method allows for the alteration/setting of the battleTerrain variable.
+     * @param battleTerrain The new terrain of the battle, represented as a TerrainType enum.
+     */
+    public void setBattleTerrain(TerrainType battleTerrain) {
+        this.battleTerrain = battleTerrain;
     }
 
     @Override
