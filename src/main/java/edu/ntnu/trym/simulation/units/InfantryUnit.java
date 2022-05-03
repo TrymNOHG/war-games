@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation.units;
 
+import edu.ntnu.trym.simulation.TerrainType;
+
 /**
  * This class represents an infantry unit. An infantry unit has medium base stats for both attack (15) and armor
  * (10). The class shows the different offensive and defensive advantages that an infantry unit would have in a battle.
@@ -33,21 +35,27 @@ public class InfantryUnit extends Unit {
 
     /**
      * {@inheritDoc}
-     * The InfantryUnit's attack bonus is 2.
-     * @return Attack bonus, which is equal to 2.
+     * The InfantryUnit's attack bonus is 12 when in a FOREST terrain, otherwise it is 2.
+     * @return The attack bonus of the infantry unit, represented as an int.
      */
     @Override
     public int getAttackBonus() {
+        if(this.getCurrentTerrain() == TerrainType.FOREST){
+            return 12;
+        }
         return 2;
     }
 
     /**
      * {@inheritDoc}
-     * The InfantryUnit's resistance bonus is 1.
-     * @return Resistance bonus, which is equal to 1.
+     * The InfantryUnit's resistance bonus is 11 when in a FOREST terrain, otherwise it is 1.
+     * @return The resistance bonus of the infantry unit, represented as an int.
      */
     @Override
     public int getResistBonus() {
+        if(this.getCurrentTerrain() == TerrainType.FOREST){
+            return 11;
+        }
         return 1;
     }
 }

@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation.units;
 
+import edu.ntnu.trym.simulation.TerrainType;
+
 /**
  * This class represents a ranged unit. A ranged unit has medium-low base stats for attack (15) and low for armor (12).
  * A ranged unit excels in distanced-attacks, which is shown through the additional attack bonus (3) that the unit gets.
@@ -37,20 +39,23 @@ public class RangedUnit extends Unit {
     /**
      * {@inheritDoc}
      * The RangedUnit has the advantage of fighting from a distance. Therefore, they have a medium-high attack bonus of
-     * three.
-     * @return Attack bonus, which is equal to 3.
+     * three as default. In the Hill terrain, they have an attack bonus of 13, while in the Forest terrain they only
+     * have 1 attack bonus.
+     * @return The attack bonus of the ranged unit, represented as an int.
      */
     @Override
     public int getAttackBonus() {
+        if(this.getCurrentTerrain() == TerrainType.HILL) return 13;
+        else if(this.getCurrentTerrain() == TerrainType.FOREST) return 1;
         return 3;
     }
 
     /**
      * {@inheritDoc}
-     * The RangedUnit has the advantage of defending from a distance at first. Therefore, the resistance bonus starts
-     * at a high value of 6. For the next attack, the Opponent is closer and so the resistance bonus drops to 4 and
-     * eventually there is no longer a distance, and it remains at 2.
-     * @return Resistance bonus, which goes from 6 (first defense) to 4 (second defense) to 2 (the rest).
+     * The RangedUnit has the advantage of defending from a distance at first. Therefore, the default resistance bonus
+     * starts at a high value of 6 (first defense). For the next attack, the Opponent is closer and so the resistance
+     * bonus drops to 4 (second defense) and eventually there is no longer a distance, and it remains at 2 (the rest).
+     * @return The resistance bonus of the ranged unit, represented as an int.
      */
     @Override
     public int getResistBonus() {

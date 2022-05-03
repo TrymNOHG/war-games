@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation.units;
 
 
+import edu.ntnu.trym.simulation.TerrainType;
+
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).
  * A cavalry unit excels in charges, which is shown through the additional attack bonus that the unit gets during the
@@ -37,27 +39,31 @@ public class CavalryUnit extends Unit {
 
     /**
      * {@inheritDoc}
-     * Since the CavalryUnit is good at charging, its initial attack bonus is 6; however, as the fighting continues,
-     * the CavalryUnit's attack bonus drops to 2.
-     * @return Attack bonus, which is 6 during first attack(charge) and 2 thereafter.
+     * Since the CavalryUnit is good at charging, its default, initial attack bonus is 6; however, as the fighting
+     * continues, the default CavalryUnit's attack bonus drops to 2. When the terrain is Plains, a 10 point bonus
+     * is added to the attack bonus, regardless of when.
+     * @return The attack bonus of the cavalry unit, represented as an int.
      */
     @Override
     public int getAttackBonus() {
+        int terrainBonus = 0;
+        if(this.getCurrentTerrain() == TerrainType.PLAINS) terrainBonus = 10;
         this.numAttack++;
         if(numAttack == 1){
-            return 6;
+            return 6 + terrainBonus;
         }
-
-        return 2;
+        return 2 + terrainBonus;
     }
 
     /**
      * {@inheritDoc}
-     * The CavalryUnit's resistance bonus is 1, since it only has a small advantage in defense.
-     * @return Resistance bonus, which is equal to 1.
+     * The CavalryUnit's default resistance bonus is 1, since it only has a small advantage in defense. When the
+     * cavalry unit fights in the Forest terrain, it has no resistance bonus.
+     * @return The resistance bonus of the cavalry unit, represented as an int.
      */
     @Override
     public int getResistBonus() {
+        if(this.getCurrentTerrain() == TerrainType.FOREST) return 0;
         return 1;
     }
 }
