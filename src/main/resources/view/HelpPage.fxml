@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,23 +26,29 @@
             <Text fx:id="informationText" strokeType="OUTSIDE" strokeWidth="0.0" text="This application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwww" wrappingWidth="343.34716796875" BorderPane.alignment="CENTER" />
          </center>
          <left>
-            <ImageView fitHeight="32.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="57.0" onMouseClicked="#previousPage" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="25.0" />
                </BorderPane.margin>
                <image>
                   <Image url="@../pictures/Left Arrow.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </left>
          <right>
-            <ImageView fitHeight="32.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="rightArrow" fitHeight="32.0" fitWidth="57.0" onMouseClicked="#nextPage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets right="25.0" />
                </BorderPane.margin>
                <image>
                   <Image url="@../pictures/Right Arrow.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </right>
       </BorderPane>
