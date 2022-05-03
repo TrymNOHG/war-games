@@ -1,13 +1,13 @@
 package edu.ntnu.trym.simulation.controller;
 
+import edu.ntnu.trym.simulation.model.SceneHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+import java.io.IOException;
+
 
 
 public class MainMenuController extends Application {
@@ -18,22 +18,12 @@ public class MainMenuController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 3000, 3000);
-        stage.setTitle("War Games");
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
-        stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
-        stage.initStyle(StageStyle.TRANSPARENT);
-        //No non-full screen, only exit
-        stage.setResizable(false);
-        stage.show();
+        SceneHandler.openStartScene(stage);
     }
 
     @FXML
-    void goToHelp(ActionEvent event) {
-
+    void goToHelp(ActionEvent event) throws IOException {
+        SceneHandler.switchScene("HelpPage", event);
     }
 
     @FXML
@@ -43,6 +33,7 @@ public class MainMenuController extends Application {
 
     @FXML
     void startSimulator(ActionEvent event) {
+
     }
 
     @FXML
