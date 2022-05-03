@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * This class concerns itself with the switching of scenes. As such, its only method is one which takes it the desired
+ * scene's location, as well as the event that triggered the switch, and creates a new scene.
+ */
 public class SwitchScene {
 
     /**
