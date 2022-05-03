@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation.units;
 
+import edu.ntnu.trym.simulation.TerrainType;
+
 import java.util.Objects;
 
 /**
@@ -14,6 +16,7 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
+    private TerrainType currentTerrain = TerrainType.DEFAULT;
 
     /**
      * This constructor allows for a Unit Object to be initialized with the information intrinsic to a military Unit.
@@ -88,6 +91,22 @@ public abstract class Unit {
         else{
             this.health = health;
         }
+    }
+
+    /**
+     * This method retrieves the Unit's current terrain.
+     * @return Unit's current terrain, given as a TerrainType enum.
+     */
+    public TerrainType getCurrentTerrain() {
+        return currentTerrain;
+    }
+
+    /**
+     * This method changes this Unit's current terrain to the input value.
+     * @param currentTerrain The new terrain of the unit, represented as a TerrainType enum.
+     */
+    public void setCurrentTerrain(TerrainType currentTerrain) {
+        this.currentTerrain = currentTerrain;
     }
 
     /**
