@@ -1,6 +1,5 @@
 package edu.ntnu.trym.simulation.units;
 
-import edu.ntnu.trym.simulation.TerrainType;
 
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).

@@ -1,7 +1,5 @@
 package edu.ntnu.trym.simulation.units;
 
-import edu.ntnu.trym.simulation.units.Unit;
-
 /**
  * This class represents a ranged unit. A ranged unit has medium-low base stats for attack (15) and low for armor (12).
  * A ranged unit excels in distanced-attacks, which is shown through the additional attack bonus (3) that the unit gets.
