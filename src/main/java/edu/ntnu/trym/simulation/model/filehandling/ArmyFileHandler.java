@@ -124,15 +124,17 @@ public class ArmyFileHandler {
                     unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
                             Integer.parseInt(splitUnitInfo[2])));
                 }
-                else{
+                else if (splitUnitInfo.length == 5){
                     unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
                             Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
                             Integer.parseInt(splitUnitInfo[4])));
                 }
+                else throw new StreamCorruptedException("Corrupt format");
             }
         }
         catch (IOException | InstantiationException e){
             e.printStackTrace();
+            //TODO: add CorruptFileException here, which can be thrown further and used to remove files.
         }
         return new Army(armyName, unitList);
     }
