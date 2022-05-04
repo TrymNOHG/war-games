@@ -8,29 +8,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class ArmyFileHandlerTest{
 
     ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
+    //TODO: Remove helper method below
 //    @Test
 //    void presetClasses() throws IOException {
 //        Army army = new Army("Trym's Army", fillArmyList());
-//        armyFileHandler.createAndWriteNewArmyFile(army, getValidFile("Corrupt Attributes"));
+//        armyFileHandler.createAndWriteNewArmyFile(army, getValidFile("Corrupt CSV Format"));
 //    }
 
-    //TODO: fix the regex file error
-    //Make try catch here so I dont need throws every!!!
-    //Do I need to check that the first line has no commas and that every other line has 4 commas?
     public File getValidFile(String fileName) {
         return new File(FileSystems.getDefault()
                 .getPath("src", "test", "resources", "armytestfiles", fileName) + ".csv");
@@ -46,39 +42,39 @@ class ArmyFileHandlerTest{
     }
 
     @Nested
-    public class An_Armys_files_work_if{
+    public class An_ArmyFile_can_be_created_if {
 
         //TODO: Check if file is closed, check if it can be renamed
         //Sending in a path which is not valid as a CSV but is a file
         //Check that file is saved to right directory
         //Do not make ArmyFileHandler static
 
-        @ParameterizedTest (name = "{index}. File was named: {0}")
+        @ParameterizedTest(name = "{index}. File was named: {0}")
         @ValueSource(strings = {"$123test", "50%Off", "***army***", "Army?", "Orc Army!",
                 "Human Army > Orc Army", "Army/military", "[ArmyFile]", "{ArmyFile}", "Trym's : Army"})
-        void names_with_special_characters_cannot_be_used_in_file_name(String fileName){
+        void names_with_special_characters_cannot_be_used_in_file_name(String fileName) {
             //Given/Arrange
             String expectedExceptionMessage = "The file name contains illegal characters.";
 
             //When/Act
-            try{
+            try {
                 armyFileHandler.isFileNameValid(fileName);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 //Then/Assert
                 Assertions.assertEquals(expectedExceptionMessage, e.getMessage());
             }
         }
 
-        @ParameterizedTest (name = "{index}. File was named: {0}")
-        @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
+        @ParameterizedTest(name = "{index}. File was named: {0}")
+        @ValueSource(strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
         void names_with_valid_characters_can_be_used_as_file_name(String fileName) {
             //Given/Arrange
             Army army = new Army("Trym's Army", fillArmyList());
 
             //When/Act
-            try{
+            try {
                 armyFileHandler.createAndWriteNewArmyFile(army, getValidFile(fileName));
-            }catch (Exception e){
+            } catch (Exception e) {
                 fail("An exception was thrown when it shouldn't have.");
             }
 
@@ -89,11 +85,14 @@ class ArmyFileHandlerTest{
             expectedFileCreated.delete();
 
         }
+    }
 
+    @Nested
+    public class An_ArmyFile_is_valid_if {
         //TODO: Use this:
         @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
-        void valid_files_created_can_be_accessed_and_read(String fileName) {
+        void files_created_can_be_accessed_and_read(String fileName) {
             //Given/Arrange
             Army army = new Army("Trym's Army", fillArmyList());
 
@@ -135,7 +134,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void cant_create_new_file_with_preexisting_file_name() {
+        void it_cant_create_new_file_with_preexisting_file_name() {
             //Given/Arrange
             Army army = new Army("Trym's Army", fillArmyList());
 
@@ -150,14 +149,16 @@ class ArmyFileHandlerTest{
             else fail("The file check for doesn't exist, so this test is invalid");
         }
 
+    }
 
+    @Nested
+    public class An_ArmyFile_properly_writes_an_army_to_new_file_if_it {
         @Test
-        void saves_the_correct_information() throws IOException {
+        void saves_the_correct_information_for_a_special_unit() throws IOException {
             //Given/Arrange
             List<Unit> oneUnitList = new ArrayList<>();
             oneUnitList.add(new CommanderUnit("Queen", 50, 20, 10));
             Army army = new Army("Sarah's Army", oneUnitList);
-            String expectedFirstLine = "Sarah's Army";
             String expectedSecondLine = "CommanderUnit,Queen,50,20,10";
 
             File newFile = new File("Sarah Army");
@@ -165,30 +166,99 @@ class ArmyFileHandlerTest{
             //When/Act
             armyFileHandler.createAndWriteNewArmyFile(army, newFile);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(newFile));
-            String actualFirstLine = bufferedReader.readLine();
+            String firstLine = bufferedReader.readLine();
             String actualSecondLine = bufferedReader.readLine();
+            bufferedReader.close();
 
             //Then/Assert
-            Assertions.assertEquals(expectedFirstLine, actualFirstLine);
             Assertions.assertEquals(expectedSecondLine, actualSecondLine);
 
             newFile.delete();
         }
 
         @Test
-        void constructs_an_Army_correctly_when_read() throws IOException {
+        void saves_the_correct_information_for_default_units() throws IOException {
             //Given/Arrange
-            Army expectedArmy = new Army("Trym's Army", fillArmyList());
+            List<Unit> oneUnitList = new ArrayList<>();
+            oneUnitList.add(new CommanderUnit("Queen", 50));
+            Army army = new Army("Sarah's Army", oneUnitList);
+            String expectedFirstLine = "Sarah's Army";
+            String expectedSecondLine = "CommanderUnit,Queen,50";
+
+            File newFile = new File("Sarah Army");
 
             //When/Act
-            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
+            armyFileHandler.createAndWriteNewArmyFile(army, newFile);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(newFile));
+            String firstLine = bufferedReader.readLine();
+            String actualSecondLine = bufferedReader.readLine();
+            bufferedReader.close();
 
             //Then/Assert
-            Assertions.assertTrue(actualArmy.equals(expectedArmy));
+            Assertions.assertEquals(expectedSecondLine, actualSecondLine);
+
+            newFile.delete();
         }
 
         @Test
-        void overwriting_doesnt_add_on_to_but_changes_a_file_completely() throws IOException {
+        void saves_the_army_name_correctly() throws IOException {
+            //Given/Arrange
+            List<Unit> oneUnitList = new ArrayList<>();
+            Army army = new Army("Sarah's Army", oneUnitList);
+            String expectedFirstLine = "Sarah's Army";
+
+            File newFile = new File("Sarah Army");
+
+            //When/Act
+            armyFileHandler.createAndWriteNewArmyFile(army, newFile);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(newFile));
+            String actualFirstLine = bufferedReader.readLine();
+            bufferedReader.close();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedFirstLine, actualFirstLine);
+
+            newFile.delete();
+        }
+
+        @Test
+        void formats_the_information_using_CSV() throws IOException {
+            //Given/Arrange
+            List<Unit> twoUnitList = new ArrayList<>();
+            twoUnitList.add(new CommanderUnit("Queen", 50, 20, 10));
+            twoUnitList.add(new RangedUnit("Archer", 25));
+
+            Army army = new Army("Sarah's Army", twoUnitList);
+            String expectedFirstLine = "Sarah's Army";
+            String expectedSecondLine = "CommanderUnit,Queen,50,20,10";
+            String expectedThirdLine = "RangedUnit,Archer,25";
+
+            File newFile = new File("Sarah Army");
+            armyFileHandler.createAndWriteNewArmyFile(army, newFile);
+
+            //When/Act
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(newFile));
+            String actualFirstLine = bufferedReader.readLine();
+            String actualSecondLine = bufferedReader.readLine();
+            String actualThirdLine = bufferedReader.readLine();
+            bufferedReader.close();
+
+
+            //Then/Assert
+            Assertions.assertEquals(expectedFirstLine, actualFirstLine);
+            Assertions.assertEquals(expectedSecondLine, actualSecondLine);
+            Assertions.assertEquals(expectedThirdLine, actualThirdLine);
+
+            newFile.delete();
+        }
+
+    }
+
+    @Nested
+    public class An_ArmyFile_properly_overwrites_an_army_if {
+
+        @Test
+        void it_doesnt_add_on_to_but_changes_a_file_completely() throws IOException {
             //Given/Arrange
             Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
             long initialFileLength = getValidFile("Tryms Army").length();
@@ -205,6 +275,7 @@ class ArmyFileHandlerTest{
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader(getValidFile("Tryms Army")));
             String overwrittenFirstLine = bufferedReader.readLine();
+            bufferedReader.close();
 
             long overwrittenFileLength = getValidFile("Tryms Army").length();
 
@@ -219,7 +290,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void overwriting_successfully_writes_a_new_armys_info() throws IOException {
+        void it_successfully_writes_a_new_armys_info() throws IOException {
             //Given/Arrange
             Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
             List<Unit> changedArmyList = fillArmyList();
@@ -234,26 +305,6 @@ class ArmyFileHandlerTest{
             Assertions.assertTrue(changedArmy.equals(secondFileArmy));
             Assertions.assertFalse(secondFileArmy.equals(firstFileArmy));
             Assertions.assertNotEquals(firstFileArmy.getName(), secondFileArmy.getName());
-
-            //Resetting the start info
-            armyFileHandler.overwriteExistingArmyFile(firstFileArmy, getValidFile("Tryms Army"));
-        }
-
-        @Test
-        void an_overwritten_file_can_be_read_successfully() throws IOException {
-            //Given/Arrange
-            Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
-
-            List<Unit> expectedOverwrittenArmyList = fillArmyList();
-            expectedOverwrittenArmyList.add(new CommanderUnit("Queen", 1000));
-            Army expectedArmy = new Army("Sarahs Army", expectedOverwrittenArmyList);
-            armyFileHandler.overwriteExistingArmyFile(expectedArmy, getValidFile("Tryms Army"));
-
-            //When/Act
-            Army overwrittenArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
-
-            //Then/Assert
-            Assertions.assertTrue(overwrittenArmy.equals(expectedArmy));
 
             //Resetting the start info
             armyFileHandler.overwriteExistingArmyFile(firstFileArmy, getValidFile("Tryms Army"));
@@ -275,6 +326,56 @@ class ArmyFileHandlerTest{
         }
 
         @Test
+        void it_cant_overwrite_a_non_existent_file() {
+            //Given/Arrange
+            Army changedArmy = new Army("Sarahs Army", fillArmyList());
+
+            //When/Act
+            boolean canOverwrite = armyFileHandler.overwriteExistingArmyFile(changedArmy, getValidFile("Non Existent"));
+            //Then/Assert
+            Assertions.assertFalse(canOverwrite);
+
+        }
+    }
+
+    @Nested
+    public class An_ArmyFile_properly_reads_an_army_if_it {
+        @Test
+        void constructs_an_Army_correctly_when_read() throws IOException {
+            //Given/Arrange
+            Army expectedArmy = new Army("Trym's Army", fillArmyList());
+
+            //When/Act
+            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
+
+            //Then/Assert
+            Assertions.assertTrue(actualArmy.equals(expectedArmy));
+        }
+
+        @Test
+        void an_overwritten_file_can_be_read_successfully() throws IOException {
+            //Given/Arrange
+            Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
+
+            List<Unit> expectedOverwrittenArmyList = fillArmyList();
+            expectedOverwrittenArmyList.add(new CommanderUnit("Queen", 1000));
+            Army expectedArmy = new Army("Sarahs Army", expectedOverwrittenArmyList);
+            armyFileHandler.overwriteExistingArmyFile(expectedArmy, getValidFile("Tryms Army"));
+
+            //When/Act
+            Army overwrittenArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
+
+            //Then/Assert
+            Assertions.assertTrue(overwrittenArmy.equals(expectedArmy));
+
+            //Resetting the start info
+            armyFileHandler.overwriteExistingArmyFile(firstFileArmy, getValidFile("Tryms Army"));
+        }
+    }
+
+    @Nested
+    public class An_ArmyFile_with_invalid_information_such_as {
+        @Test
         void a_null_army_when_creating_new_file_will_throw_NullPointerException(){
             //Given/Arrange
             Army army = null;
@@ -289,6 +390,7 @@ class ArmyFileHandlerTest{
         void a_null_army_when_overwriting_file_will_throw_NullPointerException() {
             //Given/Arrange
             Army army = null;
+
             Assertions.assertThrows(NullPointerException.class, () ->{
                 //When/Act
                 armyFileHandler.overwriteExistingArmyFile(army, getValidFile("Tryms Army"));
@@ -296,61 +398,52 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void cant_overwrite_a_non_existent_file() {
-            //Given/Arrange
-            Army changedArmy = new Army("Sarahs Army", fillArmyList());
-
-            //When/Act
-            boolean canOverwrite = armyFileHandler.overwriteExistingArmyFile(changedArmy, getValidFile("Non Existent"));
-            //Then/Assert
-            Assertions.assertFalse(canOverwrite);
-
-        }
-
-        @Test
-        void formats_the_information_using_CSV() throws IOException {
-            //Given/Arrange
-            Army army = new Army("Sarah's Army", fillArmyList());
-            File file = getValidFile("Sarahs Army");
-            armyFileHandler.createAndWriteNewArmyFile(army,file);
-
-
-            //When/Act
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            bufferedReader.lines().skip(1).forEach(line -> {
-                //Check that each line, other than the first, has four commas
-                if(line.split(",").length != 5){
-                    //Then/Assert
-                    fail("There aren't five attributes saved and separated by commas");
-                }
-            });
-
-            file.delete();
-        }
-
-        @Test
-        void can_handle_external_changes() {
-
-        }
-
-        //TODO: Test for all attributes and for when commas are used. What if a comma is used in the name?
-        @Test
-        void throws_NumberFormatException_when_attribute_info_is_wrong_and_is_read(){
+        void corrupt_attribute_info_throws_NumberFormatException_when_read(){
             //Given/Arrange
             Army expectedArmy = new Army("Trym's Army", fillArmyList());
 
             Assertions.assertThrows(NumberFormatException.class, () -> {
                 //When/Act
-                    Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Attributes"));
-
+                Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Attributes"));
+                assertNotEquals(expectedArmy, actualArmy);
             });//Then/Assert
+
         }
 
-        //TODO: Organize better
-        //Check it contains the correct information
-        //Corrupt data
-        //Missing formatting?
-        //If something is changed in the csv, check that everything isn't messed up completely
+        @Test
+        void file_with_corrupt_unit_class_throws_InstantiationException() throws IOException {
+            //Given/Arrange
+            Army expectedArmy = new Army("Trym's Army", fillArmyList());
+
+            //When/Act
+            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Unit Class"));
+
+            //Then/Assert
+            Assertions.assertNotEquals(expectedArmy, actualArmy);
+            //TODO: Complete this test, when my own CorruptFileException is made
+
+        }
+
+        //TODO: change name to my exception
+        @Test
+        void file_with_improper_format_throws_StreamCorruptedException() throws IOException {
+            //Given/Arrange
+            Army expectedArmy = new Army("Trym's Army", fillArmyList());
+
+            //When/Act
+            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Unit Class"));
+
+            //Then/Assert
+            Assertions.assertNotEquals(expectedArmy, actualArmy);
+            //TODO: Complete this test, when my own CorruptFileException is made
+            //This test may be completed by asking asserting CorruptFileException was thrown
+        }
+
     }
 
+        //TODO: Test for all attributes and for when commas are used. What if a comma is used in the name?
+        //TODO: Go over structure and make sure it is organized
+
 }
+
+//TODO: Make CorruptFileException, which can then be used to remove the corrupted file
