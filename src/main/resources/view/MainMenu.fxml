@@ -5,11 +5,10 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.Glow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
@@ -20,11 +19,11 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ntnu.trym.simulation.controller.MainMenuController">
    <children>
-      <ImageView fx:id="backgroundPic" fitHeight="400.0" fitWidth="808.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-87.02044677734375" AnchorPane.rightAnchor="-23.47955322265625" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@../pictures/Main Menu Background.png" />
-         </image>
-      </ImageView>
+      <Pane id="main-menu-background" prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/MainMenu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
+      </Pane>
       <GridPane cache="true" layoutX="254.0" layoutY="170.0" prefHeight="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -86,22 +85,22 @@
                <children>
                   <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="280.0" spacing="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#startSimulator" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenuButtons.css" text="Start Simulator" textFill="WHITE">
+                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#startSimulator" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenu.css" text="Start Simulator" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="26.0" prefWidth="177.0" stylesheets="@../stylesheets/MainMenuButtons.css" text="Settings" textFill="#fcfcfc">
+                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="26.0" prefWidth="177.0" stylesheets="@../stylesheets/MainMenu.css" text="Settings" textFill="#fcfcfc">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToHelp" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenuButtons.css" text="Help" textFill="WHITE">
+                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToHelp" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenu.css" text="Help" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exitApp" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenuButtons.css" text="Exit" textFill="WHITE">
+                        <Button id="main-menu-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exitApp" prefHeight="26.0" prefWidth="170.0" stylesheets="@../stylesheets/MainMenu.css" text="Exit" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
