@@ -58,10 +58,11 @@ public class ArmyFileHandler {
      * This method takes an army, given as input, and records its information in the form of a csv file (also given
      * as input). Through a writer, the army information is transcribed with the following format:
      * <pre>
-     *     Army name
-     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
-     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
-     *     Unit type,Unit name,Unit health,Unit attack,Unit armor
+     *    Army name
+     *    Unit type,Unit name,Unit health    (Default Unit)
+     *    Unit type,Unit name,Unit health
+     *    Unit type,Unit name,Unit health,Unit attack,Unit armor (Special Unit)
+     *    Unit type,Unit name,Unit health,Unit attack,Unit armor
      * </pre>
      * @param army         The army that will be saved, represented using an Army object
      * @param armyFile     The file which the information will be saved, represented using a File object
@@ -74,8 +75,14 @@ public class ArmyFileHandler {
 
             for(Unit unit : army.getAllUnits()){
                 armyBufferedWriter.newLine();
-                armyBufferedWriter.write(unit.getClass().getSimpleName() + DELIMITER + unit.getName() +
-                        DELIMITER + unit.getHealth() + DELIMITER + unit.getAttack() + DELIMITER + unit.getArmor());
+                if(unit.isDefaultUnit()){
+                    armyBufferedWriter.write(unit.getClass().getSimpleName() + DELIMITER + unit.getName() +
+                            DELIMITER + unit.getHealth());
+                }
+                else{
+                    armyBufferedWriter.write(unit.getClass().getSimpleName() + DELIMITER + unit.getName() +
+                            DELIMITER + unit.getHealth() + DELIMITER + unit.getAttack() + DELIMITER + unit.getArmor());
+                }
             }
         }
         catch (IOException e){
@@ -95,7 +102,8 @@ public class ArmyFileHandler {
      * This method takes a given army file and initializes an Army object with the correct information. This is done
      * by taking the first line of the file, which contains the army name, and filling an army list with the appropriate
      * units. The UnitTypes are correctly chosen {@link #extractUnitTypeFromInfo(String)} and used to initialize the
-     * units {@link UnitFactory#getUnit(UnitType, String, int, int, int)}.
+     * default {@link UnitFactory#getUnit(UnitType, String, int)} and special
+     * {@link UnitFactory#getUnit(UnitType, String, int, int, int)} units.
      * @param file         The army file to be read, represented as an Army
      * @return             The army that was saved in the file, represented using an Army object
      * @throws IOException Input-output exception can be thrown by the reader
@@ -107,12 +115,20 @@ public class ArmyFileHandler {
         if(!fileExists(file)) throw new FileNotFoundException("A file with that name does not exist");
 
         try(BufferedReader armyBufferedReader = new BufferedReader(new FileReader(file))){
+
             armyName = armyBufferedReader.readLine();
+
             while(armyBufferedReader.ready()){
                 String[] splitUnitInfo = armyBufferedReader.readLine().split(",");
-                unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
-                        Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
-                        Integer.parseInt(splitUnitInfo[4])));
+                if(splitUnitInfo.length == 3){
+                    unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
+                            Integer.parseInt(splitUnitInfo[2])));
+                }
+                else{
+                    unitList.add(UnitFactory.getUnit(extractUnitTypeFromInfo(splitUnitInfo[0]), splitUnitInfo[1],
+                            Integer.parseInt(splitUnitInfo[2]), Integer.parseInt(splitUnitInfo[3]),
+                            Integer.parseInt(splitUnitInfo[4])));
+                }
             }
         }
         catch (IOException | InstantiationException e){
@@ -120,6 +136,12 @@ public class ArmyFileHandler {
         }
         return new Army(armyName, unitList);
     }
+
+    //TODO: Create extra test for corrupt file with non-3 nor 5 information format
+    //TODO: Ensure that the UnitFactory is used for default and special
+    //TODO: Test that special units are kept special and default are kept default
+
+
 
 
     //TODO: Write test for extracting the correct UnitType
@@ -175,3 +197,5 @@ public class ArmyFileHandler {
 //TODO: Ask about formatting of information
 //TODO: Read through tips
 //TODO: Check that tests directly address requirements: (e.g. only one army per CSV)
+//TODO: Test for difference between default and special units
+//TODO: Make tests for default units
