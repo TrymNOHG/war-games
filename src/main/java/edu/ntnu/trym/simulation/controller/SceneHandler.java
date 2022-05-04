@@ -32,7 +32,7 @@ public class SceneHandler {
      */
     public static void switchScene(String location, ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/" + location + ".fxml")));
-        scene = new Scene(root);
+        scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         addStageProperties(stage, scene);
     }
@@ -45,7 +45,7 @@ public class SceneHandler {
      */
     public static void openStartScene(Stage stage) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/MainMenu.fxml")));
-        scene = new Scene(root);
+        scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
         stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
         stage.initStyle(StageStyle.UNIFIED);
@@ -63,7 +63,7 @@ public class SceneHandler {
         stage.setTitle("War Games");
         stage.setScene(scene);
 //        stage.setFullScreen(true);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
 
