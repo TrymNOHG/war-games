@@ -35,6 +35,7 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health) {
         super(name, health, 20, 12);
+        this.setDefaultUnit(true);
     }
 
     /**

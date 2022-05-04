@@ -34,6 +34,7 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
+        this.setDefaultUnit(true);
     }
 
     /**

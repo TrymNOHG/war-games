@@ -31,6 +31,7 @@ public class InfantryUnit extends Unit {
      */
     public InfantryUnit(String name, int health) {
         super(name, health, 15, 10);
+        this.setDefaultUnit(true);
     }
 
     /**
