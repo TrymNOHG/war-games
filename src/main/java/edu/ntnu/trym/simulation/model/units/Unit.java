@@ -16,6 +16,7 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
+    private boolean defaultUnit = false;
     private TerrainType currentTerrain = TerrainType.DEFAULT;
 
     /**
@@ -102,6 +103,22 @@ public abstract class Unit {
      */
     public void setCurrentTerrain(TerrainType currentTerrain) {
         this.currentTerrain = currentTerrain;
+    }
+
+    /**
+     * This method checks the whether the unit is a default unit.
+     * @return If the given unit is default {@code true}, otherwise if unit is special {@code false}.
+     */
+    public boolean isDefaultUnit() {
+        return defaultUnit;
+    }
+
+    /**
+     * This method changes the status of whether the unit is default or special.
+     * @param defaultUnit The new status of the unit default {@code true} and special {@code false}, given as a boolean.
+     */
+    public void setDefaultUnit(boolean defaultUnit) {
+        this.defaultUnit = defaultUnit;
     }
 
     /**
