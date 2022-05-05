@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.awt.*;
@@ -48,10 +47,7 @@ public class SceneHandler {
     public static void loadStartScene(Stage stage) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/MainMenu.fxml")));
         scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
-//        stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
-//        stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
         addStageProperties(stage, scene);
-//        stage.setFullScreenExitHint("");
     }
 
     /**
@@ -100,6 +96,17 @@ public class SceneHandler {
     }
 
     /**
+     * This method switches the current scene with the army construction scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadArmyConstruction(ActionEvent event) throws IOException {
+        SceneHandler.loadScene("ArmyConstruction", event);
+    }
+
+
+
+    /**
      * This method adds the stage properties that every stage should have. This includes settings for fullscreen,
      * and resizability.
      * @param stage The window of the application, represented as a Stage object
@@ -117,13 +124,3 @@ public class SceneHandler {
     }
 
 }
-
-
-/*
-In order to have the black screen sweep effect use stage.initStyle(StageStyle.TRANSPARENT);
-However, it also kinda breaks the smoothness of scene switches
- */
-
-/*
-For fullscreen use, scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
- */
