@@ -62,6 +62,25 @@ public class BattlePrepController implements Initializable {
         SceneHandler.loadUnitInformation(event);
     }
 
+    @FXML
+    void createArmy(ActionEvent event) throws IOException {
+        if(event.getSource().toString().contains("createArmyButton1")){
+            //Army constructionArmy = army1
+        }
+        else ; //Army constructionArmy = army2
+        SceneHandler.loadArmyConstruction(event);
+    }
+
+    @FXML
+    void loadArmy(ActionEvent event) {
+        if(event.getSource().toString().contains("loadArmyButton1")){
+            //Army constructionArmy = army1
+        }
+        else ; //Army constructionArmy = army2
+        //Scenehandler
+    }
+
+
     private void initialData(){
         terrainComboBox.getItems().addAll(TerrainType.values());
         //Always set the value to the singleton terrain, and the singleton terrain should default be default.

@@ -86,7 +86,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="createArmyButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" stylesheets="@../stylesheets/Buttons.css" text="Create New Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="createArmyButton1" mnemonicParsing="false" onAction="#createArmy" prefHeight="26.0" prefWidth="138.0" stylesheets="@../stylesheets/Buttons.css" text="Create New Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                      </children>
                   </GridPane>
                   <GridPane prefHeight="24.0" prefWidth="198.0">
@@ -112,7 +112,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="loadArmyButton1" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" stylesheets="@../stylesheets/Buttons.css" text="Load Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="loadArmyButton1" mnemonicParsing="false" onAction="#loadArmy" prefHeight="26.0" prefWidth="81.0" stylesheets="@../stylesheets/Buttons.css" text="Load Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                      </children>
                   </GridPane>
                </children>
@@ -145,7 +145,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="createArmyButton2" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" stylesheets="@../stylesheets/Buttons.css" text="Create New Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="createArmyButton2" mnemonicParsing="false" onAction="#createArmy" prefHeight="26.0" prefWidth="138.0" stylesheets="@../stylesheets/Buttons.css" text="Create New Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                      </children>
                   </GridPane>
                   <GridPane alignment="TOP_CENTER" prefHeight="24.0" prefWidth="198.0">
@@ -171,7 +171,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="loadArmyButton2" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" stylesheets="@../stylesheets/Buttons.css" text="Load Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="loadArmyButton2" mnemonicParsing="false" onAction="#loadArmy" prefHeight="26.0" prefWidth="81.0" stylesheets="@../stylesheets/Buttons.css" text="Load Army" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                      </children>
                   </GridPane>
                </children>
