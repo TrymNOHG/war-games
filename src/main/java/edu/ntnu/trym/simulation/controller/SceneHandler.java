@@ -30,7 +30,7 @@ public class SceneHandler {
      * @param actionEvent  The type of event that caused the new scene to switch
      * @throws IOException An Input-Output exception is thrown if the path to the directory does not exist
      */
-    public static void switchScene(String location, ActionEvent actionEvent) throws IOException {
+    private static void loadScene(String location, ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/" + location + ".fxml")));
         scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
         stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
@@ -43,14 +43,58 @@ public class SceneHandler {
      * @param stage         The stage for the application, represented as a Stage object
      * @throws IOException  This exception is thrown if the fxml file is invalid
      */
-    public static void openStartScene(Stage stage) throws IOException {
+    public static void loadStartScene(Stage stage) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneHandler.class.getResource("/view/MainMenu.fxml")));
         scene = new Scene(root, maxWindowDimension.width, maxWindowDimension.height);
-        stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
-        stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
-        stage.initStyle(StageStyle.UNIFIED);
+//        stage.setFullScreenExitHint("Press ESC key or F to enter/exit fullscreen!");
+//        stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F"));
         addStageProperties(stage, scene);
-        stage.setFullScreenExitHint("");
+//        stage.setFullScreenExitHint("");
+    }
+
+    /**
+     * This method switches the current scene with the main menu scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadMainMenu(ActionEvent event) throws IOException {
+        loadScene("MainMenu", event);
+    }
+
+    /**
+     * This method switches the current scene with the help page scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadHelpPage(ActionEvent event) throws IOException {
+        loadScene("HelpPage", event);
+    }
+
+    /**
+     * This method switches the current scene with the settings scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadSettings(ActionEvent event) throws IOException {
+        loadScene("Settings", event);
+    }
+
+    /**
+     * This method switches the current scene with the unit information scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadUnitInformation(ActionEvent event) throws IOException {
+        loadScene("UnitInfo", event);
+    }
+
+    /**
+     * This method switches the current scene with the battle preparation scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadBattlePreparation(ActionEvent event){
+
     }
 
     /**
@@ -62,6 +106,8 @@ public class SceneHandler {
     private static void addStageProperties(Stage stage, Scene scene){
         stage.setTitle("War Games");
         stage.setScene(scene);
+        if(!stage.getStyle().equals(StageStyle.UNIFIED)) stage.initStyle(StageStyle.UNIFIED);
+
 //        stage.setFullScreen(true);
         stage.setResizable(true);
         stage.show();

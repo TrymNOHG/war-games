@@ -35,7 +35,7 @@ public class HelpPageController implements Initializable {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        SceneHandler.switchScene("MainMenu", event);
+        SceneHandler.loadMainMenu(event);
     }
 
     @FXML
