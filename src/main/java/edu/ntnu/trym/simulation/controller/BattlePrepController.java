@@ -1,12 +1,17 @@
 package edu.ntnu.trym.simulation.controller;
 
+import edu.ntnu.trym.simulation.model.TerrainType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class BattlePrepController {
+public class BattlePrepController implements Initializable {
 
 
     @FXML
@@ -22,6 +27,16 @@ public class BattlePrepController {
     private Text orText2;
 
     @FXML
+    private ComboBox<TerrainType> terrainComboBox = new ComboBox<>();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        terrainComboBox.getItems().addAll(TerrainType.values());
+        terrainComboBox.setValue(TerrainType.DEFAULT);
+    }
+
+    @FXML
     void backToMainMenu(ActionEvent event) throws IOException {
         SceneHandler.loadMainMenu(event);
     }
@@ -35,4 +50,5 @@ public class BattlePrepController {
     void backToUnitInfo(ActionEvent event) throws IOException {
         SceneHandler.loadUnitInformation(event);
     }
+
 }
