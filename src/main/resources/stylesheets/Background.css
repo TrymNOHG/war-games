@@ -1,3 +1,17 @@
+#main-menu-title {
+linear-gradient(from 47.981% 73.1591% to 48.2185% 42.0428%, #d72f2f 0.0%, #000000 49.6951%, #000000 58.8415%, #fafffb 100.0%)
+}
+
+#main-menu-background{
+    -fx-background-image: url('/pictures/Main_Menu_Background.png') center no-repeat;
+    -fx-background-size : cover;
+}
+
+#unit-info-background{
+    -fx-background-image: url('/pictures/Forest_terrain.jpeg') center no-repeat;
+    -fx-background-size : cover;
+}
+
 #infantry-unit-pic{
     -fx-background-image: url('/pictures/Infantry_Unit.png') center no-repeat;
     -fx-background-size : cover;
