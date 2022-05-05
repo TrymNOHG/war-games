@@ -17,22 +17,31 @@ public class MainMenuController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        SceneHandler.openStartScene(stage);
+        SceneHandler.loadStartScene(stage);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws Exception
+     */
+    @Override
+    public void init() throws Exception{
+        super.init();
     }
 
     @FXML
     void goToHelp(ActionEvent event) throws IOException {
-        SceneHandler.switchScene("HelpPage", event);
+        SceneHandler.loadHelpPage(event);
     }
 
     @FXML
     void openSettings(ActionEvent event) throws IOException {
-        SceneHandler.switchScene("Settings", event);
+        SceneHandler.loadSettings(event);
     }
 
     @FXML
-    void startSimulator(ActionEvent event) {
-
+    void startSimulator(ActionEvent event) throws IOException {
+        SceneHandler.loadUnitInformation(event);
     }
 
     @FXML
