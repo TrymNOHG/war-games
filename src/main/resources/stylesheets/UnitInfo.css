@@ -1,0 +1,16 @@
+#infantry-unit-pic{
+    -fx-background-image: url('/pictures/Infantry_Unit.png') center no-repeat;
+    -fx-background-size : cover;
+}
+#cavalry-unit-pic{
+    -fx-background-image: url('/pictures/Cavalry_Unit.png') center no-repeat;
+    -fx-background-size : cover;
+}
+#ranged-unit-pic{
+    -fx-background-image: url('/pictures/Ranged_Unit.png') center no-repeat;
+    -fx-background-size : cover;
+}
+#commander-unit-pic{
+    -fx-background-image: url('/pictures/Commander_Unit.png') center no-repeat;
+    -fx-background-size : cover;
+}
