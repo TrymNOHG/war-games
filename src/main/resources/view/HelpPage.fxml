@@ -53,9 +53,9 @@
             </ImageView>
          </right>
          <bottom>
-            <Button mnemonicParsing="false" onAction="#goToMainMenu" text="Return to Main Menu" BorderPane.alignment="CENTER">
+            <Button id="main-button" mnemonicParsing="false" onAction="#goToMainMenu" stylesheets="@../stylesheets/Buttons.css" text="Return to Main Menu" textFill="WHITE" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets bottom="50.0" />
+                  <Insets bottom="75.0" />
                </BorderPane.margin>
             </Button>
          </bottom>
