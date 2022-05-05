@@ -22,6 +22,8 @@ public class SceneHandler {
     private static Scene scene;
     private static Stage stage;
 
+    private static final int minimumHeight = 450;
+    private static final int minimumWidth = 600;
     private static final Dimension maxWindowDimension = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**
@@ -93,8 +95,8 @@ public class SceneHandler {
      * @param event         The action that caused the switch, represented as an Event object
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
      */
-    public static void loadBattlePreparation(ActionEvent event){
-
+    public static void loadBattlePreparation(ActionEvent event) throws IOException {
+        SceneHandler.loadScene("BattlePrep", event);
     }
 
     /**
@@ -107,7 +109,8 @@ public class SceneHandler {
         stage.setTitle("War Games");
         stage.setScene(scene);
         if(!stage.getStyle().equals(StageStyle.UNIFIED)) stage.initStyle(StageStyle.UNIFIED);
-
+        stage.setMinHeight(minimumHeight);
+        stage.setMinWidth(minimumWidth);
 //        stage.setFullScreen(true);
         stage.setResizable(true);
         stage.show();
