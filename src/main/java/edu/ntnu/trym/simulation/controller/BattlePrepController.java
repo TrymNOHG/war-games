@@ -65,26 +65,29 @@ public class BattlePrepController implements Initializable {
     @FXML
     void createArmy(ActionEvent event) throws IOException {
         if(event.getSource().toString().contains("createArmyButton1")){
-            //Army constructionArmy = army1
+            SimulationSingleton.INSTANCE.setCurrentArmy(1);
         }
-        else ; //Army constructionArmy = army2
+        else SimulationSingleton.INSTANCE.setCurrentArmy(2); //Army constructionArmy = army2
         SceneHandler.loadArmyConstruction(event);
     }
+
+    //I could make a method which checks which army is being worked on.
 
     @FXML
     void loadArmy(ActionEvent event) {
         if(event.getSource().toString().contains("loadArmyButton1")){
-            //Army constructionArmy = army1
+            SimulationSingleton.INSTANCE.setCurrentArmy(1);
         }
-        else ; //Army constructionArmy = army2
+        else SimulationSingleton.INSTANCE.setCurrentArmy(2); //Army constructionArmy = army2
         //Scenehandler
     }
 
 
     private void initialData(){
         terrainComboBox.getItems().addAll(TerrainType.values());
-        //Always set the value to the singleton terrain, and the singleton terrain should default be default.
-        terrainComboBox.setValue(TerrainType.DEFAULT);
+        terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
     }
 
 }
+
+//Maybe add a button for editing an existing army and one for removing
