@@ -13,7 +13,21 @@ public enum SimulationSingleton {
 
     private Army army1;
     private Army army2;
+    private int currentArmy;
     private TerrainType currentTerrain = TerrainType.DEFAULT;
+
+    public void setArmyOfCurrentArmy(Army army){
+        if(this.currentArmy == 1) setArmy1(army);
+        else if (this.currentArmy == 2) setArmy2(army);
+    }
+
+    public int getCurrentArmy() {
+        return currentArmy;
+    }
+
+    public void setCurrentArmy(int currentArmy) {
+        this.currentArmy = currentArmy;
+    }
 
     public Army getArmy1() {
         return army1;
@@ -42,3 +56,7 @@ public enum SimulationSingleton {
 
 //This singleton could also contain some logical methods such as determining whether the army variables have armies
 // when loading the battle preparation scene.
+
+//Do I want a currentArmy variable? Maybe a number representing which one is being edited
+
+//TODO: javadoc
