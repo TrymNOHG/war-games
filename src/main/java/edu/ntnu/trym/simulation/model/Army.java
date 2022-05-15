@@ -34,12 +34,8 @@ public class Army {
     public Army(String name, List<Unit> units) throws IllegalArgumentException{
         if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name is invalid");
         this.name = name;
-        if(units == null){ //If there are null units in the list, it could also break. Should I throw exception for that?
-            this.units = new ArrayList<>();
-        }
-        else {
-            this.units = units; //Should this be a deep copy so the lists aren't linked?
-        }
+        //If there are null units in the list, it could also break. Should I throw exception for that?
+        this.units = Objects.requireNonNullElseGet(units, ArrayList::new); //Should this be a deep copy so the lists aren't linked?
     }
 
     /**
@@ -48,6 +44,14 @@ public class Army {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * This method changes the name of the Army.
+     * @param name New name of the army, represented as a String
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
