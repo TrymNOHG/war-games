@@ -555,9 +555,19 @@ class ArmyTest {
     public class An_Army_with_invalid_input_values{
         @ParameterizedTest
         @ValueSource(strings = {"", " ", "           "}) //Arrange
-        void throws_IllegalArgumentException_if_name_input_is_empty_or_blank(String name){
+        void throws_IllegalArgumentException_if_name_input_is_empty_or_blank_in_constructor(String name){
             assertThrows(IllegalArgumentException.class, ()->{
                 Army army = new Army(name);
+                //Act and assert
+            });
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " ", "           "}) //Arrange
+        void throws_IllegalArgumentException_if_name_input_is_empty_or_blank_when_setting(String name){
+            Army army = new Army("Valid name");
+            assertThrows(IllegalArgumentException.class, ()->{
+                army.setName(name);
                 //Act and assert
             });
         }

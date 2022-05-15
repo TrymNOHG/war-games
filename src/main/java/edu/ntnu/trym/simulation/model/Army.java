@@ -50,7 +50,8 @@ public class Army {
      * This method changes the name of the Army.
      * @param name New name of the army, represented as a String
      */
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException{
+        if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name cannot be blank or empty.");
         this.name = name;
     }
 
