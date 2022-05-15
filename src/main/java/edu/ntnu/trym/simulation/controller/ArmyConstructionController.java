@@ -59,18 +59,29 @@ public class ArmyConstructionController implements Initializable {
 
         //TODO: Listeners on both armor and attack input to see whether default or specialized
 
+
+
+
     }
 
     //TODO: Make the input boxes size with the screen so that default is spelled out
 
     @FXML
     void addUnit(ActionEvent event) {
-
+        armyConstructed.addAll(createUnitsFromInputData());
+        armyTable.refresh();
     }
 
     @FXML
     void removeUnit(ActionEvent event) {
-
+        try {
+            Objects.requireNonNull(selectedUnit);
+            armyTable.getItems().remove(selectedUnit);
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            //TODO: add error message of some sort, maybe pop-up
+        }
     }
 
     @FXML
