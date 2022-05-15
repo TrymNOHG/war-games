@@ -11,8 +11,7 @@ public class AlertDialog {
 
 
     public static boolean showConfirmation(String message, String header){
-        Alert alert = createAlert(Alert.AlertType.CONFIRMATION, message, header);
-        Optional<ButtonType> buttonPressed = alert.showAndWait();
+        Optional<ButtonType> buttonPressed = createAlert(Alert.AlertType.CONFIRMATION, message, header);
 
         return buttonPressed.get() != ButtonType.CANCEL;
     }
@@ -33,12 +32,11 @@ public class AlertDialog {
     }
 
 
-    private static Alert createAlert(Alert.AlertType alertType, String message, String headerText){
+    private static Optional<ButtonType> createAlert(Alert.AlertType alertType, String message, String headerText){
         Alert alert = new Alert(alertType);
         setDialogInformation(alert, alertType.name(), headerText, message);
-        alert.showAndWait();
 
-        return alert;
+        return alert.showAndWait();
     }
 
     private static void setDialogInformation(Dialog<?> dialog, String title, String header, String content){
