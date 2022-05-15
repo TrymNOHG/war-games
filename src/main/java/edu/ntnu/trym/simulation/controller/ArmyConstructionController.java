@@ -59,7 +59,27 @@ public class ArmyConstructionController implements Initializable {
 
         //TODO: Listeners on both armor and attack input to see whether default or specialized
 
+        attackInput.setOnKeyTyped((action) -> {
+            if(attackInput.getText().isEmpty()){
+                defaultUnit = true;
+                armorInput.setPromptText("DEFAULT");
+            }
+            else{
+                defaultUnit = false;
+                armorInput.setPromptText("");
+            }
+        });
 
+        armorInput.setOnKeyTyped((action) -> {
+            if(armorInput.getText().isEmpty()){
+                defaultUnit = true;
+                attackInput.setPromptText("DEFAULT");
+            }
+            else{
+                defaultUnit = false;
+                attackInput.setPromptText("");
+            }
+        });
 
 
     }
@@ -97,10 +117,8 @@ public class ArmyConstructionController implements Initializable {
 
     private void initialData(){
         //TODO: Make sure the name is changed before allowing the army to be constructed
-        List<Unit> unitList = new ArrayList<>();
-        unitList.add(new RangedUnit("Archer", 1, 2, 3));
 
-        armyConstructed = new Army("Temporary Name", unitList);
+        armyConstructed = new Army("Temporary Name", new ArrayList<>());
         unitTypeBox.getItems().addAll(UnitType.values());
         createArmyTable();
         attackInput.setPromptText("DEFAULT");
