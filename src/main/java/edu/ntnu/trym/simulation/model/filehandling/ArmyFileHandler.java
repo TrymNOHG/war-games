@@ -192,7 +192,7 @@ public class ArmyFileHandler {
      * @return         The source path to the file, represented as a String
      */
     public String getFileSourcePath(String fileName){
-        return FileSystems.getDefault().getPath("src", "main", "resources", "army-files") + fileName + ".csv";
+        return FileSystems.getDefault().getPath("src", "main", "resources", "army-files", fileName) + ".csv";
     }
 }
 
