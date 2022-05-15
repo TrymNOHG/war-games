@@ -1,9 +1,7 @@
 package edu.ntnu.trym.simulation.controller;
 
-import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.TerrainType;
-import edu.ntnu.trym.simulation.model.UnitFactory;
-import edu.ntnu.trym.simulation.model.UnitType;
+import edu.ntnu.trym.simulation.model.*;
+import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.units.RangedUnit;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
@@ -17,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -49,6 +48,8 @@ public class ArmyConstructionController implements Initializable {
     private Unit selectedUnit;
 
     private boolean defaultUnit = true;
+
+    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     @FXML
     private ComboBox<UnitType> unitTypeBox = new ComboBox<>();
@@ -105,8 +106,45 @@ public class ArmyConstructionController implements Initializable {
     }
 
     @FXML
-    void saveLoadArmy(ActionEvent event) {
+    void saveLoadArmy(ActionEvent event) throws IOException {
+
         SimulationSingleton.INSTANCE.setArmyOfCurrentArmy(this.armyConstructed);
+        String fileName = AlertDialog.createTextInputDialog("Save Army", "Type the name of the army's file",
+                "File name: ");
+
+        //TODO: check if there is a better way of telling whether the cancel button was pressed.
+        if(fileName == null) return;
+        if(this.armyConstructed.getAllUnits().isEmpty()){
+            AlertDialog.showError("The army is empty and can, therefore, not be saved.");
+            return;
+        }
+
+        //Check if a file with that name already exists and if so, does the person want to overwrite it?
+
+        try{
+            this.armyConstructed.setName(this.armyNameText.getText());
+            armyFileHandler.isFileNameValid(fileName);
+
+            if(armyFileHandler.fileExists(new File(armyFileHandler.getFileSourcePath(fileName)))){
+                if(AlertDialog.showConfirmation("A file with this already exists. If you press OK, then" +
+                        " that file will be overwritten by this army. Press CANCEL to go back.", "Are you " +
+                        "sure you want to overwrite?")){
+                    armyFileHandler.overwriteExistingArmyFile(this.armyConstructed,
+                            new File(armyFileHandler.getFileSourcePath(fileName)));
+                }
+                else return;
+            }
+            else{
+                armyFileHandler.createAndWriteNewArmyFile(this.armyConstructed,
+                        new File(armyFileHandler.getFileSourcePath(fileName)));
+            }
+
+        } catch (Exception e) {
+            AlertDialog.showError(e.getMessage());
+            return;
+        }
+
+        SceneHandler.loadBattlePreparation(event);
         //Save the army to file but maybe get some information from a pop-up on what the name should be.
     }
 
@@ -128,11 +166,6 @@ public class ArmyConstructionController implements Initializable {
     }
 
     private void createArmyTable(){
-//        armyTable.getItems().addAll(armyConstructed);
-
-//        armyTable.getColumns().addAll((Collection<? extends TableColumn<Unit, ?>>) armyConstructed);
-
-
 
         TableColumn<Unit, String> firstColumn = new TableColumn<>("Unit Type");
         firstColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
@@ -147,12 +180,13 @@ public class ArmyConstructionController implements Initializable {
         fourthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
 
         TableColumn<Unit, String> fifthColumn = new TableColumn<>("Armor");
-        fifthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
+        fifthColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
         //TODO: add amount once everything else works
 //        TableColumn<Army, String> sixthColumn = new TableColumn<>("Amount");
 //        sixthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
 
+        //TODO: check better options for this:
         armyTable.getColumns().addAll(firstColumn, secondColumn, thirdColumn, fourthColumn, fifthColumn);
         armyTable.setItems(FXCollections.observableList(armyConstructed.getAllUnits()));
 
@@ -169,6 +203,11 @@ public class ArmyConstructionController implements Initializable {
     }
 
     private List<Unit> createUnitsFromInputData(){
+        if(unitTypeBox.getValue() == null){
+            AlertDialog.showError("Please choose a unit type before adding a unit!");
+            return null;
+        }
+
         //Default Unit
         if(defaultUnit){
             return UnitFactory.getMultipleUnits(Integer.parseInt(amountOfUnitsInput.getText()), unitTypeBox.getValue(),
@@ -181,6 +220,7 @@ public class ArmyConstructionController implements Initializable {
                     Integer.parseInt(attackInput.getText()), Integer.parseInt(armorInput.getText()));
         }
     }
+
 
 }
 
