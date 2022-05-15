@@ -66,6 +66,21 @@ class ArmyFileHandlerTest{
         }
 
         @ParameterizedTest(name = "{index}. File was named: {0}")
+        @ValueSource(strings = {"", "  "})
+        void file_name_is_not_empty_or_blank(String fileName){
+            //Given/Arrange
+            String expectedExceptionMessage = "The file name is blank/empty.";
+
+            //When/Act
+            try {
+                armyFileHandler.isFileNameValid(fileName);
+            } catch (IllegalArgumentException e) {
+                //Then/Assert
+                Assertions.assertEquals(expectedExceptionMessage, e.getMessage());
+            }
+        }
+
+        @ParameterizedTest(name = "{index}. File was named: {0}")
         @ValueSource(strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
         void names_with_valid_characters_can_be_used_as_file_name(String fileName) {
             //Given/Arrange
