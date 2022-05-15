@@ -174,8 +174,8 @@ public class ArmyFileHandler {
     public void isFileNameValid(String fileName) throws IllegalArgumentException{
         Matcher matcher = validFileCharacters.matcher(fileName);
         if(!matcher.matches()) throw new IllegalArgumentException("The file name contains illegal characters.");
+        else if(fileName.isEmpty() || fileName.isBlank()) throw new IllegalArgumentException("The file name is blank/empty.");
     }
-    //TODO: Should the exception thrown above be IllegalArgumentException
 
     /**
      * This method checks if a file with a given directory path already exists and if it contains any information.
