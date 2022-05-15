@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
+import edu.ntnu.trym.simulation.model.UnitType;
 
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
  * @author Trym Hamer Gudvangen
  */
 public abstract class Unit {
+    private UnitType unitType;
     private String name;
     private int health;
     private int attack;
@@ -47,6 +49,22 @@ public abstract class Unit {
         int thisDamage = this.getAttack() + this.getAttackBonus();
         int opponentResistance = opponent.getArmor() + opponent.getResistBonus();
         opponent.setHealth(opponent.getHealth() - thisDamage + opponentResistance);
+    }
+
+    /**
+     * This method retrieves the unit type of the given Unit.
+     * @return Unit type, represented as a UnitType enumeration.
+     */
+    public UnitType getUnitType() {
+        return unitType;
+    }
+
+    /**
+     * This method changes the unit type of the given Unit.
+     * @param unitType New unit type, represented as a UnitType enumeration..
+     */
+    public void setUnitType(UnitType unitType) {
+        this.unitType = unitType;
     }
 
     /**

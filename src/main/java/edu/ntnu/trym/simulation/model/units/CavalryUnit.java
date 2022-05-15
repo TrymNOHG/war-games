@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation.model.units;
 
 
 import edu.ntnu.trym.simulation.model.TerrainType;
+import edu.ntnu.trym.simulation.model.UnitType;
 
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).
@@ -25,6 +26,7 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
+        this.setUnitType(UnitType.CAVALRY);
     }
 
     /**

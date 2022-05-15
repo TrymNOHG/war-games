@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
+import edu.ntnu.trym.simulation.model.UnitType;
 
 /**
  * This class represents a ranged unit. A ranged unit has medium-low base stats for attack (15) and low for armor (12).
@@ -24,6 +25,7 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException{
         super(name, health, attack, armor);
+        this.setUnitType(UnitType.RANGED);
     }
 
     /**

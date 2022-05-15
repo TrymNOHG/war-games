@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
+import edu.ntnu.trym.simulation.model.UnitType;
 
 /**
  * This class represents an infantry unit. An infantry unit has medium base stats for both attack (15) and armor
@@ -21,6 +22,7 @@ public class InfantryUnit extends Unit {
      */
     public InfantryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
+        this.setUnitType(UnitType.INFANTRY);
     }
 
     /**

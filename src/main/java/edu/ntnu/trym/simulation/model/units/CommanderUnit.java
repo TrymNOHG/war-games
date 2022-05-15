@@ -1,5 +1,7 @@
 package edu.ntnu.trym.simulation.model.units;
 
+import edu.ntnu.trym.simulation.model.UnitType;
+
 /**
  * This class represents a commander unit, which is a subclass or "promotion" from the cavalry unit.
  * A commander unit has high base stats for both attack (25) and armor (15). The commander unit inherits the same
@@ -20,6 +22,7 @@ public class CommanderUnit extends CavalryUnit {
      */
     public CommanderUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
+        this.setUnitType(UnitType.COMMANDER);
     }
 
     /**
