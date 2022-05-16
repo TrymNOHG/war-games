@@ -45,6 +45,18 @@ public class BattlePrepController implements Initializable {
     private Text orText2;
 
     @FXML
+    private Button changeArmyButton1;
+
+    @FXML
+    private Button changeArmyButton2;
+
+    @FXML
+    private Button removeArmyButton1;
+
+    @FXML
+    private Button removeArmyButton2;
+
+    @FXML
     private ComboBox<TerrainType> terrainComboBox = new ComboBox<>();
     //Check if there were previous armies, if so load them, if not let the default be loaded.
 
@@ -58,6 +70,31 @@ public class BattlePrepController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialData();
 
+    }
+
+    @FXML
+    void createArmy(ActionEvent event) throws IOException {
+        SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
+
+        SceneHandler.loadArmyConstruction(event);
+    }
+
+    @FXML
+    void loadArmy(ActionEvent event) {
+        SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
+        //Scenehandler
+    }
+
+    @FXML
+    void changeArmy(ActionEvent event) {
+        SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
+    }
+
+    @FXML
+    void removeArmy(ActionEvent event) {
+        if(armyNumberByButton(event) == 1) SimulationSingleton.INSTANCE.setArmy1(null);
+        else SimulationSingleton.INSTANCE.setArmy2(null);
+        initialData();
     }
 
     @FXML
@@ -75,60 +112,50 @@ public class BattlePrepController implements Initializable {
         SceneHandler.loadUnitInformation(event);
     }
 
-    @FXML
-    void createArmy(ActionEvent event) throws IOException {
-        if(event.getSource().toString().contains("createArmyButton1")){
-            SimulationSingleton.INSTANCE.setCurrentArmy(1);
-        }
-        else SimulationSingleton.INSTANCE.setCurrentArmy(2); //Army constructionArmy = army2
-        SceneHandler.loadArmyConstruction(event);
-    }
-
-    //I could make a method which checks which army is being worked on.
-
-    @FXML
-    void loadArmy(ActionEvent event) {
-        if(event.getSource().toString().contains("loadArmyButton1")){
-            SimulationSingleton.INSTANCE.setCurrentArmy(1);
-        }
-        else SimulationSingleton.INSTANCE.setCurrentArmy(2); //Army constructionArmy = army2
-        //Scenehandler
-    }
-
 
     private void initialData(){
         terrainComboBox.getItems().addAll(TerrainType.values());
         terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
 
-        //Try to generalize so that all buttons can be displayed using these methods
+        if(armyNameText1 != null && armyNameText2 != null) displayArmy();
 
-        if(SimulationSingleton.INSTANCE.getArmy1() != null){
-            displayArmy(SimulationSingleton.INSTANCE.getArmy1(), 1);
-        }
-        if(SimulationSingleton.INSTANCE.getArmy2() != null){
-            displayArmy(SimulationSingleton.INSTANCE.getArmy2(), 2);
-        }
     }
 
-    private void displayArmy(Army army, int armyNumber){
-        if(armyNumber == 1){
-            armyNameText1.setText(army.getName());
-            loadArmyButton1.setVisible(false);
-            createArmyButton1.setVisible(false);
-            orText.setVisible(false);
 
-            createArmyTable(army, army1Table);
-            army1Table.setVisible(true);
-        }
-        else{
-            armyNameText2.setText(army.getName());
-            loadArmyButton2.setVisible(false);
-            createArmyButton2.setVisible(false);
-            orText2.setVisible(false);
 
-            createArmyTable(army, army2Table);
-            army2Table.setVisible(true);
+    private void displayArmy(){
+        boolean displayInfo = false;
+        if(SimulationSingleton.INSTANCE.getArmy1() != null) {
+            displayInfo = true;
+            armyNameText1.setText(SimulationSingleton.INSTANCE.getArmy1().getName());
+            createArmyTable(SimulationSingleton.INSTANCE.getArmy1(), army1Table);
         }
+        else armyNameText1.setText("No Army Equipped");
+
+        loadArmyButton1.setVisible(!displayInfo);
+        createArmyButton1.setVisible(!displayInfo);
+        orText.setVisible(!displayInfo);
+
+        army1Table.setVisible(displayInfo);
+        changeArmyButton1.setVisible(displayInfo);
+        removeArmyButton1.setVisible(displayInfo);
+
+        displayInfo = false;
+
+        if(SimulationSingleton.INSTANCE.getArmy2() != null){
+            displayInfo = true;
+            armyNameText2.setText(SimulationSingleton.INSTANCE.getArmy2().getName());
+            createArmyTable(SimulationSingleton.INSTANCE.getArmy2(), army2Table);
+        }
+        else armyNameText2.setText("No Army Equipped");
+
+        loadArmyButton2.setVisible(!displayInfo);
+        createArmyButton2.setVisible(!displayInfo);
+        orText2.setVisible(!displayInfo);
+
+        army2Table.setVisible(displayInfo);
+        changeArmyButton2.setVisible(displayInfo);
+        removeArmyButton2.setVisible(displayInfo);
     }
 
     private void createArmyTable(Army army, TableView<Unit> tableView){
@@ -152,6 +179,12 @@ public class BattlePrepController implements Initializable {
         tableView.setItems(FXCollections.observableList(army.getAllUnits()));
     }
 
+    private int armyNumberByButton(ActionEvent event){
+        if(event.getSource().toString().contains("1")){
+            return 1;
+        }
+        return 2;
+    }
 
 }
 

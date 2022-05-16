@@ -2,16 +2,12 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.*;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
-import edu.ntnu.trym.simulation.model.units.RangedUnit;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
@@ -108,7 +104,6 @@ public class ArmyConstructionController implements Initializable {
     @FXML
     void saveLoadArmy(ActionEvent event) throws IOException {
 
-        SimulationSingleton.INSTANCE.setArmyOfCurrentArmy(this.armyConstructed);
         String fileName = AlertDialog.createTextInputDialog("Save Army", "Type the name of the army's file",
                 "File name: ");
 
@@ -123,6 +118,7 @@ public class ArmyConstructionController implements Initializable {
 
         try{
             this.armyConstructed.setName(this.armyNameText.getText());
+            SimulationSingleton.INSTANCE.setArmyOfCurrentArmy(this.armyConstructed);
             armyFileHandler.isFileNameValid(fileName);
 
             if(armyFileHandler.fileExists(new File(armyFileHandler.getFileSourcePath(fileName)))){
@@ -147,6 +143,9 @@ public class ArmyConstructionController implements Initializable {
         SceneHandler.loadBattlePreparation(event);
         //Save the army to file but maybe get some information from a pop-up on what the name should be.
     }
+
+
+
 
     @FXML
     void backToBattlePrep(ActionEvent event) throws IOException {
@@ -202,10 +201,7 @@ public class ArmyConstructionController implements Initializable {
     }
 
     private List<Unit> createUnitsFromInputData(){
-        if(unitTypeBox.getValue() == null){
-            AlertDialog.showError("Please choose a unit type before adding a unit!");
-            return null;
-        }
+        if(!isUnitReadyToBeCreated())return null;
 
         //Default Unit
         if(defaultUnit){
@@ -218,6 +214,15 @@ public class ArmyConstructionController implements Initializable {
                     unitNameInput.getText(), Integer.parseInt(healthInput.getText()),
                     Integer.parseInt(attackInput.getText()), Integer.parseInt(armorInput.getText()));
         }
+    }
+
+    private boolean isUnitReadyToBeCreated(){
+        if(unitTypeBox.getValue() == null){
+            AlertDialog.showError("Please choose a unit type before adding a unit!");
+            return false;
+        }
+        //Check whether the health and such are valid
+        return true;
     }
 
 
