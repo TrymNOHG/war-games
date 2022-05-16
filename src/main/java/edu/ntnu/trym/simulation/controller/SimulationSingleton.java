@@ -16,6 +16,10 @@ public enum SimulationSingleton {
     private int currentArmy;
     private TerrainType currentTerrain = TerrainType.DEFAULT;
 
+    public Army getArmyOfCurrentArmy(){
+        if(this.currentArmy == 1) return getArmy1();
+        else return getArmy2();
+    }
     public void setArmyOfCurrentArmy(Army army){
         if(this.currentArmy == 1) setArmy1(army);
         else if (this.currentArmy == 2) setArmy2(army);
