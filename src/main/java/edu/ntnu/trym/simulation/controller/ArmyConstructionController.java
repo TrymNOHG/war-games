@@ -190,7 +190,6 @@ public class ArmyConstructionController implements Initializable {
         armyTable.getColumns().addAll(firstColumn, secondColumn, thirdColumn, fourthColumn, fifthColumn);
         armyTable.setItems(FXCollections.observableList(armyConstructed.getAllUnits()));
 
-
     }
 
     //TODO: Name better?
