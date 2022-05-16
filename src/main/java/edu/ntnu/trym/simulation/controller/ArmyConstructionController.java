@@ -30,7 +30,7 @@ public class ArmyConstructionController implements Initializable {
     private TextField armyNameText;
 
     @FXML
-    private TableView<Unit> armyTable;
+    private TableView<Unit> armyTable = new TableView<Unit>();
 
     @FXML
     private TextField attackInput;
@@ -154,8 +154,11 @@ public class ArmyConstructionController implements Initializable {
 
     private void initialData(){
         //TODO: Make sure the name is changed before allowing the army to be constructed
-
-        armyConstructed = new Army("Temporary Name", new ArrayList<>());
+        if(SimulationSingleton.INSTANCE.getArmyOfCurrentArmy() != null){
+            armyConstructed = SimulationSingleton.INSTANCE.getArmyOfCurrentArmy();
+            armyNameText.setText(armyConstructed.getName());
+        }
+        else armyConstructed = new Army("Temporary Name", new ArrayList<>());
         unitTypeBox.getItems().addAll(UnitType.values());
         createArmyTable();
         attackInput.setPromptText("DEFAULT");
@@ -166,27 +169,27 @@ public class ArmyConstructionController implements Initializable {
 
     private void createArmyTable(){
 
-        TableColumn<Unit, String> firstColumn = new TableColumn<>("Unit Type");
-        firstColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        TableColumn<Unit, String> unitTypeCol = new TableColumn<>("Unit Type");
+        unitTypeCol.setCellValueFactory(new PropertyValueFactory<>("unitType"));
 
-        TableColumn<Unit, String> secondColumn = new TableColumn<>("Name");
-        secondColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Unit, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Unit, String> thirdColumn = new TableColumn<>("Health");
-        thirdColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
+        TableColumn<Unit, String> healthCol = new TableColumn<>("Health");
+        healthCol.setCellValueFactory(new PropertyValueFactory<>("health"));
 
-        TableColumn<Unit, String> fourthColumn = new TableColumn<>("Attack");
-        fourthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
+        TableColumn<Unit, String> attackCol = new TableColumn<>("Attack");
+        attackCol.setCellValueFactory(new PropertyValueFactory<>("attack"));
 
-        TableColumn<Unit, String> fifthColumn = new TableColumn<>("Armor");
-        fifthColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
+        TableColumn<Unit, String> armorCol = new TableColumn<>("Armor");
+        armorCol.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
         //TODO: add amount once everything else works
 //        TableColumn<Army, String> sixthColumn = new TableColumn<>("Amount");
 //        sixthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
 
         //TODO: check better options for this:
-        armyTable.getColumns().addAll(firstColumn, secondColumn, thirdColumn, fourthColumn, fifthColumn);
+        armyTable.getColumns().addAll(unitTypeCol, nameCol, healthCol, attackCol, armorCol);
         armyTable.setItems(FXCollections.observableList(armyConstructed.getAllUnits()));
 
     }
@@ -198,6 +201,7 @@ public class ArmyConstructionController implements Initializable {
                 selectedUnit = armyTable.getSelectionModel().getSelectedItem();
             }
         });
+
     }
 
     private List<Unit> createUnitsFromInputData(){

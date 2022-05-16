@@ -75,7 +75,6 @@ public class BattlePrepController implements Initializable {
     @FXML
     void createArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
-
         SceneHandler.loadArmyConstruction(event);
     }
 
@@ -86,8 +85,9 @@ public class BattlePrepController implements Initializable {
     }
 
     @FXML
-    void changeArmy(ActionEvent event) {
+    void changeArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
+        SceneHandler.loadArmyConstruction(event);
     }
 
     @FXML
