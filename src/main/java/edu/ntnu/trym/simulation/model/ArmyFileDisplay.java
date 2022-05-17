@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.model;
 
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -13,22 +14,22 @@ import java.util.Arrays;
  * This class represents a depiction of an army saved to a file. The file and the army's information will be
  * instantiated as text and displayed in the GUI.
  */
-public class ArmyFileRegion {
+public class ArmyFileDisplay {
     private File armyFile;
 
-    private Region armyRegion = new Region();
+    private VBox armyDisplay;
 
     private String location;
     private Army army;
 
 
     /**
-     * This constructor represents a region filled with a given army's information. It, therefore, takes in an army file
-     * and creates such a region during instantiation.
+     * This constructor represents a display filled with a given army's information. It, therefore, takes in an army
+     * file and creates VBox during instantiation.
      * @param armyFile      The file containing the army, represented using a File object.
      * @throws IOException  This exception is thrown if the file stated is invalid.
      */
-    public ArmyFileRegion(File armyFile) throws IOException {
+    public ArmyFileDisplay(File armyFile) throws IOException {
         this.armyFile = armyFile;
         setArmyInformation();
         constructRegion();
@@ -51,10 +52,10 @@ public class ArmyFileRegion {
 
         Text fileName = new Text(this.armyFile.getName());
 
-        VBox vBox = new VBox(armyName, infantryNumInfo, cavalryNumInfo, rangedNumInfo, commanderNumInfo, timeSavedInfo,
+        this.armyDisplay = new VBox(armyName, infantryNumInfo, cavalryNumInfo, rangedNumInfo, commanderNumInfo, timeSavedInfo,
                 fileLocationInfo, fileName);
-        vBox.autosize();
-
+        this.armyDisplay.setPadding(new Insets(20));
+        this.armyDisplay.autosize();
     }
 
     /**
