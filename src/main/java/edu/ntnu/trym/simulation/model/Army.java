@@ -119,45 +119,45 @@ public class Army {
 
     //TODO: Is it better to use InfantryUnit.getClass().getSimpleName() since the class name could change? Ask studass
     /**
-     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of InfantryUnits.
+     * This method uses the filtering method {@link #getUnitsByType(UnitType)} to create a list of InfantryUnits.
      * @return The filtered list of solely InfantryUnits, represented as a List of Units
      */
     public List<Unit> getInfantryUnits(){
-        return getUnitsByType("InfantryUnit");
+        return getUnitsByType(UnitType.INFANTRY);
     }
 
     /**
-     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CavalryUnits.
+     * This method uses the filtering method {@link #getUnitsByType(UnitType)} to create a list of CavalryUnits.
      * @return The filtered list of solely CavalryUnits, represented as a List of Units
      */
     public List<Unit> getCavalryUnits(){
-        return getUnitsByType("CavalryUnit");
+        return getUnitsByType(UnitType.CAVALRY);
     }
 
     /**
-     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of RangedUnits.
+     * This method uses the filtering method {@link #getUnitsByType(UnitType)} to create a list of RangedUnits.
      * @return The filtered list of solely RangedUnits, represented as a List of Units
      */
     public List<Unit> getRangedUnits(){
-        return getUnitsByType("RangedUnit");
+        return getUnitsByType(UnitType.RANGED);
     }
 
     /**
-     * This method uses the filtering method {@link #getUnitsByType(String)} to create a list of CommanderUnits.
+     * This method uses the filtering method {@link #getUnitsByType(UnitType)} to create a list of CommanderUnits.
      * @return The filtered list of solely CommanderUnits, represented as a List of Units
      */
     public List<Unit> getCommanderUnits(){
-        return getUnitsByType("CommanderUnit");
+        return getUnitsByType(UnitType.COMMANDER);
     }
 
     /**
      * This method uses a stream to filter through all the units in the list and based on the class to create
      * a new list containing solely the unit desired.
-     * @param className The name of the class that the unit belongs to, represented as a String
+     * @param unitType  The type of unit, represented as a UnitType enumeration
      * @return          A list of all the units of the given type found in the Army's unit list
      */
-    private List<Unit> getUnitsByType(String className){
-        return this.units.stream().filter(unit -> unit.getClass().getSimpleName().equals(className)).toList();
+    public List<Unit> getUnitsByType(UnitType unitType){
+        return this.units.stream().filter(unit -> unit.getUnitType() == unitType).toList();
     }
 
     @Override
