@@ -14,6 +14,8 @@ import java.util.stream.Stream;
  * This class contains methods that are use generally through all file handling such as getting a file source path,
  * check if a name of a file is valid, and calculating the number of CSV files in a directory. This class provides
  * general utility for other more specific file handlers.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class FileHandler {
 
@@ -58,23 +60,24 @@ public class FileHandler {
         AtomicInteger counter = new AtomicInteger();
         Stream<Path> fileWalk = Files.walk(FileSystems.getDefault().getPath("src", "main", "resources", "army-files"));
         try(fileWalk){
-            fileWalk.forEach(file -> {
-                if(file.endsWith(".csv")) counter.getAndIncrement();
+            fileWalk.forEach(path -> {
+                if(endsWithCSV(path)) counter.getAndIncrement();
             });
         }
         return counter.get();
     }
-    //TODO: test that the number returned is correct and that it only counts CSV Files
 
 
-//    /**
-//     * This method checks if a given File's path ends with .csv, therefore making it a CSV file.
-//     * @param file  The file to be checked, represented as a File object.
-//     * @return      A boolean stating if the path contains .csv {@code true} or if it does not {@code false}.
-//     */
-//    public boolean endsWithCSV(File file){
-//        String fileName = file.getName();
-//    }
+    /**
+     * This method checks if a given File's path ends with .csv, therefore making it a CSV file.
+     * @param path  The path to be checked, represented as a Path object.
+     * @return      A boolean stating if the path contains .csv {@code true} or if it does not {@code false}.
+     */
+    private static boolean endsWithCSV(Path path){
+        String fileName = path.getFileName().toString();
+        String extensionText = fileName.substring(fileName.length() - 4);
+        return extensionText.equals(".csv");
+    }
     //TODO: Test that this actually returns the correct booleans.
 
 
