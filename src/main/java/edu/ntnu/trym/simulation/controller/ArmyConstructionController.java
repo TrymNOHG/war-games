@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.*;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
+import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -30,7 +31,7 @@ public class ArmyConstructionController implements Initializable {
     private TextField armyNameText;
 
     @FXML
-    private TableView<Unit> armyTable = new TableView<Unit>();
+    private TableView<Unit> armyTable = new TableView<>();
 
     @FXML
     private TextField attackInput;
@@ -119,20 +120,20 @@ public class ArmyConstructionController implements Initializable {
         try{
             this.armyConstructed.setName(this.armyNameText.getText());
             SimulationSingleton.INSTANCE.setArmyOfCurrentArmy(this.armyConstructed);
-            armyFileHandler.isFileNameValid(fileName);
+            FileHandler.isFileNameValid(fileName);
 
-            if(armyFileHandler.fileExists(new File(armyFileHandler.getFileSourcePath(fileName)))){
+            if(FileHandler.fileExists(new File(FileHandler.getFileSourcePath(fileName)))){
                 if(AlertDialog.showConfirmation("A file with this already exists. If you press OK, then" +
                         " that file will be overwritten by this army. Press CANCEL to go back.", "Are you " +
                         "sure you want to overwrite?")){
                     armyFileHandler.overwriteExistingArmyFile(this.armyConstructed,
-                            new File(armyFileHandler.getFileSourcePath(fileName)));
+                            new File(FileHandler.getFileSourcePath(fileName)));
                 }
                 else return;
             }
             else{
                 armyFileHandler.createAndWriteNewArmyFile(this.armyConstructed,
-                        new File(armyFileHandler.getFileSourcePath(fileName)));
+                        new File(FileHandler.getFileSourcePath(fileName)));
             }
 
         } catch (Exception e) {

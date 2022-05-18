@@ -29,7 +29,7 @@ public class ArmyFileDisplay {
      * @param armyFile      The file containing the army, represented using a File object.
      * @throws IOException  This exception is thrown if the file stated is invalid.
      */
-    public ArmyFileDisplay(File armyFile) throws IOException {
+    public ArmyFileDisplay(File armyFile) throws IOException, InstantiationException {
         this.armyFile = armyFile;
         setArmyInformation();
         constructRegion();
@@ -115,7 +115,7 @@ public class ArmyFileDisplay {
      * This method retrieves the location and army information from the army file.
      * @throws IOException This exception is thrown if the file read is invalid.
      */
-    private void setArmyInformation() throws IOException {
+    private void setArmyInformation() throws IOException, InstantiationException {
         this.location = this.armyFile.getAbsolutePath();
         this.army = new ArmyFileHandler().readFromArmyFile(this.armyFile);
     }

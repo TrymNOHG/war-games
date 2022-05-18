@@ -42,47 +42,11 @@ class ArmyFileHandlerTest{
     }
 
     @Nested
-    public class An_ArmyFile_can_be_created_if {
-
-        //TODO: Check if file is closed, check if it can be renamed
-        //Sending in a path which is not valid as a CSV but is a file
-        //Check that file is saved to right directory
-        //Do not make ArmyFileHandler static
-
-        @ParameterizedTest(name = "{index}. File was named: {0}")
-        @ValueSource(strings = {"$123test", "50%Off", "***army***", "Army?", "Orc Army!",
-                "Human Army > Orc Army", "Army/military", "[ArmyFile]", "{ArmyFile}", "Trym's : Army"})
-        void names_with_special_characters_cannot_be_used_in_file_name(String fileName) {
-            //Given/Arrange
-            String expectedExceptionMessage = "The file name contains illegal characters.";
-
-            //When/Act
-            try {
-                armyFileHandler.isFileNameValid(fileName);
-            } catch (IllegalArgumentException e) {
-                //Then/Assert
-                Assertions.assertEquals(expectedExceptionMessage, e.getMessage());
-            }
-        }
-
-        @ParameterizedTest(name = "{index}. File was named: {0}")
-        @ValueSource(strings = {"", "  "})
-        void file_name_is_not_empty_or_blank(String fileName){
-            //Given/Arrange
-            String expectedExceptionMessage = "The file name is blank/empty.";
-
-            //When/Act
-            try {
-                armyFileHandler.isFileNameValid(fileName);
-            } catch (IllegalArgumentException e) {
-                //Then/Assert
-                Assertions.assertEquals(expectedExceptionMessage, e.getMessage());
-            }
-        }
+    public class An_ArmyFile_is_valid_if {
 
         @ParameterizedTest(name = "{index}. File was named: {0}")
         @ValueSource(strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
-        void names_with_valid_characters_can_be_used_as_file_name(String fileName) {
+        void a_file_has_a_valid_name(String fileName) {
             //Given/Arrange
             Army army = new Army("Trym's Army", fillArmyList());
 
@@ -98,12 +62,8 @@ class ArmyFileHandlerTest{
             //Then/Assert
             Assertions.assertTrue(expectedFileCreated.isFile());
             expectedFileCreated.delete();
-
         }
-    }
 
-    @Nested
-    public class An_ArmyFile_is_valid_if {
         //TODO: Use this:
         @ParameterizedTest (name = "{index}. File was named: {0}")
         @ValueSource (strings = {"Sarahs army", "Army", "Human-Army", "OrcArmy123"})
@@ -273,7 +233,7 @@ class ArmyFileHandlerTest{
     public class An_ArmyFile_properly_overwrites_an_army_if {
 
         @Test
-        void it_doesnt_add_on_to_but_changes_a_file_completely() throws IOException {
+        void it_doesnt_add_on_to_but_changes_a_file_completely() throws IOException, InstantiationException {
             //Given/Arrange
             Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
             long initialFileLength = getValidFile("Tryms Army").length();
@@ -305,7 +265,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void it_successfully_writes_a_new_armys_info() throws IOException {
+        void it_successfully_writes_a_new_armys_info() throws IOException, InstantiationException {
             //Given/Arrange
             Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
             List<Unit> changedArmyList = fillArmyList();
@@ -326,7 +286,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void an_empty_army_will_write_only_name() throws IOException {
+        void an_empty_army_will_write_only_name() throws IOException, InstantiationException {
             //Given/Arrange
             Army army = new Army("Human Army");
             File file = getValidFile("Empty Army Test");
@@ -356,7 +316,7 @@ class ArmyFileHandlerTest{
     @Nested
     public class An_ArmyFile_properly_reads_an_army_if_it {
         @Test
-        void constructs_an_Army_correctly_when_read() throws IOException {
+        void constructs_an_Army_correctly_when_read() throws IOException, InstantiationException {
             //Given/Arrange
             Army expectedArmy = new Army("Trym's Army", fillArmyList());
 
@@ -368,7 +328,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void an_overwritten_file_can_be_read_successfully() throws IOException {
+        void an_overwritten_file_can_be_read_successfully() throws IOException, InstantiationException {
             //Given/Arrange
             Army firstFileArmy = armyFileHandler.readFromArmyFile(getValidFile("Tryms Army"));
 
@@ -426,17 +386,17 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void file_with_corrupt_unit_class_throws_InstantiationException() throws IOException {
+        void file_with_corrupt_unit_class_throws_InstantiationException() {
             //Given/Arrange
             Army expectedArmy = new Army("Trym's Army", fillArmyList());
 
             //When/Act
-            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Unit Class"));
+            Assertions.assertThrows(InstantiationException.class, () ->{
+                Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Unit Class"));
+            }); //Then/Assert
 
-            //Then/Assert
-            Assertions.assertNotEquals(expectedArmy, actualArmy);
             //TODO: Complete this test, when my own CorruptFileException is made
-
+            //This test may be completed by asking asserting CorruptFileException was thrown
         }
 
         //TODO: change name to my exception
@@ -446,10 +406,10 @@ class ArmyFileHandlerTest{
             Army expectedArmy = new Army("Trym's Army", fillArmyList());
 
             //When/Act
-            Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt Unit Class"));
+            Assertions.assertThrows(StreamCorruptedException.class, () ->{
+                Army actualArmy = armyFileHandler.readFromArmyFile(getValidFile("Corrupt CSV Format"));
+            }); //Then/Assert
 
-            //Then/Assert
-            Assertions.assertNotEquals(expectedArmy, actualArmy);
             //TODO: Complete this test, when my own CorruptFileException is made
             //This test may be completed by asking asserting CorruptFileException was thrown
         }

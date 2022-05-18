@@ -6,12 +6,9 @@ import edu.ntnu.trym.simulation.model.UnitType;
 import edu.ntnu.trym.simulation.model.units.*;
 
 import java.io.*;
-import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class handles the storage and retrieval of Army objects from files. It handles these files through buffered
@@ -20,7 +17,6 @@ import java.util.regex.Pattern;
  * @author Trym Hamer Gudvangen
  */
 public class ArmyFileHandler {
-    private final Pattern validFileCharacters = Pattern.compile("^[\\w- ]*$");
     private final String DELIMITER = ",";
 
     /**
@@ -33,7 +29,7 @@ public class ArmyFileHandler {
      * @throws NullPointerException This exception is thrown if army is null
      */
     public void createAndWriteNewArmyFile(Army army, File file) throws IOException, NullPointerException {
-        if(fileExists(file)) throw new IOException("A file with that name already exists.");
+        if(FileHandler.fileExists(file)) throw new IOException("A file with that name already exists.");
         writeToArmyFile(army, file);
     }
 
@@ -46,7 +42,7 @@ public class ArmyFileHandler {
      * @throws NullPointerException This exception is thrown if army is null
      */
     public boolean overwriteExistingArmyFile(Army army, File file) throws NullPointerException {
-        if(!fileExists(file)) return false;
+        if(!FileHandler.fileExists(file)) return false;
         writeToArmyFile(army, file);
         return true;
     }
@@ -108,11 +104,11 @@ public class ArmyFileHandler {
      * @return             The army that was saved in the file, represented using an Army object
      * @throws IOException Input-output exception can be thrown by the reader
      */
-    public Army readFromArmyFile(File file) throws IOException {
-        String armyName = "";
+    public Army readFromArmyFile(File file) throws IOException, InstantiationException {
+        String armyName;
         List<Unit> unitList = new ArrayList<>();
 
-        if(!fileExists(file)) throw new FileNotFoundException("A file with that name does not exist");
+        if(!FileHandler.fileExists(file)) throw new FileNotFoundException("A file with that name does not exist");
 
         try(BufferedReader armyBufferedReader = new BufferedReader(new FileReader(file))){
 
@@ -132,10 +128,7 @@ public class ArmyFileHandler {
                 else throw new StreamCorruptedException("Corrupt format");
             }
         }
-        catch (IOException | InstantiationException e){
-            e.printStackTrace();
-            //TODO: add CorruptFileException here, which can be thrown further and used to remove files.
-        }
+        //TODO: add CorruptFileException here, which can be thrown further and used to remove files.
         return new Army(armyName, unitList);
     }
 
@@ -165,35 +158,6 @@ public class ArmyFileHandler {
         throw new InstantiationException("The Unit type information is corrupt");
     }
 
-
-    /**
-     * This method takes in a file name and checks whether it is valid using a pre-set regex pattern.
-     * @param fileName Name of the file to be created, represented as a String
-     * @throws IllegalArgumentException If the file name sent in is invalid, then an IllegalArgumentException is thrown
-     */
-    public void isFileNameValid(String fileName) throws IllegalArgumentException{
-        Matcher matcher = validFileCharacters.matcher(fileName);
-        if(!matcher.matches()) throw new IllegalArgumentException("The file name contains illegal characters.");
-        else if(fileName.isEmpty() || fileName.isBlank()) throw new IllegalArgumentException("The file name is blank/empty.");
-    }
-
-    /**
-     * This method checks if a file with a given directory path already exists and if it contains any information.
-     * @param fileInQuestion The file that is to be checked, represented using a File object
-     * @return               If the file contains no information, {@code false} is returned. Else, {@code true} is returned
-     */
-    public boolean fileExists(File fileInQuestion){
-        return fileInQuestion.length() > 0;
-    }
-
-    /**
-     * This method retrieves the file source path of a csv file with the given file name.
-     * @param fileName The name of the desired file, represented as a String
-     * @return         The source path to the file, represented as a String
-     */
-    public String getFileSourcePath(String fileName){
-        return FileSystems.getDefault().getPath("src", "main", "resources", "army-files", fileName) + ".csv";
-    }
 }
 
 //TODO: Ask about formatting of information

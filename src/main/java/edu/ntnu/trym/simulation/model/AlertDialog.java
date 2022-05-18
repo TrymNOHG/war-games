@@ -46,3 +46,5 @@ public class AlertDialog {
     }
 
 }
+
+//Maybe look at making this into a decorator pattern design or maybe builder or at least extending
