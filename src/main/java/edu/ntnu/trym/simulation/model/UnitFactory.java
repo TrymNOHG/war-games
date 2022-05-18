@@ -15,8 +15,6 @@ import java.util.stream.IntStream;
 public class UnitFactory {
 
 
-    //Use this when file handling for example
-
     /**
      * This method takes in a UnitType and the simplified information for a unit in order to retrieve an instance of
      * the unit.
@@ -34,7 +32,6 @@ public class UnitFactory {
         };
     }
 
-    //Use this when file handling for example
 
     /**
      * This method takes in a UnitType and the additional information for a unit in order to retrieve an instance of
@@ -54,8 +51,6 @@ public class UnitFactory {
             case COMMANDER -> new CommanderUnit(name, healthValue, attackValue, armorValue);
         };
     }
-
-    //Use this when actually generating the army
 
     /**
      * This method creates a list of simplified units with the information below. The list will contain the amount
