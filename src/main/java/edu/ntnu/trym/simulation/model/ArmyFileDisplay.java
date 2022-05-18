@@ -86,7 +86,7 @@ public class ArmyFileDisplay {
      */
     private HBox createUnitInformation(UnitType unitType){
         Text unitNameText = new Text(unitType + ": ");
-        Text unitNumberText = new Text(this.army.getUnitsByType(unitType).toString());
+        Text unitNumberText = new Text(String.valueOf(this.army.getUnitsByType(unitType).size()));
         return createHBoxWithSpacing(unitNameText, unitNumberText);
     }
 
