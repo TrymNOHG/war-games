@@ -120,6 +120,13 @@ public class ArmyFileDisplay {
         this.army = new ArmyFileHandler().readFromArmyFile(this.armyFile);
     }
 
+    /**
+     * This method retrieves the VBox containing the army information
+     * @return A vertical box of army information, represented as a VBox object
+     */
+    public VBox getArmyDisplay() {
+        return armyDisplay;
+    }
 }
 
 //TODO: test the setArmyInformation method by checking that the location and army is correct.
