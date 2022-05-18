@@ -79,9 +79,9 @@ public class BattlePrepController implements Initializable {
     }
 
     @FXML
-    void loadArmy(ActionEvent event) {
+    void loadArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
-        //Scenehandler
+        SceneHandler.loadSavedArmies(event);
     }
 
     @FXML
