@@ -1,0 +1,18 @@
+#main-text {
+    -fx-font-family: "Hiragino Sans W8";
+    -fx-font-scale: inherit;
+    -fx-font-size: 40;
+    -fx-fill: white;
+    -fx-stroke: black;
+    -fx-stroke-width: 3;
+    -fx-stroke-type: centered;
+    -fx-stroke-line-cap: square;
+}
+
+#main-text:hover {
+    -fx-fill: lightblue;
+}
+
+#main-text:pressed {
+    -fx-fill: #4a98ff;
+}
