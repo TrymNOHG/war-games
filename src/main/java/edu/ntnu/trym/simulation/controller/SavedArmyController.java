@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.ArmyFileDisplay;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -42,5 +43,17 @@ public class SavedArmyController implements Initializable {
 //        saveSlot1.setCenter(new Text("Hello"));
 
     }
+
+    @FXML
+    void backToBattlePrep(ActionEvent event) throws IOException {
+        SceneHandler.loadBattlePreparation(event);
+    }
+
+    @FXML
+    void loadArmy(ActionEvent event) {
+
+    }
+
+
 
 }
