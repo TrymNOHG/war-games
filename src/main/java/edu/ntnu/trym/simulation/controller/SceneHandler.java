@@ -104,6 +104,15 @@ public class SceneHandler {
         SceneHandler.loadScene("ArmyConstruction", event);
     }
 
+    /**
+     * This method switches the current scene with the saved army slot scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadSavedArmies(ActionEvent event) throws IOException {
+        SceneHandler.loadScene("SavedArmy", event);
+    }
+
 
 
     /**
