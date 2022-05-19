@@ -1,21 +1,20 @@
 package edu.ntnu.trym.simulation.model;
 
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileTime;
 
 /**
  * This class represents a depiction of an army saved to a file. The file and the army's information will be
  * instantiated as text and displayed in the GUI.
  */
 public class ArmyFileDisplay {
-    private File armyFile;
+    private final File armyFile;
 
     private VBox armyDisplay;
 
@@ -39,7 +38,7 @@ public class ArmyFileDisplay {
      * This method creates the necessary text boxes in order to display the information. It, then, attaches these
      * boxes to a given region.
      */
-    public void constructRegion(){
+    public void constructRegion() throws IOException {
         HBox armyNameInfo = PaneSpacing.createHBoxWithSpacing(new Text(army.getName()));
 
         HBox infantryNumInfo = createUnitInformation(UnitType.INFANTRY);
@@ -52,8 +51,8 @@ public class ArmyFileDisplay {
         HBox fileNameInfo = createFileNameInfo();
 
 
-        this.armyDisplay = new VBox(armyNameInfo, infantryNumInfo, cavalryNumInfo, rangedNumInfo, commanderNumInfo,
-                timeSavedInfo, fileLocationInfo, fileNameInfo);
+        this.armyDisplay = PaneSpacing.createVBoxWithSpacing(armyNameInfo, infantryNumInfo, cavalryNumInfo,
+                rangedNumInfo, commanderNumInfo, timeSavedInfo, fileLocationInfo, fileNameInfo);
 //        this.armyDisplay.setPadding(new Insets(20));
         this.armyDisplay.autosize();
     }
@@ -72,9 +71,10 @@ public class ArmyFileDisplay {
      * This method creates the time saved information of the army file.
      * @return A horizontal layout with the file save information, represented using an HBox object
      */
-    private HBox createTimeSavedInfo(){
+    private HBox createTimeSavedInfo() throws IOException {
         Text savedText = new Text("Saved: ");
-        Text timeSaved = new Text(String.valueOf(this.armyFile.lastModified()));
+        FileTime fileTime = Files.getLastModifiedTime(this.armyFile.toPath());
+        Text timeSaved = new Text(fileTime.toString().substring(0, 10));
         return PaneSpacing.createHBoxWithSpacing(savedText, timeSaved);
     }
 
