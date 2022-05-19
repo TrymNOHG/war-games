@@ -28,3 +28,22 @@ linear-gradient(from 47.981% 73.1591% to 48.2185% 42.0428%, #d72f2f 0.0%, #00000
     -fx-background-image: url('/pictures/Commander_Unit.png') center no-repeat;
     -fx-background-size : cover;
 }
+
+#save-slot{
+    -fx-background-color: white;
+    -fx-background-size : cover;
+
+}
+
+#save-slot:hover{
+    -fx-background-color: lightblue;
+}
+
+#save-slot:pressed{
+    -fx-background-color: #9f9fe8;
+}
+
+
+#save-slot:focused{
+    -fx-background-color: red;
+}
