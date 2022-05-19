@@ -43,17 +43,25 @@ public class PaneSpacing {
     private static Pane createPaneWithSpacing(Pane typeOfPane, Node...nodes){
         Pane initialPaneSpacing = new Pane();
         typeOfPane.getChildren().add(initialPaneSpacing);
-        HBox.setHgrow(initialPaneSpacing, Priority.ALWAYS);
+        addPaneProperties(initialPaneSpacing, typeOfPane);
 
         Arrays.stream(nodes).forEach(node -> {
             Pane spacingPane = new Pane();
-
-            if(typeOfPane instanceof HBox) HBox.setHgrow(spacingPane, Priority.ALWAYS);
-            else if(typeOfPane instanceof VBox) VBox.setVgrow(spacingPane, Priority.ALWAYS);
-
+            addPaneProperties(spacingPane, typeOfPane);
             typeOfPane.getChildren().addAll(node, spacingPane);
         });
         return typeOfPane;
+    }
+
+    /**
+     * This method takes in a pane to receive a property and then finds out which typeOfPane it will be attached to.
+     * It, then, attaches desired properties to those panes.
+     * @param nodeToGetProperty The node that will get a property, represented as a Node object.
+     * @param typeOfPane        The type of pane it will be attached to, represented as a Pane object.
+     */
+    private static void addPaneProperties(Node nodeToGetProperty, Pane typeOfPane){
+        if(typeOfPane instanceof HBox) HBox.setHgrow(nodeToGetProperty, Priority.ALWAYS);
+        else if(typeOfPane instanceof VBox) VBox.setVgrow(nodeToGetProperty, Priority.ALWAYS);
     }
 
 }
