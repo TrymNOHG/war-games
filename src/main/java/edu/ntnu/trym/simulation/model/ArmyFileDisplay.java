@@ -40,7 +40,7 @@ public class ArmyFileDisplay {
      * boxes to a given region.
      */
     public void constructRegion(){
-        Text armyName = new Text(army.getName());
+        HBox armyNameInfo = PaneSpacing.createHBoxWithSpacing(new Text(army.getName()));
 
         HBox infantryNumInfo = createUnitInformation(UnitType.INFANTRY);
         HBox cavalryNumInfo = createUnitInformation(UnitType.CAVALRY);
@@ -49,23 +49,33 @@ public class ArmyFileDisplay {
 
         HBox timeSavedInfo = createTimeSavedInfo();
         HBox fileLocationInfo = createFileLocationInfo();
+        HBox fileNameInfo = createFileNameInfo();
 
-        Text fileName = new Text(this.armyFile.getName());
 
-        this.armyDisplay = new VBox(armyName, infantryNumInfo, cavalryNumInfo, rangedNumInfo, commanderNumInfo, timeSavedInfo,
-                fileLocationInfo, fileName);
-        this.armyDisplay.setPadding(new Insets(20));
+        this.armyDisplay = new VBox(armyNameInfo, infantryNumInfo, cavalryNumInfo, rangedNumInfo, commanderNumInfo,
+                timeSavedInfo, fileLocationInfo, fileNameInfo);
+//        this.armyDisplay.setPadding(new Insets(20));
         this.armyDisplay.autosize();
     }
 
     /**
+     * This method creates the file name information of the army file.
+     * @return A horizontal layout with the file name information, represented using an HBox object
+     */
+    private HBox createFileNameInfo(){
+        Text description = new Text("File Name: ");
+        Text fileName = new Text(this.armyFile.getName());
+        return PaneSpacing.createHBoxWithSpacing(description, fileName);
+    }
+
+    /**
      * This method creates the time saved information of the army file.
-     * @return A horizontal layout with the file save information,represented using an HBox object
+     * @return A horizontal layout with the file save information, represented using an HBox object
      */
     private HBox createTimeSavedInfo(){
         Text savedText = new Text("Saved: ");
         Text timeSaved = new Text(String.valueOf(this.armyFile.lastModified()));
-        return createHBoxWithSpacing(savedText, timeSaved);
+        return PaneSpacing.createHBoxWithSpacing(savedText, timeSaved);
     }
 
     /**
@@ -75,7 +85,7 @@ public class ArmyFileDisplay {
     private HBox createFileLocationInfo(){
         Text locationText = new Text("Location: ");
         Text pathSaved = new Text(this.location);
-        return createHBoxWithSpacing(locationText, pathSaved);
+        return PaneSpacing.createHBoxWithSpacing(locationText, pathSaved);
     }
 
     /**
@@ -87,28 +97,7 @@ public class ArmyFileDisplay {
     private HBox createUnitInformation(UnitType unitType){
         Text unitNameText = new Text(unitType + ": ");
         Text unitNumberText = new Text(String.valueOf(this.army.getUnitsByType(unitType).size()));
-        return createHBoxWithSpacing(unitNameText, unitNumberText);
-    }
-
-    /**
-     * This method takes in different nodes and creates an HBox with equal spaces between each of the nodes. The
-     * spaces are created using panes.
-     * @param nodes Any type of node from JavaFX such as Text
-     */
-    private HBox createHBoxWithSpacing(Node...nodes){
-        HBox hBox = new HBox();
-        Pane initialPane = new Pane();
-        hBox.getChildren().add(initialPane);
-        HBox.setHgrow(initialPane, Priority.ALWAYS);
-
-        Arrays.stream(nodes).forEach(node -> {
-            Pane spacingPane = new Pane();
-            HBox.setHgrow(spacingPane, Priority.ALWAYS);
-            hBox.getChildren().addAll(node, spacingPane);
-
-        });
-
-        return hBox;
+        return PaneSpacing.createHBoxWithSpacing(unitNameText, unitNumberText);
     }
 
     /**
