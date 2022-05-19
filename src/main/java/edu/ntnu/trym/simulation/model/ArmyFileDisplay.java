@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation.model;
 
+import edu.ntnu.trym.simulation.controller.SceneHandler;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
+import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
@@ -53,8 +55,10 @@ public class ArmyFileDisplay {
 
         this.armyDisplay = PaneSpacing.createVBoxWithSpacing(armyNameInfo, infantryNumInfo, cavalryNumInfo,
                 rangedNumInfo, commanderNumInfo, timeSavedInfo, fileLocationInfo, fileNameInfo);
-//        this.armyDisplay.setPadding(new Insets(20));
+        this.armyDisplay.setPadding(new Insets(20));
         this.armyDisplay.autosize();
+        this.armyDisplay.getStylesheets().add(String.valueOf(SceneHandler.class.getResource("/stylesheets/Background.css")));
+        this.armyDisplay.setId("save-slot");
     }
 
     /**
