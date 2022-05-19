@@ -9,7 +9,8 @@ import javafx.scene.layout.VBox;
 import java.util.Arrays;
 
 /**
- * This class provides utility for spacing layouts using panes. This is done by placing panes between each node provided.
+ * This class provides utility for spacing layouts using panes. This is done by placing panes between each node
+ * provided.
  */
 public class PaneSpacing {
 
