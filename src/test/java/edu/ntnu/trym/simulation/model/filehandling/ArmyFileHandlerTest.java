@@ -301,7 +301,7 @@ class ArmyFileHandlerTest{
         }
 
         @Test
-        void it_cant_overwrite_a_non_existent_file() {
+        void it_cant_overwrite_a_non_existent_file() throws IOException {
             //Given/Arrange
             Army changedArmy = new Army("Sarahs Army", fillArmyList());
 

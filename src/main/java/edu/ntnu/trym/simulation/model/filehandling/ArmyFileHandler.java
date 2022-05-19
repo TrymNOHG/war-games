@@ -41,7 +41,7 @@ public class ArmyFileHandler {
      * @return                      The status of overwriting. If the file doesn't already exist, then {@code false}. Else, {@code true}
      * @throws NullPointerException This exception is thrown if army is null
      */
-    public boolean overwriteExistingArmyFile(Army army, File file) throws NullPointerException {
+    public boolean overwriteExistingArmyFile(Army army, File file) throws NullPointerException, IOException {
         if(!FileHandler.fileExists(file)) return false;
         writeToArmyFile(army, file);
         return true;
@@ -63,7 +63,7 @@ public class ArmyFileHandler {
      * @param army         The army that will be saved, represented using an Army object
      * @param armyFile     The file which the information will be saved, represented using a File object
      */
-    private void writeToArmyFile(Army army, File armyFile) throws NullPointerException{
+    private void writeToArmyFile(Army army, File armyFile) throws NullPointerException, IOException {
         Objects.requireNonNull(army, "Army cannot be null");
         try(BufferedWriter armyBufferedWriter = new BufferedWriter(new FileWriter(armyFile))){
             //Adding the army's name to the first line
@@ -80,9 +80,6 @@ public class ArmyFileHandler {
                             DELIMITER + unit.getHealth() + DELIMITER + unit.getAttack() + DELIMITER + unit.getArmor());
                 }
             }
-        }
-        catch (IOException e){
-            e.printStackTrace();
         }
     }
 
