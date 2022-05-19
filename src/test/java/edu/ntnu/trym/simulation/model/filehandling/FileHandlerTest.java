@@ -117,11 +117,11 @@ public class FileHandlerTest {
         try(fileWalk){
             fileWalk.forEach(file -> {
                 String fileName = file.getFileName().toString();
+                System.out.println(fileName);
                 String extensionText = fileName.substring(fileName.length() - 4);
                 if(extensionText.equals(".csv")) counter.getAndIncrement();
             });
         }
         return counter.get();
     }
-
 }

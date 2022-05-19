@@ -58,7 +58,7 @@ public class FileHandler {
      */
     public static int getNumberOfCSVFiles() throws IOException {
         AtomicInteger counter = new AtomicInteger();
-        Stream<Path> fileWalk = Files.walk(FileSystems.getDefault().getPath("src", "main", "resources", "army-files"));
+        Stream<Path> fileWalk = getFilesInDirectory();
         try(fileWalk){
             fileWalk.forEach(path -> {
                 if(endsWithCSV(path)) counter.getAndIncrement();
@@ -67,6 +67,25 @@ public class FileHandler {
         return counter.get();
     }
 
+    /**
+     * This method returns a stream of the file paths in the army-files directory.
+     * @return              All file paths, represented as a Stream
+     * @throws IOException  This exception is thrown if the path to the directory is invalid
+     */
+    public static Stream<Path> getFilesInDirectory() throws IOException {
+        return Files.walk(FileSystems.getDefault().getPath("src", "main", "resources", "army-files"));
+    }
+
+    /**
+     * This method strips a CSV file of the extension .csv and returns just the file name.
+     * @param fileName Name of the file with extension, represented as a String
+     * @return         Name of the file without the extension, represented as a String
+     */
+    @Deprecated
+    public static String getFileNameWithoutExtension(String fileName){
+        return fileName.replaceAll(".csv", "");
+    }
+    //TODO: Write test for this method
 
     /**
      * This method checks if a given File's path ends with .csv, therefore making it a CSV file.
