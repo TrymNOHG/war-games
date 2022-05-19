@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.controller;
 
+import edu.ntnu.trym.simulation.model.AlertDialog;
 import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.ArmyFileDisplay;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
@@ -227,8 +228,14 @@ public class SavedArmyController implements Initializable {
     }
 
     @FXML
-    void loadArmy(ActionEvent event) {
-
+    void loadArmy(ActionEvent event) throws IOException {
+        if(selectedArmy == null) {
+            AlertDialog.showError("No Army is currently selected.");
+        }
+        else{
+            SimulationSingleton.INSTANCE.setArmyOfCurrentArmy(selectedArmy);
+            SceneHandler.loadBattlePreparation(event);
+        }
     }
 
 
