@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.*;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import edu.ntnu.trym.simulation.model.units.Unit;
@@ -48,7 +49,7 @@ public class ArmyConstructionController implements Initializable {
 
     private boolean defaultUnit = true;
 
-    private ArmyFileHandler armyFileHandler = new ArmyFileHandler();
+    private final ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
     @FXML
     private ComboBox<UnitType> unitTypeBox = new ComboBox<>();
@@ -172,27 +173,15 @@ public class ArmyConstructionController implements Initializable {
 
     private void createArmyTable(){
 
-        TableColumn<Unit, String> unitTypeCol = new TableColumn<>("Unit Type");
-        unitTypeCol.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        TableView<Unit> armyTableView = new ArmyTable.Builder()
+                .addUnitColumn("Unit Type", "unitType")
+                .addUnitColumn("Name", "name")
+                .addUnitColumn("Health", "health")
+                .addUnitColumn("Attack", "attack")
+                .addUnitColumn("Armor", "armor")
+                .build();
 
-        TableColumn<Unit, String> nameCol = new TableColumn<>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<Unit, String> healthCol = new TableColumn<>("Health");
-        healthCol.setCellValueFactory(new PropertyValueFactory<>("health"));
-
-        TableColumn<Unit, String> attackCol = new TableColumn<>("Attack");
-        attackCol.setCellValueFactory(new PropertyValueFactory<>("attack"));
-
-        TableColumn<Unit, String> armorCol = new TableColumn<>("Armor");
-        armorCol.setCellValueFactory(new PropertyValueFactory<>("armor"));
-
-        //TODO: add amount once everything else works
-//        TableColumn<Army, String> sixthColumn = new TableColumn<>("Amount");
-//        sixthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
-
-        //TODO: check better options for this:
-        armyTable.getColumns().addAll(unitTypeCol, nameCol, healthCol, attackCol, armorCol);
+        armyTable.getColumns().addAll(armyTableView.getColumns());
         armyTable.setItems(FXCollections.observableList(armyConstructed.getAllUnits()));
 
     }
