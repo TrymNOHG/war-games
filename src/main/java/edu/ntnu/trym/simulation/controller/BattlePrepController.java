@@ -118,13 +118,13 @@ public class BattlePrepController implements Initializable {
         terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
 
         if(armyNameText1 != null && armyNameText2 != null) displayArmy();
-
+        //TODO: This needs to be fixed since when the text is changed to no army equipped
     }
 
-
-
+    //TODO: refactor to make the code more readable
     private void displayArmy(){
         boolean displayInfo = false;
+
         if(SimulationSingleton.INSTANCE.getArmy1() != null) {
             displayInfo = true;
             armyNameText1.setText(SimulationSingleton.INSTANCE.getArmy1().getName());
@@ -158,25 +158,23 @@ public class BattlePrepController implements Initializable {
         removeArmyButton2.setVisible(displayInfo);
     }
 
+
     private void createArmyTable(Army army, TableView<Unit> tableView){
-        TableColumn<Unit, String> firstColumn = new TableColumn<>("Unit Type");
-        firstColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
 
-        TableColumn<Unit, String> secondColumn = new TableColumn<>("Name");
-        secondColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        createUnitColumn("Unit Type", "unitType", tableView);
+        createUnitColumn("Name", "name", tableView);
+        createUnitColumn("Health", "health", tableView);
+        createUnitColumn("Attack", "attack", tableView);
+        createUnitColumn("Armor", "armor", tableView);
 
-        TableColumn<Unit, String> thirdColumn = new TableColumn<>("Health");
-        thirdColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
-
-        TableColumn<Unit, String> fourthColumn = new TableColumn<>("Attack");
-        fourthColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
-
-        TableColumn<Unit, String> fifthColumn = new TableColumn<>("Armor");
-        fifthColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
-
-
-        tableView.getColumns().addAll(firstColumn, secondColumn, thirdColumn, fourthColumn, fifthColumn);
         tableView.setItems(FXCollections.observableList(army.getAllUnits()));
+    }
+
+
+    private void createUnitColumn(String unitInfoHeader, String unitVariableName, TableView<Unit> tableView){
+        TableColumn<Unit, String> column = new TableColumn<>(unitInfoHeader);
+        column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
+        tableView.getColumns().add(column);
     }
 
     private int armyNumberByButton(ActionEvent event){
