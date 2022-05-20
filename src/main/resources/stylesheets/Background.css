@@ -3,29 +3,46 @@ linear-gradient(from 47.981% 73.1591% to 48.2185% 42.0428%, #d72f2f 0.0%, #00000
 }
 
 #main-menu-background{
-    -fx-background-image: url('/pictures/Main_Menu_Background.png') center no-repeat;
+    -fx-background-image: url('/pictures/background/Main_Menu_Background.png') center no-repeat;
     -fx-background-size : cover;
 }
 
 #unit-info-background{
-    -fx-background-image: url('/pictures/Forest_terrain.jpeg') center no-repeat;
+    -fx-background-image: url('/pictures/background/unit_info.jpeg') center no-repeat;
     -fx-background-size : cover;
 }
 
 #infantry-unit-pic{
-    -fx-background-image: url('/pictures/Infantry_Unit.png') center no-repeat;
+    -fx-background-image: url('/pictures/unit/Infantry_Unit.png') center no-repeat;
     -fx-background-size : cover;
 }
 #cavalry-unit-pic{
-    -fx-background-image: url('/pictures/Cavalry_Unit.png') center no-repeat;
+    -fx-background-image: url('/pictures/unit/Cavalry_Unit.png') center no-repeat;
     -fx-background-size : cover;
 }
 #ranged-unit-pic{
-    -fx-background-image: url('/pictures/Ranged_Unit.png') center no-repeat;
+    -fx-background-image: url('/pictures/unit/Ranged_Unit.png') center no-repeat;
     -fx-background-size : cover;
 }
 #commander-unit-pic{
-    -fx-background-image: url('/pictures/Commander_Unit.png') center no-repeat;
+    -fx-background-image: url('/pictures/unit/Commander_Unit.png') center no-repeat;
+    -fx-background-size : cover;
+}
+
+#default-background{
+    -fx-background-image: url('/pictures/background/default_background.jpg') center no-repeat;
+    -fx-background-size : cover;
+}
+#hill-background{
+    -fx-background-image: url('/pictures/background/hill_terrain.jpg') center no-repeat;
+    -fx-background-size : cover;
+}
+#plains-background{
+    -fx-background-image: url('/pictures/background/plains_terrain.jpg') center no-repeat;
+    -fx-background-size : cover;
+}
+#forest-background{
+    -fx-background-image: url('/pictures/background/forest_terrain.jpg') center no-repeat;
     -fx-background-size : cover;
 }
 
