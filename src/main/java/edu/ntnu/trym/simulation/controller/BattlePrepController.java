@@ -158,7 +158,12 @@ public class BattlePrepController implements Initializable {
         removeArmyButton2.setVisible(displayInfo);
     }
 
-
+    /**
+     * This method creates a table containing all the information of a unit. This is done by creating a column for each
+     * attribute that a unit has {@link #createUnitColumn(String, String, TableView)}.
+     * @param army      The army that provides the information to be displayed, given as an Army object.
+     * @param tableView The table where the information will be displayed, given as a TableView object.
+     */
     private void createArmyTable(Army army, TableView<Unit> tableView){
 
         createUnitColumn("Unit Type", "unitType", tableView);
@@ -170,13 +175,25 @@ public class BattlePrepController implements Initializable {
         tableView.setItems(FXCollections.observableList(army.getAllUnits()));
     }
 
-
+    /**
+     * This method creates a table column with the specified information concerning a unit. It, thereafter, is added
+     * as a column in the tableview provided.
+     * @param unitInfoHeader    The header of the column being added, represented as a String.
+     * @param unitVariableName  The name of the variable from the Unit, represented as a String.
+     * @param tableView         The tableview the column will be placed in, represented as a TableView object.
+     */
     private void createUnitColumn(String unitInfoHeader, String unitVariableName, TableView<Unit> tableView){
         TableColumn<Unit, String> column = new TableColumn<>(unitInfoHeader);
         column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
         tableView.getColumns().add(column);
     }
 
+    /**
+     * This method takes the javafx id of a given event's button and finds out whether the event belonged
+     * to army one, indicated by a 1 in the id, or belongs to army2, indicated by a 2.
+     * @param event An action taken by the user such as a button click, represented using an Event object.
+     * @return      A number representing which army the action adheres to, using the ints 1 for army1 and 2 for army2.
+     */
     private int armyNumberByButton(ActionEvent event){
         if(event.getSource().toString().contains("1")){
             return 1;
