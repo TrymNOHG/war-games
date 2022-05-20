@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.model;
+package edu.ntnu.trym.simulation.model.armydisplay;
 
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.scene.control.TableColumn;

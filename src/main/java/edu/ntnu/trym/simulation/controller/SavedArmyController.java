@@ -2,7 +2,7 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.AlertDialog;
 import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.ArmyFileDisplay;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyFileDisplay;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import javafx.event.ActionEvent;

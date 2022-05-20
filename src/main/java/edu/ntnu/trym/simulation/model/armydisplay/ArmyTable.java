@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.model;
+package edu.ntnu.trym.simulation.model.armydisplay;
 
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
@@ -18,7 +18,7 @@ public class ArmyTable extends TableView<Unit>{
      * This is a constructor which is used to construct an army table.
      * @param armyTableBuilder The builder used to construct the army table, represented using an ArmyTableBuilder object.
      */
-    public ArmyTable(ArmyTableBuilder armyTableBuilder) {
+    public ArmyTable(Builder armyTableBuilder) {
         super();
         this.getColumns().addAll(armyTableBuilder.armyTableColumns);
     }
@@ -28,10 +28,10 @@ public class ArmyTable extends TableView<Unit>{
      * to efficiently accomplish this, as well as remove the telescoping constructor anti-pattern, the builder pattern
      * was utilized.
      */
-    public static class ArmyTableBuilder {
+    public static class Builder {
         private final ObservableList<TableColumn<Unit, ?>> armyTableColumns;
 
-        public ArmyTableBuilder() {
+        public Builder() {
             this.armyTableColumns = FXCollections.observableArrayList();
         }
 
@@ -42,9 +42,17 @@ public class ArmyTable extends TableView<Unit>{
          * @param unitVariableName The unit attribute the information will be extracted from, represented as a String.
          * @return                 The builder itself is returned, represented as an ArmyTableBuilder object.
          */
-        public ArmyTableBuilder addUnitColumn(String unitInfoHeader, String unitVariableName) {
-            armyTableColumns.add(new UnitColumn(unitInfoHeader, unitVariableName).getColumn());
+        public Builder addUnitColumn(String unitInfoHeader, String unitVariableName) {
+            this.armyTableColumns.add(new UnitColumn(unitInfoHeader, unitVariableName).getColumn());
             return this;
+        }
+
+        /**
+         * This method actually constructs the table by creating an ArmyTable object.
+         * @return The army table view, represented using an ArmyTable object.
+         */
+        public ArmyTable build(){
+            return new ArmyTable(this);
         }
     }
 

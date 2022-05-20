@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
@@ -9,9 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -200,8 +199,8 @@ public class BattlePrepController implements Initializable {
     }
 
     /**
-     * This method creates a table containing all the information of a unit. This is done by creating a column for each
-     * attribute that a unit has {@link #createUnitColumn(String, String, TableView)}.
+     * This method creates a table containing all the information of a unit. This is done by using the army table
+     * class to build the columns desired {@link ArmyTable#ArmyTable(ArmyTable.Builder)}.
      * @param army      The army that provides the information to be displayed, given as an Army object.
      * @param tableView The table where the information will be displayed, given as a TableView object.
      */
@@ -209,26 +208,15 @@ public class BattlePrepController implements Initializable {
 
         if(tableView.getColumns().size() != 0) return;
 
-        createUnitColumn("Unit Type", "unitType", tableView);
-        createUnitColumn("Name", "name", tableView);
-        createUnitColumn("Health", "health", tableView);
-        createUnitColumn("Attack", "attack", tableView);
-        createUnitColumn("Armor", "armor", tableView);
+        tableView = new ArmyTable.Builder()
+                .addUnitColumn("Unit Type", "unitType")
+                .addUnitColumn("Name", "name")
+                .addUnitColumn("Health", "health")
+                .addUnitColumn("Attack", "attack")
+                .addUnitColumn("Armor", "armor")
+                .build();
 
         tableView.setItems(FXCollections.observableList(army.getAllUnits()));
-    }
-
-    /**
-     * This method creates a table column with the specified information concerning a unit. It, thereafter, is added
-     * as a column in the tableview provided.
-     * @param unitInfoHeader    The header of the column being added, represented as a String.
-     * @param unitVariableName  The name of the variable from the Unit, represented as a String.
-     * @param tableView         The tableview the column will be placed in, represented as a TableView object.
-     */
-    private void createUnitColumn(String unitInfoHeader, String unitVariableName, TableView<Unit> tableView){
-        TableColumn<Unit, String> column = new TableColumn<>(unitInfoHeader);
-        column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
-        tableView.getColumns().add(column);
     }
 
     /**

@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.model;
+package edu.ntnu.trym.simulation.model.armydisplay;
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
