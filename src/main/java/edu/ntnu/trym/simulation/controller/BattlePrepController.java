@@ -57,6 +57,9 @@ public class BattlePrepController implements Initializable {
     private Button removeArmyButton2;
 
     @FXML
+    private Button fightButton;
+
+    @FXML
     private ComboBox<TerrainType> terrainComboBox = new ComboBox<>();
     //Check if there were previous armies, if so load them, if not let the default be loaded.
 
@@ -94,7 +97,7 @@ public class BattlePrepController implements Initializable {
     void removeArmy(ActionEvent event) {
         if(armyNumberByButton(event) == 1) SimulationSingleton.INSTANCE.setArmy1(null);
         else SimulationSingleton.INSTANCE.setArmy2(null);
-        initialData();
+        updateData();
     }
 
     @FXML
@@ -113,12 +116,31 @@ public class BattlePrepController implements Initializable {
     }
 
 
+    @FXML
+    void simulateFight(ActionEvent event) {
+
+    }
+
+    //TODO: check that initialData only works with initial data. Maybe make updateData method
     private void initialData(){
         terrainComboBox.getItems().addAll(TerrainType.values());
         terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
 
-        if(armyNameText1 != null && armyNameText2 != null) displayArmy();
+        updateData();
         //TODO: This needs to be fixed since when the text is changed to no army equipped
+    }
+
+    private void updateData(){
+        if(armyNameText1 != null && armyNameText2 != null) displayArmy();
+
+        if(readyToFight()){
+            fightButton.setDisable(false);
+            fightButton.setId("main-load-button");
+        }
+        else if(this.fightButton != null){
+            fightButton.setDisable(true);
+            fightButton.setId("main-button");
+        }
     }
 
     /**
@@ -173,6 +195,10 @@ public class BattlePrepController implements Initializable {
         removeArmyButton2.setVisible(displayInfo);
     }
 
+    private boolean readyToFight(){
+        return SimulationSingleton.INSTANCE.getArmy1() != null && SimulationSingleton.INSTANCE.getArmy2() != null;
+    }
+
     /**
      * This method creates a table containing all the information of a unit. This is done by creating a column for each
      * attribute that a unit has {@link #createUnitColumn(String, String, TableView)}.
@@ -180,6 +206,8 @@ public class BattlePrepController implements Initializable {
      * @param tableView The table where the information will be displayed, given as a TableView object.
      */
     private void createArmyTable(Army army, TableView<Unit> tableView){
+
+        if(tableView.getColumns().size() != 0) return;
 
         createUnitColumn("Unit Type", "unitType", tableView);
         createUnitColumn("Name", "name", tableView);
@@ -218,4 +246,24 @@ public class BattlePrepController implements Initializable {
 
 }
 
-//Maybe add a button for editing an existing army and one for removing
+
+/*
+TODO:
+        Fix the table problem where if one army is remove, the columns are doubled up. (Fixed!)
+        Edit the BattlePreparation scene to have a fight button that is disabled until both armies are non-null Done!
+        3. Create a fight scene and a fight controller.
+        4. Add methods for actually conducting the fight in the fight controller.
+                    - Attempt to create a text that rolls down the screen for different events
+                    (with a skip button that appears when the match is actually complete)
+        5. Add results scene and controller
+        6. Add button in settings to return to main menu
+        7. Fix the unit information screen and add proper info as well as for the help page.
+        8. Add a warning dialog that pops up if a file that was attempted to be loaded was corrupt.
+        9. Add background picture for different terrains and to saved armies
+        10. Javadoc all classes and methods
+        11. Look for places that need refactoring
+        12. Look over all tests
+        13. Try and break the simulation. (Check where error and warning boxes may be used.
+        14. If there is extra time, allow the saved files to be organized
+            - Based on Army Name, File name, save time, etc.
+ */
