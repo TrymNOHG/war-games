@@ -74,6 +74,7 @@ public class SavedArmyController implements Initializable {
         setSaveSlotProperties();
     }
 
+    //TODO: refactor this method since it is weirdly structured.
     private void addListeners() throws IOException {
         updatePage();
         this.nextPageButton.setOnMouseClicked(event -> {
@@ -97,6 +98,7 @@ public class SavedArmyController implements Initializable {
         addListenerToArmySlots();
     }
 
+    //TODO: maybe refactor this so that one method sets all listeners and one method sets on listener.
     private void addListenerToArmySlots(){
         saveSlot1.setOnMouseClicked(mouseEvent -> {
             //Do stuff when the slot is pressed such as make the region blue
@@ -121,7 +123,6 @@ public class SavedArmyController implements Initializable {
             loadArmyButton.setId("main-load-button");
 
         });
-
     }
 
     private void updatePage() throws IOException {
@@ -143,15 +144,22 @@ public class SavedArmyController implements Initializable {
             fileWalk.skip((currentPage-1) * 4L + 1).forEach(path -> {
                 if(counter.get() == 4) return;
 
+                File file = null;
                 try{
-                    File file = new File(String.valueOf(path));
+                    file = new File(String.valueOf(path));
 
                     setArmyBasedOnPage(counter.get(), file);
 
                     counter.getAndIncrement();
                 }
                 catch (IOException | InstantiationException e) {
-                    throw new RuntimeException(e);
+                    AlertDialog.showWarning("Due to " + e.getMessage() + ": " + path.getFileName() + " was deleted");
+                    file.delete();
+
+                    //TODO: make sure the correct amount of pages is changed. So, that if there was 5 slots and 2 pages
+                    //then there are only 4 and 1 after.
+
+                    //TODO: when NumberFormat is thrown...
                 }
             });
         fileWalk.close();
