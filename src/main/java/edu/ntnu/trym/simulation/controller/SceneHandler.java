@@ -15,6 +15,8 @@ import java.util.Objects;
  * This class concerns itself with the handling of scenes. As such, one if its methods can switch to a desired scene,
  * by taking the desired scene's location, as well as the event that triggered the switch, and creating a new scene.
  * Since it handles scenes, it also opens the starting scene.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class SceneHandler {
     private static Parent root;
@@ -113,6 +115,14 @@ public class SceneHandler {
         SceneHandler.loadScene("SavedArmy", event);
     }
 
+    /**
+     * This method switches the current scene with the fight scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadFightScreen(ActionEvent event) throws IOException {
+        SceneHandler.loadScene("SimulationScreen", event);
+    }
 
 
     /**
