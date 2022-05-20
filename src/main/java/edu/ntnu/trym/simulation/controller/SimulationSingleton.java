@@ -7,6 +7,8 @@ import edu.ntnu.trym.simulation.model.TerrainType;
  * This enumeration is constructed using the singleton design pattern. The implementation of this design pattern
  * restricts the amount of instances of the enumeration to one. This is essential for the enumeration's purpose.
  * The enum contains all the data that needs to be transmitted between controllers.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public enum SimulationSingleton {
     INSTANCE;

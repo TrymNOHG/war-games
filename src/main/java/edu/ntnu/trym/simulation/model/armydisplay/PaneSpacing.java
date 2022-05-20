@@ -11,6 +11,8 @@ import java.util.Arrays;
 /**
  * This class provides utility for spacing layouts using panes. This is done by placing panes between each node
  * provided.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class PaneSpacing {
 

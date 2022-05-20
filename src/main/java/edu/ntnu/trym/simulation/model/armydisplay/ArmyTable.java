@@ -10,6 +10,8 @@ import javafx.scene.control.TableView;
 /**
  * This class concerns itself with building a table view filled with the desired unit information columns. It does so
  * by using an ArmyTableBuilder.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class ArmyTable extends TableView<Unit>{
 
