@@ -42,7 +42,7 @@ public class ArmyTable extends TableView<Unit>{
          * tableview.
          * @param unitInfoHeader   The name of the column, represented using a String.
          * @param unitVariableName The unit attribute the information will be extracted from, represented as a String.
-         * @return                 The builder itself is returned, represented as an ArmyTableBuilder object.
+         * @return                 The builder itself is returned, represented as a Builder object.
          */
         public Builder addUnitColumn(String unitInfoHeader, String unitVariableName) {
             this.armyTableColumns.add(new UnitColumn(unitInfoHeader, unitVariableName).getColumn());
