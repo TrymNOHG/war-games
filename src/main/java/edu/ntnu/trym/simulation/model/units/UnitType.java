@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation.model;
+package edu.ntnu.trym.simulation.model.units;
 
 //TODO: Javadoc
 public enum UnitType {

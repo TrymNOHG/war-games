@@ -1,7 +1,6 @@
 package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
-import edu.ntnu.trym.simulation.model.UnitType;
 
 import java.util.Objects;
 

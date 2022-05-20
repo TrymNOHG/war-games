@@ -1,7 +1,6 @@
 package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
-import edu.ntnu.trym.simulation.model.UnitType;
 
 /**
  * This class represents a ranged unit. A ranged unit has medium-low base stats for attack (15) and low for armor (12).

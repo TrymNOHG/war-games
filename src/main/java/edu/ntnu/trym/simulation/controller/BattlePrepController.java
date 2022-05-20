@@ -117,8 +117,8 @@ public class BattlePrepController implements Initializable {
 
 
     @FXML
-    void simulateFight(ActionEvent event) {
-
+    void simulateFight(ActionEvent event) throws IOException {
+        SceneHandler.loadFightScreen(event);
     }
 
     //TODO: check that initialData only works with initial data. Maybe make updateData method
@@ -251,14 +251,14 @@ public class BattlePrepController implements Initializable {
 TODO:
         Fix the table problem where if one army is remove, the columns are doubled up. (Fixed!)
         Edit the BattlePreparation scene to have a fight button that is disabled until both armies are non-null Done!
-        3. Create a fight scene and a fight controller.
+        Create a fight scene and a fight controller. Done!
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
         5. Add results scene and controller
         6. Add button in settings to return to main menu
         7. Fix the unit information screen and add proper info as well as for the help page.
-        8. Add a warning dialog that pops up if a file that was attempted to be loaded was corrupt.
+        8. Add a warning dialog that pops up if a file that was attempted to be loaded was corrupt. Make sure amount of pages is correct
         9. Add background picture for different terrains and to saved armies
         10. Javadoc all classes and methods
         11. Look for places that need refactoring

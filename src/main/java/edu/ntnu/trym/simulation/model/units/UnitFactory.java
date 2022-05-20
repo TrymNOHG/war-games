@@ -1,6 +1,4 @@
-package edu.ntnu.trym.simulation.model;
-
-import edu.ntnu.trym.simulation.model.units.*;
+package edu.ntnu.trym.simulation.model.units;
 
 import java.util.ArrayList;
 import java.util.List;

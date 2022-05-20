@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation.model;
 
 import edu.ntnu.trym.simulation.model.units.Unit;
+import edu.ntnu.trym.simulation.model.units.UnitType;
+
 import java.util.*;
 
 /**

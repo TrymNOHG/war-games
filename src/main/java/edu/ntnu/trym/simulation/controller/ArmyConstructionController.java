@@ -4,6 +4,8 @@ import edu.ntnu.trym.simulation.model.*;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import edu.ntnu.trym.simulation.model.units.Unit;
+import edu.ntnu.trym.simulation.model.units.UnitFactory;
+import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

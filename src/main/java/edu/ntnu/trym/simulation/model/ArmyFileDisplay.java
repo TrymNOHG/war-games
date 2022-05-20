@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation.model;
 
 import edu.ntnu.trym.simulation.controller.SceneHandler;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
+import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
