@@ -7,6 +7,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * This class concerns itself with the aspects intrinsic to a unit column. It, therefore, contains a method for
  * the creation of such a column.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class UnitColumn {
     private TableColumn<Unit, ?> column;
@@ -29,6 +31,7 @@ public class UnitColumn {
     private void createUnitColumn(String unitInfoHeader, String unitVariableName){
         this.column = new TableColumn<>(unitInfoHeader);
         this.column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
+        this.column.setStyle("-fx-alignment: CENTER");
     }
 
     /**
