@@ -126,13 +126,16 @@ public class BattlePrepController implements Initializable {
      * changes, the enum value can be stored in the SimulationSingleton class.
      */
     private void addTerrainListener(){
-        terrainComboBox.setOnAction(event -> {
-            SimulationSingleton.INSTANCE.setCurrentTerrain(terrainComboBox.getValue());
-        });
+        terrainComboBox.setOnAction(event -> SimulationSingleton.INSTANCE.setCurrentTerrain(terrainComboBox.getValue()));
     }
 
     //TODO: refactor to make the code more readable
     private void displayArmy(){
+        displayArmy1();
+        displayArmy2();
+    }
+
+    private void displayArmy1(){
         boolean displayInfo = false;
 
         if(SimulationSingleton.INSTANCE.getArmy1() != null) {
@@ -149,8 +152,10 @@ public class BattlePrepController implements Initializable {
         army1Table.setVisible(displayInfo);
         changeArmyButton1.setVisible(displayInfo);
         removeArmyButton1.setVisible(displayInfo);
+    }
 
-        displayInfo = false;
+    private void displayArmy2(){
+        boolean displayInfo = false;
 
         if(SimulationSingleton.INSTANCE.getArmy2() != null){
             displayInfo = true;
