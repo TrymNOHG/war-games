@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.controller;
 
+import edu.ntnu.trym.simulation.model.TerrainBackground;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.Unit;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -56,6 +58,9 @@ public class BattlePrepController implements Initializable {
 
     @FXML
     private Button fightButton;
+
+    @FXML
+    private Pane backgroundPane = new Pane();
 
     @FXML
     private ComboBox<TerrainType> terrainComboBox = new ComboBox<>();
@@ -123,6 +128,8 @@ public class BattlePrepController implements Initializable {
         terrainComboBox.getItems().addAll(TerrainType.values());
         terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
 
+        TerrainBackground.setBackgroundByTerrain(terrainComboBox.getValue(), backgroundPane);
+
         updateData();
         //TODO: This needs to be fixed since when the text is changed to no army equipped
     }
@@ -130,7 +137,7 @@ public class BattlePrepController implements Initializable {
     private void updateData(){
         if(armyNameText1 != null && armyNameText2 != null) displayArmy();
 
-        if(readyToFight()){
+        if(readyToFight() && this.fightButton != null){
             fightButton.setDisable(false);
             fightButton.setId("main-load-button");
         }
@@ -145,7 +152,10 @@ public class BattlePrepController implements Initializable {
      * changes, the enum value can be stored in the SimulationSingleton class.
      */
     private void addTerrainListener(){
-        terrainComboBox.setOnAction(event -> SimulationSingleton.INSTANCE.setCurrentTerrain(terrainComboBox.getValue()));
+        terrainComboBox.setOnAction(event -> {
+            SimulationSingleton.INSTANCE.setCurrentTerrain(terrainComboBox.getValue());
+            TerrainBackground.setBackgroundByTerrain(terrainComboBox.getValue(), backgroundPane);
+        });
     }
 
     //TODO: refactor to make the code more readable
