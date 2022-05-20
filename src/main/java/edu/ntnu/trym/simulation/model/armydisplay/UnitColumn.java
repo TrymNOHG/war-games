@@ -28,7 +28,7 @@ public class UnitColumn {
      */
     private void createUnitColumn(String unitInfoHeader, String unitVariableName){
         this.column = new TableColumn<>(unitInfoHeader);
-        column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
+        this.column.setCellValueFactory(new PropertyValueFactory<>(unitVariableName));
     }
 
     /**
