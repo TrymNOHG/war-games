@@ -52,7 +52,8 @@
                   <TableView fx:id="army1Table" maxHeight="-Infinity" prefHeight="250.0" prefWidth="200.0" visible="false" VBox.vgrow="ALWAYS">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy></TableView>
+                     </columnResizePolicy>
+                  </TableView>
                </children>
                <GridPane.margin>
                   <Insets top="10.0" />

@@ -1,6 +1,5 @@
 package edu.ntnu.trym.simulation.controller;
 
-import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.Unit;
@@ -60,7 +59,6 @@ public class BattlePrepController implements Initializable {
 
     @FXML
     private ComboBox<TerrainType> terrainComboBox = new ComboBox<>();
-    //Check if there were previous armies, if so load them, if not let the default be loaded.
 
     @FXML
     private TableView<Unit> army1Table;
@@ -162,7 +160,9 @@ public class BattlePrepController implements Initializable {
         if(SimulationSingleton.INSTANCE.getArmy1() != null) {
             displayInfo = true;
             armyNameText1.setText(SimulationSingleton.INSTANCE.getArmy1().getName());
-            createArmyTable(SimulationSingleton.INSTANCE.getArmy1(), army1Table);
+            //Try .toFront() on table to allow it to be used. Remember toback when not in use
+            army1Table.getColumns().addAll(createArmyTable().getColumns());
+            army1Table.setItems(FXCollections.observableList(SimulationSingleton.INSTANCE.getArmy1().getAllUnits()));
         }
         else armyNameText1.setText("No Army Equipped");
 
@@ -181,7 +181,8 @@ public class BattlePrepController implements Initializable {
         if(SimulationSingleton.INSTANCE.getArmy2() != null){
             displayInfo = true;
             armyNameText2.setText(SimulationSingleton.INSTANCE.getArmy2().getName());
-            createArmyTable(SimulationSingleton.INSTANCE.getArmy2(), army2Table);
+            army2Table.getColumns().addAll(createArmyTable().getColumns());
+            army2Table.setItems(FXCollections.observableList(SimulationSingleton.INSTANCE.getArmy2().getAllUnits()));
         }
         else armyNameText2.setText("No Army Equipped");
 
@@ -201,22 +202,16 @@ public class BattlePrepController implements Initializable {
     /**
      * This method creates a table containing all the information of a unit. This is done by using the army table
      * class to build the columns desired {@link ArmyTable#ArmyTable(ArmyTable.Builder)}.
-     * @param army      The army that provides the information to be displayed, given as an Army object.
-     * @param tableView The table where the information will be displayed, given as a TableView object.
      */
-    private void createArmyTable(Army army, TableView<Unit> tableView){
+    private TableView<Unit> createArmyTable(){
 
-        if(tableView.getColumns().size() != 0) return;
-
-        tableView = new ArmyTable.Builder()
+        return new ArmyTable.Builder()
                 .addUnitColumn("Unit Type", "unitType")
                 .addUnitColumn("Name", "name")
                 .addUnitColumn("Health", "health")
                 .addUnitColumn("Attack", "attack")
                 .addUnitColumn("Armor", "armor")
                 .build();
-
-        tableView.setItems(FXCollections.observableList(army.getAllUnits()));
     }
 
     /**
@@ -231,7 +226,6 @@ public class BattlePrepController implements Initializable {
         }
         return 2;
     }
-
 }
 
 
@@ -255,3 +249,6 @@ TODO:
         14. If there is extra time, allow the saved files to be organized
             - Based on Army Name, File name, save time, etc.
  */
+
+//     * @param army      The army that provides the information to be displayed, given as an Army object.
+//        * @param tableView The table where the information will be displayed, given as a TableView object.
