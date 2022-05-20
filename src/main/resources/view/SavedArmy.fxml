@@ -97,7 +97,7 @@
                                        </cursor>
                                     </Button>
                                     <Pane prefHeight="59.0" prefWidth="126.0" HBox.hgrow="ALWAYS" />
-                                    <Button id="main-button" mnemonicParsing="false" onAction="#loadArmy" stylesheets="@../stylesheets/Buttons.css" text="Load Army" textFill="WHITE">
+                                    <Button id="main-button" fx:id="loadArmyButton" mnemonicParsing="false" onAction="#loadArmy" stylesheets="@../stylesheets/Buttons.css" text="Load Army" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

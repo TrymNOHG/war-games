@@ -8,8 +8,8 @@ import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -39,6 +39,9 @@ public class SavedArmyController implements Initializable {
 
     @FXML
     private ScrollPane saveSlot4;
+
+    @FXML
+    private Button loadArmyButton;
 
     private int currentPage;
 
@@ -98,25 +101,31 @@ public class SavedArmyController implements Initializable {
         saveSlot1.setOnMouseClicked(mouseEvent -> {
             //Do stuff when the slot is pressed such as make the region blue
             selectedArmy = army1;
-
+            loadArmyButton.setId("main-load-button");
+            //TODO: Check if adding a listener to a slot being selected is possible. So if a slot isn't selected, the
+            //setId is just main-button
         });
         saveSlot2.setOnMouseClicked(mouseEvent -> {
             //Do stuff when the slot is pressed
             selectedArmy = army2;
+            loadArmyButton.setId("main-load-button");
         });
         saveSlot3.setOnMouseClicked(mouseEvent -> {
             //Do stuff when the slot is pressed
             selectedArmy = army3;
+            loadArmyButton.setId("main-load-button");
         });
         saveSlot4.setOnMouseClicked(mouseEvent -> {
             //Do stuff when the slot is pressed
             selectedArmy = army4;
+            loadArmyButton.setId("main-load-button");
+
         });
 
     }
 
     private void updatePage() throws IOException {
-        clearSlotInfo();
+        clearAllSlotsInfo();
         updateButtonVisibility();
         updateArmyOnPage();
     }
@@ -176,27 +185,24 @@ public class SavedArmyController implements Initializable {
         }
     }
 
-    private void clearSlotInfo(){
-        saveSlot1.setContent(null);
-        saveSlot1.setId(null);
+    private void clearAllSlotsInfo(){
+        clearSlotInfo(saveSlot1);
         army1 = null;
 
-
-        saveSlot2.setContent(null);
-        saveSlot2.setId(null);
+        clearSlotInfo(saveSlot2);
         army2 = null;
 
-
-        saveSlot3.setContent(null);
-        saveSlot3.setId(null);
+        clearSlotInfo(saveSlot3);
         army3 = null;
 
-
-        saveSlot4.setContent(null);
-        saveSlot4.setId(null);
+        clearSlotInfo(saveSlot4);
         army4 = null;
     }
 
+    private void clearSlotInfo(ScrollPane saveSlot){
+        saveSlot.setContent(null);
+        saveSlot.setId(null);
+    }
 
     private void setSaveSlotProperties(){
         saveSlot1.fitToHeightProperty().set(true);
@@ -239,14 +245,4 @@ public class SavedArmyController implements Initializable {
     }
 
 
-
 }
-
-
-//Things that need to be done:
-/*
-       Make the display of army information a lot better
-       Allow for the selection of an army
-       Create the actual loading of the army
-
- */
