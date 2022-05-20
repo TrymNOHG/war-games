@@ -69,7 +69,7 @@ public class BattlePrepController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialData();
-
+        addTerrainListener();
     }
 
     @FXML
@@ -119,6 +119,16 @@ public class BattlePrepController implements Initializable {
 
         if(armyNameText1 != null && armyNameText2 != null) displayArmy();
         //TODO: This needs to be fixed since when the text is changed to no army equipped
+    }
+
+    /**
+     * This method adds a listener to the ComboBox{@code <TerrainType>} terrainComboBox, so when the terrain choice
+     * changes, the enum value can be stored in the SimulationSingleton class.
+     */
+    private void addTerrainListener(){
+        terrainComboBox.setOnAction(event -> {
+            SimulationSingleton.INSTANCE.setCurrentTerrain(terrainComboBox.getValue());
+        });
     }
 
     //TODO: refactor to make the code more readable
