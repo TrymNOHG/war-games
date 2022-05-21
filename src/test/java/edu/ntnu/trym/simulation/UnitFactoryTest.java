@@ -87,7 +87,32 @@ class UnitFactoryTest{
 
         }
 
-        //TODO: Should I limit the amount that can be entered so heap space isn't messed up?
+        @ParameterizedTest (name = "Unit tested : {0}")
+        @EnumSource(value = UnitType.class)
+        void deep_copies_a_given_unit(UnitType unitType){
+            //Given/Arrange
+            String name = unitType + " unit";
+            int health = 10;
+            Unit unitToBeCopied = UnitFactory.getUnit(unitType, name, health);
+
+            //When/Act
+            Unit deepCopiedUnit = UnitFactory.getDeepCopiedDefaultUnit(unitToBeCopied);
+
+            //Then/Assert
+            Assertions.assertFalse(unitToBeCopied == deepCopiedUnit); //Testing reference in memory
+            Assertions.assertEquals(unitToBeCopied, deepCopiedUnit); //Testing actual information in unit
+        }
+
+        @Test
+        void throws_NullPointerException_when_null_unit_is_deep_copied(){
+            //Given/Arrange
+            Unit nullUnit = null;
+
+            //When/Act
+            Assertions.assertThrows(NullPointerException.class, () -> {
+                Unit deepCopiedUnit = UnitFactory.getDeepCopiedDefaultUnit(null);
+            }); //Then/Assert
+        }
 
         @ParameterizedTest (name = "{index}. Sizes tested = {0}")
         @ValueSource (ints = {0, 1, 15})
@@ -241,6 +266,35 @@ class UnitFactoryTest{
             Assertions.assertThrows(IllegalArgumentException.class, () -> {
                 Unit unit = UnitFactory.getUnit(UnitType.valueOf(unitType), name, health, attackValue, armorValue);
             });//Then/Assert
+        }
+
+        @ParameterizedTest (name = "Unit tested : {0}")
+        @EnumSource(value = UnitType.class)
+        void deep_copies_a_given_unit(UnitType unitType){
+            //Given/Arrange
+            String name = unitType + " unit";
+            int health = 10;
+            int attack = 15;
+            int armor = 20;
+            Unit unitToBeCopied = UnitFactory.getUnit(unitType, name, health, attack, armor);
+
+            //When/Act
+            Unit deepCopiedUnit = UnitFactory.getDeepCopiedSpecialUnit(unitToBeCopied);
+
+            //Then/Assert
+            Assertions.assertFalse(unitToBeCopied == deepCopiedUnit); //Testing reference in memory
+            Assertions.assertEquals(unitToBeCopied, deepCopiedUnit); //Testing actual information in unit
+        }
+
+        @Test
+        void throws_NullPointerException_when_null_unit_is_deep_copied(){
+            //Given/Arrange
+            Unit nullUnit = null;
+
+            //When/Act
+            Assertions.assertThrows(NullPointerException.class, () -> {
+                Unit deepCopiedUnit = UnitFactory.getDeepCopiedSpecialUnit(null);
+            }); //Then/Assert
         }
 
         @ParameterizedTest (name = "{index}. Sizes tested = {0}")
