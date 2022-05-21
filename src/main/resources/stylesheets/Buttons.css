@@ -28,7 +28,7 @@
     -fx-background-color:
             linear-gradient(from 0% 93% to 0% 100%, #9a6d07 0%, #b46700 100%),
             #e5c781, #e7a000,
-            radial-gradient(center 50% 50%, radius 100%, #338314, #155703);
+            radial-gradient(center 50% 50%, radius 100%, #7dd758, #429a29);
     -fx-effect: dropshadow(gaussian , rgba(0, 0, 0, 0.75), 4, 0 , 0, 1);
     -fx-background-insets: 0,0 0 3 0, 0 2 6 0, 0 0 8 0;
     -fx-background-radius: 3;
@@ -40,7 +40,7 @@
     -fx-background-color:
             linear-gradient(from 0% 90% to 0% 100%, #9a6d07 4%, #b46700 100%),
             #e5c781, #e7a000,
-            radial-gradient(center 50% 50%, radius 100%, #428526, #b4d25d);
+            radial-gradient(center 50% 50%, radius 100%, #aeee90, #b0c285);
 }
 
 #main-load-button:pressed {
