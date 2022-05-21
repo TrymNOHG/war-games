@@ -40,6 +40,16 @@ public class Army {
         this.units = Objects.requireNonNullElseGet(units, ArrayList::new); //Should this be a deep copy so the lists aren't linked?
     }
 
+    //TODO: create tests for this constructor as well!
+    /**
+     * This constructor creates a new Army object {@link #Army(String, List)}  Army} from an already existing one.
+     * This is in order to create a deep copy of an army object.
+     * @param army  The army that will be copied, represented using an Army object
+     */
+    public Army(Army army){
+        this(army.name, army.units);
+    }
+
     /**
      * This method retrieves the name of the Army.
      * @return Name of the army, represented as a String
