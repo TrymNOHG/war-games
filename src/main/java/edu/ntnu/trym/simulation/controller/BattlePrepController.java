@@ -171,7 +171,7 @@ public class BattlePrepController implements Initializable {
             displayInfo = true;
             armyNameText1.setText(SimulationSingleton.INSTANCE.getArmy1().getName());
             //Try .toFront() on table to allow it to be used. Remember toback when not in use
-            army1Table.getColumns().addAll(createArmyTable().getColumns());
+            if(this.army1Table.getColumns().size() == 0) army1Table.getColumns().addAll(createArmyTable().getColumns());
             army1Table.setItems(FXCollections.observableList(SimulationSingleton.INSTANCE.getArmy1().getAllUnits()));
         }
         else armyNameText1.setText("No Army Equipped");
@@ -191,7 +191,7 @@ public class BattlePrepController implements Initializable {
         if(SimulationSingleton.INSTANCE.getArmy2() != null){
             displayInfo = true;
             armyNameText2.setText(SimulationSingleton.INSTANCE.getArmy2().getName());
-            army2Table.getColumns().addAll(createArmyTable().getColumns());
+            if(this.army2Table.getColumns().size() == 0) army2Table.getColumns().addAll(createArmyTable().getColumns());
             army2Table.setItems(FXCollections.observableList(SimulationSingleton.INSTANCE.getArmy2().getAllUnits()));
         }
         else armyNameText2.setText("No Army Equipped");
@@ -241,23 +241,21 @@ public class BattlePrepController implements Initializable {
 
 /*
 TODO:
-        Fix the table problem where if one army is remove, the columns are doubled up. (Fixed!)
-        Edit the BattlePreparation scene to have a fight button that is disabled until both armies are non-null Done!
-        Create a fight scene and a fight controller. Done!
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
         5. Add results scene and controller
-        6. Add button in settings to return to main menu
         7. Fix the unit information screen and add proper info as well as for the help page.
         8. Add a warning dialog that pops up if a file that was attempted to be loaded was corrupt. Make sure amount of pages is correct
-        9. Add background picture for different terrains and to saved armies
+        9. Add background picture to saved armies screen
+        Fix text in battle preparation to be more visible (try out text with border)
         10. Javadoc all classes and methods
         11. Look for places that need refactoring
         12. Look over all tests
-        13. Try and break the simulation. (Check where error and warning boxes may be used.
+        13. Try to break the simulation. (Check where error and warning boxes may be used.
         14. If there is extra time, allow the saved files to be organized
             - Based on Army Name, File name, save time, etc.
+
  */
 
 //     * @param army      The army that provides the information to be displayed, given as an Army object.
