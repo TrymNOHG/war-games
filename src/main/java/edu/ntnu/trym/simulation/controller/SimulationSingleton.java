@@ -1,6 +1,7 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.Battle;
 import edu.ntnu.trym.simulation.model.TerrainType;
 
 /**
@@ -16,6 +17,7 @@ public enum SimulationSingleton {
     private Army army1;
     private Army army2;
     private int currentArmy;
+    private Battle battle;
     private TerrainType currentTerrain = TerrainType.DEFAULT;
 
     public Army getArmyOfCurrentArmy(){
@@ -51,6 +53,14 @@ public enum SimulationSingleton {
         this.army2 = army2;
     }
 
+    public Battle getBattle() {
+        return battle;
+    }
+
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+    }
+
     public TerrainType getCurrentTerrain() {
         return currentTerrain;
     }
@@ -64,5 +74,7 @@ public enum SimulationSingleton {
 // when loading the battle preparation scene.
 
 //Do I want a currentArmy variable? Maybe a number representing which one is being edited
+
+//TODO: should I have one armyFileHandler in this class and then just use it everywhere I need it?
 
 //TODO: javadoc
