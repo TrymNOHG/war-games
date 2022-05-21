@@ -48,6 +48,7 @@ public class FightController implements Initializable {
 
     @FXML
     void backToBattlePrep(ActionEvent event) throws IOException {
+        SimulationSingleton.INSTANCE.setBattle(null);
         SceneHandler.loadBattlePreparation(event);
     }
 
@@ -56,7 +57,8 @@ public class FightController implements Initializable {
     }
 
     private void initiateFight(){
-        this.battle = new Battle(SimulationSingleton.INSTANCE.getArmy1(), SimulationSingleton.INSTANCE.getArmy2(),
+        this.battle = new Battle(new Army(SimulationSingleton.INSTANCE.getArmy1()),
+                new Army(SimulationSingleton.INSTANCE.getArmy2()),
                 SimulationSingleton.INSTANCE.getCurrentTerrain());
         conductBattle();
     }
