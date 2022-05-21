@@ -1,6 +1,8 @@
 package edu.ntnu.trym.simulation.model;
 
+import edu.ntnu.trym.simulation.model.units.RangedUnit;
 import edu.ntnu.trym.simulation.model.units.Unit;
+import edu.ntnu.trym.simulation.model.units.UnitFactory;
 import edu.ntnu.trym.simulation.model.units.UnitType;
 
 import java.util.*;
@@ -42,30 +44,14 @@ public class Army {
 
     //TODO: create tests for this constructor as well!
     /**
-     * This constructor creates a new Army object {@link #Army(String, List)}  Army} from an already existing one.
+     * This constructor creates a new Army object {@link #Army(String, List)} from an already existing one.
      * This is in order to create a deep copy of an army object.
      * @param army  The army that will be copied, represented using an Army object
      */
     public Army(Army army){
-        this(army.name, army.units);
+        this(army.name, army.deepCopyArmyUnits());
     }
 
-    /**
-     * This method retrieves the name of the Army.
-     * @return Name of the army, represented as a String
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * This method changes the name of the Army.
-     * @param name New name of the army, represented as a String
-     */
-    public void setName(String name) throws IllegalArgumentException{
-        if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name cannot be blank or empty.");
-        this.name = name;
-    }
 
     /**
      * This method adds a new Unit to the army list, if it is not null.
@@ -128,8 +114,6 @@ public class Army {
         return this.units.get(randomIndex);
     }
 
-
-    //TODO: Is it better to use InfantryUnit.getClass().getSimpleName() since the class name could change? Ask studass
     /**
      * This method uses the filtering method {@link #getUnitsByType(UnitType)} to create a list of InfantryUnits.
      * @return The filtered list of solely InfantryUnits, represented as a List of Units
@@ -170,6 +154,40 @@ public class Army {
      */
     public List<Unit> getUnitsByType(UnitType unitType){
         return this.units.stream().filter(unit -> unit.getUnitType() == unitType).toList();
+    }
+
+    /**
+     * This method deep copies every unit from an Army's unit list and distinguishes between
+     * default units {@link UnitFactory#getDeepCopiedDefaultUnit(Unit)} and special units
+     * {@link UnitFactory#getDeepCopiedSpecialUnit(Unit)}.
+     * @return A list of deep copied units, represented using a List{@code <Unit>} object.
+     */
+    public List<Unit> deepCopyArmyUnits(){
+        List<Unit> copiedUnitList = new ArrayList<>();
+
+        this.units.forEach(unit -> {
+            if(unit.isDefaultUnit()) copiedUnitList.add(UnitFactory.getDeepCopiedDefaultUnit(unit));
+            else copiedUnitList.add(UnitFactory.getDeepCopiedSpecialUnit(unit));
+        });
+
+        return copiedUnitList;
+    }
+
+    /**
+     * This method retrieves the name of the Army.
+     * @return Name of the army, represented as a String
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * This method changes the name of the Army.
+     * @param name New name of the army, represented as a String
+     */
+    public void setName(String name) throws IllegalArgumentException{
+        if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name cannot be blank or empty.");
+        this.name = name;
     }
 
     @Override
