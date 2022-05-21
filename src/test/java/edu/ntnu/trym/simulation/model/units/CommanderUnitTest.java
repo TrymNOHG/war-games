@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 class CommanderUnitTest {
 
     @Nested
-    public class A_CommanderUnit_with_valid_input_values{
-
+    public class A_CommanderUnit_object{
         @Test
         void instantiates_properly_with_preset_constructor() {
             //Given/Arrange
@@ -61,6 +60,11 @@ class CommanderUnitTest {
             Assertions.assertEquals(attack, specialCommanderUnit.getAttack());
             Assertions.assertEquals(armor, specialCommanderUnit.getArmor());
         }
+
+    }
+
+    @Nested
+    public class A_CommanderUnit_with_valid_input_values{
 
         @Test
         void returns_correct_name(){

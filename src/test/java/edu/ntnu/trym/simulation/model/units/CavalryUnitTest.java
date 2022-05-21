@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CavalryUnitTest {
 
     @Nested
-    public class A_CavalryUnit_with_valid_input_values{
+    public class A_CavalryUnit_object{
 
         @Test
         void instantiates_properly_with_preset_constructor() {
@@ -60,6 +60,11 @@ class CavalryUnitTest {
             Assertions.assertEquals(attack, specialCavalryUnit.getAttack());
             Assertions.assertEquals(armor, specialCavalryUnit.getArmor());
         }
+
+    }
+
+    @Nested
+    public class A_CavalryUnit_with_valid_input_values{
 
         @Test
         void returns_correct_name(){

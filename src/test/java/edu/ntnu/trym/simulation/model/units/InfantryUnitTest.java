@@ -13,8 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InfantryUnitTest {
 
     @Nested
-    public class An_InfantryUnit_with_valid_input_values{
-
+    public class A_InfantryUnit_object {
         @Test
         void instantiates_properly_with_preset_constructor() {
             //Given/Arrange
@@ -24,7 +23,7 @@ class InfantryUnitTest {
             int expectedArmor = 10;
 
             //When/Act
-             InfantryUnit presetInfantryUnit = null;
+            InfantryUnit presetInfantryUnit = null;
             try {
                 presetInfantryUnit = new InfantryUnit(name, health);
             } catch (Exception e) {
@@ -60,6 +59,11 @@ class InfantryUnitTest {
             Assertions.assertEquals(attack, specialInfantryUnit.getAttack());
             Assertions.assertEquals(armor, specialInfantryUnit.getArmor());
         }
+
+    }
+
+    @Nested
+    public class An_InfantryUnit_with_valid_input_values{
 
         @Test
         void returns_correct_name(){

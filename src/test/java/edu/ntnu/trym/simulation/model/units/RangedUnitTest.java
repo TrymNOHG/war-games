@@ -12,11 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RangedUnitTest {
 
-    //Make sure you test both positive and negative. For example, creating constructor with positive health, positive attack
-    //Check different states of attacking, for example, when the opponent health would go negative.
-
     @Nested
-    public class A_RangedUnit_with_valid_input_values{
+    public class A_InfantryUnit_object {
 
         @Test
         void instantiates_properly_with_preset_constructor() {
@@ -64,6 +61,14 @@ class RangedUnitTest {
             Assertions.assertEquals(attack, specialRangedUnit.getAttack());
             Assertions.assertEquals(armor, specialRangedUnit.getArmor());
         }
+
+    }
+
+    //Make sure you test both positive and negative. For example, creating constructor with positive health, positive attack
+    //Check different states of attacking, for example, when the opponent health would go negative.
+
+    @Nested
+    public class A_RangedUnit_with_valid_input_values{
 
         @Test
         void returns_correct_name(){
