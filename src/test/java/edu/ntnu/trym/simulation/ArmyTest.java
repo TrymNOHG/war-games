@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArmyTest {
 
-    //TODO: Test that the stream for sorting doesn't get Commander Units when looking for Cavalry
-
     static List<Unit> fillArmyList(){
         List<Unit> filledArmyList = new ArrayList<>();
         filledArmyList.add(new CommanderUnit("King", 10));
@@ -27,7 +25,7 @@ class ArmyTest {
     }
 
     @Nested
-    public class An_Army_with_valid_input_values{
+    public class An_Army_object{
 
         @Test
         void instantiates_properly_with_preset_constructor() {
@@ -66,6 +64,31 @@ class ArmyTest {
             Assertions.assertEquals(name, army.getName());
             Assertions.assertEquals(inputArmyList, army.getAllUnits());
         }
+
+        @Test
+        void instantiates_properly_with_deep_copy_constructor(){
+            //Given/Arrange
+            String name = "Trym's Army";
+            List<Unit> inputArmyList = fillArmyList();
+            Army inputArmy = new Army(name, inputArmyList);
+
+            //When/Act
+            Army deepCopyArmy = null;
+            try {
+                deepCopyArmy = new Army(inputArmy);
+            } catch (Exception e) {
+                fail("Preset constructor did not instantiate properly");
+            }
+
+            //Then/Assert
+            Assertions.assertEquals(name, deepCopyArmy.getName());
+            Assertions.assertEquals(inputArmyList, deepCopyArmy.getAllUnits());
+        }
+
+    }
+
+    @Nested
+    public class An_Army_with_valid_input_values{
 
         @Test
         void returns_correct_name(){
@@ -158,6 +181,8 @@ class ArmyTest {
         @Test
         void removes_correct_Unit_from_Army_list(){
             //Given/Arrange
+            List<Unit> expectedEmptyArmyList = new ArrayList<>();
+
             List<Unit> armyList = new ArrayList<>();
             RangedUnit rangedUnit = new RangedUnit("Archer", 10);
             armyList.add(rangedUnit);
@@ -167,13 +192,36 @@ class ArmyTest {
             army.remove(rangedUnit);
 
             //Then/Assert
-            //Since there was only one unit, army's units list should be an empty arrayList.
-            //Assertions.assertNotEquals(armyList, army.getAllUnits());
-            // Lists refer to same place in memory because of lack
-            //deep copy
-            Assertions.assertEquals(new ArrayList<>(), army.getAllUnits());
+            Assertions.assertEquals(expectedEmptyArmyList, army.getAllUnits());
 
-            //Maybe test trying to remove a null Unit
+        }
+
+        @Test
+        void returns_a_deep_copied_filled_army_list(){
+            //Given/Arrange
+            List<Unit> armyListToBeCopied = fillArmyList();
+            Army armyWithList = new Army("Army", armyListToBeCopied);
+
+            //When/Act
+            List<Unit> actualCopiedList = armyWithList.deepCopyArmyUnits();
+
+            //Then/Assert
+            Assertions.assertFalse(armyListToBeCopied == actualCopiedList); //This checks that the reference in memory is different
+            Assertions.assertEquals(armyListToBeCopied, actualCopiedList); //This checks if the elements are the same
+        }
+
+        @Test
+        void returns_empty_list_when_an_empty_army_list_is_deep_copied(){
+            //Given/Arrange
+            List<Unit> armyListToBeCopied = new ArrayList<>();
+            Army armyWithList = new Army("Army", armyListToBeCopied);
+
+            //When/Act
+            List<Unit> actualCopiedList = armyWithList.deepCopyArmyUnits();
+
+            //Then/Assert
+            Assertions.assertFalse(armyListToBeCopied == actualCopiedList); //This checks that the reference in memory is different
+            Assertions.assertEquals(armyListToBeCopied, actualCopiedList); //This checks if the elements are the same
         }
 
         @Test
@@ -257,7 +305,7 @@ class ArmyTest {
             List<Unit> actualReturnedInfantryList = army.getInfantryUnits();
 
             //Then/Assert
-            actualReturnedInfantryList.stream().forEach(infantryUnit ->{
+            actualReturnedInfantryList.forEach(infantryUnit -> {
                 Assertions.assertTrue(infantryList.contains(infantryUnit));
             });
         }
@@ -317,9 +365,36 @@ class ArmyTest {
             List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
 
             //Then/Assert
-            actualReturnedCavalryList.stream().forEach(cavalryUnit ->{
+            actualReturnedCavalryList.forEach(cavalryUnit ->{
                 Assertions.assertTrue(cavalryList.contains(cavalryUnit));
             });
+        }
+
+        @Test
+        void doesnt_add_CommanderUnit_when_filtering_for_Cavalry_unit(){
+            //Given/Arrange
+            List<Unit> filledArmyList = new ArrayList<>();
+            filledArmyList.add(new CommanderUnit("King", 10));
+            filledArmyList.add(new InfantryUnit("Pikeman", 10));
+            filledArmyList.add(new RangedUnit("Crossbowman", 10));
+
+            //Creates an army without any cavalry units.
+            Army army = new Army("Trym's Army", filledArmyList);
+
+            List<Unit> cavalryList = new ArrayList<>();
+            cavalryList.add(new CavalryUnit("Knight", 10));
+            cavalryList.add(new CavalryUnit("Knight", 20));
+            cavalryList.add(new CavalryUnit("Knight", 30));
+
+            //cavalryList contains all the Cavalry Units that are in the army
+            army.addAll(cavalryList);
+
+            //When/Act
+            List<Unit> actualReturnedCavalryList = army.getCavalryUnits();
+
+            //Then/Assert
+            Assertions.assertTrue(actualReturnedCavalryList.stream().noneMatch(unit -> unit instanceof CommanderUnit));
+            Assertions.assertTrue(actualReturnedCavalryList.stream().allMatch(unit -> unit instanceof CavalryUnit));
         }
 
         @Test
@@ -377,7 +452,7 @@ class ArmyTest {
             List<Unit> actualReturnedRangedList = army.getRangedUnits();
 
             //Then/Assert
-            actualReturnedRangedList.stream().forEach(rangedUnit ->{
+            actualReturnedRangedList.forEach(rangedUnit ->{
                 Assertions.assertTrue(rangedList.contains(rangedUnit));
             });
         }
@@ -437,7 +512,7 @@ class ArmyTest {
             List<Unit> actualReturnedCommanderList = army.getCommanderUnits();
 
             //Then/Assert
-            actualReturnedCommanderList.stream().forEach(commanderUnit ->{
+            actualReturnedCommanderList.forEach(commanderUnit ->{
                 Assertions.assertTrue(commanderList.contains(commanderUnit));
             });
         }
@@ -498,7 +573,7 @@ class ArmyTest {
 
             //Then/Assert
             Assertions.assertTrue(actualReturnedCavalryList.stream().noneMatch(cavalryUnit ->
-                    cavalryUnit.getClass().getSimpleName() == "CommanderUnit"));
+                    cavalryUnit.getClass().getSimpleName().equals("CommanderUnit")));
         }
 
     }
@@ -554,22 +629,31 @@ class ArmyTest {
     @Nested
     public class An_Army_with_invalid_input_values{
         @ParameterizedTest
-        @ValueSource(strings = {"", " ", "           "}) //Arrange
+        @ValueSource(strings = {"", " ", "           "}) //Given/Arrange
         void throws_IllegalArgumentException_if_name_input_is_empty_or_blank_in_constructor(String name){
             assertThrows(IllegalArgumentException.class, ()->{
-                Army army = new Army(name);
-                //Act and assert
-            });
+                Army army = new Army(name); //When/Act
+            }); //Then/Assert
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"", " ", "           "}) //Arrange
+        @ValueSource(strings = {"", " ", "           "}) //Given/Arrange
         void throws_IllegalArgumentException_if_name_input_is_empty_or_blank_when_setting(String name){
             Army army = new Army("Valid name");
+
             assertThrows(IllegalArgumentException.class, ()->{
-                army.setName(name);
-                //Act and assert
-            });
+                army.setName(name); //When/Act
+            });//Then/Assert
+        }
+
+        @Test
+        void throws_NullPointerException_if_army_input_in_deep_copy_constructor_is_null(){
+            //Given/Arrange
+            Army inputArmy = null;
+
+            Assertions.assertThrows(NullPointerException.class, () ->{
+                Army newArmy = new Army(inputArmy); //When/Act
+            }); //Then/Assert
         }
     }
 
