@@ -1,6 +1,5 @@
 package edu.ntnu.trym.simulation.model.filehandling;
 
-import edu.ntnu.trym.simulation.model.Army;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class FileHandlerTest {
 
@@ -117,7 +114,6 @@ public class FileHandlerTest {
         try(fileWalk){
             fileWalk.forEach(file -> {
                 String fileName = file.getFileName().toString();
-                System.out.println(fileName);
                 String extensionText = fileName.substring(fileName.length() - 4);
                 if(extensionText.equals(".csv")) counter.getAndIncrement();
             });
