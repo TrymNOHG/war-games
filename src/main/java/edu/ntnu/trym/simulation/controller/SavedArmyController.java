@@ -2,14 +2,18 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.AlertDialog;
 import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.armydisplay.ArmyFileDisplay;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
+import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -170,27 +174,47 @@ public class SavedArmyController implements Initializable {
 
         if(counter % 4 == 0){
             army1 = currentArmy;
-            saveSlot1.setContent(new ArmyFileDisplay(file).getArmyDisplay());
+            setSlotContent(saveSlot1, file);
+
             saveSlot1.setId("save-slot");
         }
         else if(counter % 4 == 1){
             army2 = currentArmy;
-            saveSlot2.setContent(new ArmyFileDisplay(file).getArmyDisplay());
+            setSlotContent(saveSlot2, file);
             saveSlot2.setId("save-slot");
 
         }
         else if(counter % 4 == 2){
             army3 = currentArmy;
-            saveSlot3.setContent(new ArmyFileDisplay(file).getArmyDisplay());
+            setSlotContent(saveSlot3, file);
             saveSlot3.setId("save-slot");
 
         }
         else if(counter % 4 == 3){
             army4 = currentArmy;
-            saveSlot4.setContent(new ArmyFileDisplay(file).getArmyDisplay());
+            setSlotContent(saveSlot4, file);
             saveSlot4.setId("save-slot");
 
         }
+    }
+
+    private void setSlotContent(ScrollPane saveSlot, File file) throws IOException, InstantiationException {
+        VBox armyVBox = new ArmyDisplay.Builder(file)
+                .addArmyName()
+                .addUnitInformation(UnitType.INFANTRY)
+                .addUnitInformation(UnitType.CAVALRY)
+                .addUnitInformation(UnitType.RANGED)
+                .addUnitInformation(UnitType.COMMANDER)
+                .addTimeSavedInfo()
+                .addFileLocationInfo()
+                .addFileNameInfo()
+                .build();
+
+//        armyVBox.setPadding(new Insets(20));
+        armyVBox.getStylesheets().add(String.valueOf(SceneHandler.class.getResource("/stylesheets/Background.css")));
+        armyVBox.setId("save-slot");
+
+        saveSlot.setContent(armyVBox);
     }
 
     private void clearAllSlotsInfo(){
