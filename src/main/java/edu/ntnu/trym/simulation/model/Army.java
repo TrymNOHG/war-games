@@ -211,7 +211,7 @@ public class Army {
         for(Unit unit : units){
             if(army.units.stream().noneMatch(unit::equals)) return false;
         }
-        return true;
+        return units.size() == army.getAllUnits().size();
     }
 
     @Override
