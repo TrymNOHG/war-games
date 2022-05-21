@@ -108,6 +108,7 @@ public class FileHandlerTest {
     */
 
     int getNumberOfCSVFilesTest() throws IOException {
+        FileHandler.getNumberOfCSVFiles();
         AtomicInteger counter = new AtomicInteger();
         Stream<Path> fileWalk = Files.walk(FileSystems.getDefault().getPath("src", "test", "resources",
                 "armytestfiles"));
