@@ -2,6 +2,7 @@ package edu.ntnu.trym.simulation.model.units;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -30,7 +31,6 @@ public class UnitFactory {
         };
     }
 
-
     /**
      * This method takes in a UnitType and the additional information for a unit in order to retrieve an instance of
      * the specialized unit.
@@ -48,6 +48,30 @@ public class UnitFactory {
             case INFANTRY -> new InfantryUnit(name, healthValue, attackValue, armorValue);
             case COMMANDER -> new CommanderUnit(name, healthValue, attackValue, armorValue);
         };
+    }
+
+    /**
+     * This method takes a default unit object and uses the factory methods to produce a deep copied version of it
+     * {@link #getUnit(UnitType, String, int)}.
+     * @param unit                      The unit to be copied, represented using a Unit object.
+     * @return                          The new and copied unit, represented using a Unit object.
+     * @throws NullPointerException This exception is thrown if the unit input is null
+     */
+    public static Unit getDeepCopiedDefaultUnit(Unit unit) throws NullPointerException{
+        if(unit == null) throw new NullPointerException("Unit cannot be null");
+        return getUnit(unit.getUnitType(), unit.getName(), unit.getHealth());
+    }
+
+    /**
+     * This method takes a special unit object and uses the factory methods to produce a deep copied version of it
+     * {@link #getUnit(UnitType, String, int)}.
+     * @param unit                      The unit to be copied, represented using a Unit object.
+     * @return                          The new and copied unit, represented using a Unit object.
+     * @throws NullPointerException This exception is thrown if the unit input is null.
+     */
+    public static Unit getDeepCopiedSpecialUnit(Unit unit) throws NullPointerException{
+        if(unit == null) throw new NullPointerException("Unit cannot be null");
+        return getUnit(unit.getUnitType(), unit.getName(), unit.getHealth(), unit.getAttack(), unit.getArmor());
     }
 
     /**
