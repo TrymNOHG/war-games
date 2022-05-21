@@ -160,6 +160,7 @@ public abstract class Unit {
         if (health != unit.health) return false;
         if (attack != unit.attack) return false;
         if (armor != unit.armor) return false;
+        if(defaultUnit != unit.defaultUnit) return false;
         return Objects.equals(name, unit.name);
     }
 
