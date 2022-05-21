@@ -21,6 +21,7 @@ class ArmyTest {
         filledArmyList.add(new CavalryUnit("Knight", 10));
         filledArmyList.add(new InfantryUnit("Pikeman", 10));
         filledArmyList.add(new RangedUnit("Crossbowman", 10));
+        filledArmyList.add(new RangedUnit("Crossbowman", 10, 11, 12));
         return filledArmyList;
     }
 
@@ -97,6 +98,20 @@ class ArmyTest {
             Army army = new Army(expectedName, fillArmyList());
 
             //When/Act
+            String actualName = army.getName();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedName, actualName);
+        }
+
+        @Test
+        void sets_correct_name(){
+            //Given/Arrange
+            String expectedName = "Sarah's Army";
+            Army army = new Army("Trym's army", fillArmyList());
+
+            //When/Act
+            army.setName(expectedName);
             String actualName = army.getName();
 
             //Then/Assert
