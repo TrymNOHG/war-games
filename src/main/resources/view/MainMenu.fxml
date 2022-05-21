@@ -86,7 +86,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button id="main-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="26.0" prefWidth="177.0" stylesheets="@../stylesheets/Buttons.css" text="Settings" textFill="#fcfcfc">
+                        <Button id="main-button" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="26.0" prefWidth="177.0" stylesheets="@../stylesheets/Buttons.css" text="Settings" textFill="#fcfcfc">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
