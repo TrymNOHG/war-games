@@ -97,6 +97,7 @@ public class ArmyDisplay extends VBox{
             if(armyFile == null) return this;
             Text locationText = new Text("Location: ");
             Text pathSaved = new Text(this.location);
+            pathSaved.setWrappingWidth(200);
             this.hBoxList.add(PaneSpacing.createHBoxWithSpacing(locationText, pathSaved));
             return this;
         }
