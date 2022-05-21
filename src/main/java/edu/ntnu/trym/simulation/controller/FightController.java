@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,8 +28,8 @@ public class FightController implements Initializable {
     }
 
     @FXML
-    void skipFight(ActionEvent event) {
-        //This goes to the result screen
+    void skipFight(ActionEvent event) throws IOException {
+        SceneHandler.loadFightScreen(event);
     }
 
     private void initialData(){
