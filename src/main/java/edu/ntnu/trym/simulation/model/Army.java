@@ -42,16 +42,16 @@ public class Army {
         this.units = Objects.requireNonNullElseGet(units, ArrayList::new); //Should this be a deep copy so the lists aren't linked?
     }
 
-    //TODO: create tests for this constructor as well!
+
     /**
      * This constructor creates a new Army object {@link #Army(String, List)} from an already existing one.
      * This is in order to create a deep copy of an army object.
-     * @param army  The army that will be copied, represented using an Army object
+     * @param army                      The army that will be copied, represented using an Army object
+     * @throws NullPointerException     This exception is thrown if the army input is null.
      */
-    public Army(Army army){
+    public Army(Army army) throws NullPointerException{
         this(army.name, army.deepCopyArmyUnits());
     }
-
 
     /**
      * This method adds a new Unit to the army list, if it is not null.
@@ -156,6 +156,7 @@ public class Army {
         return this.units.stream().filter(unit -> unit.getUnitType() == unitType).toList();
     }
 
+    //TODO: make test for this method.
     /**
      * This method deep copies every unit from an Army's unit list and distinguishes between
      * default units {@link UnitFactory#getDeepCopiedDefaultUnit(Unit)} and special units
