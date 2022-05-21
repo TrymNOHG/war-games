@@ -94,7 +94,7 @@ public class SceneHandler {
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
      */
     public static void loadBattlePreparation(ActionEvent event) throws IOException {
-        SceneHandler.loadScene("BattlePrep", event);
+        loadScene("BattlePrep", event);
     }
 
     /**
@@ -103,7 +103,7 @@ public class SceneHandler {
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
      */
     public static void loadArmyConstruction(ActionEvent event) throws IOException {
-        SceneHandler.loadScene("ArmyConstruction", event);
+        loadScene("ArmyConstruction", event);
     }
 
     /**
@@ -112,7 +112,7 @@ public class SceneHandler {
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
      */
     public static void loadSavedArmies(ActionEvent event) throws IOException {
-        SceneHandler.loadScene("SavedArmy", event);
+        loadScene("SavedArmy", event);
     }
 
     /**
@@ -121,7 +121,16 @@ public class SceneHandler {
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
      */
     public static void loadFightScreen(ActionEvent event) throws IOException {
-        SceneHandler.loadScene("SimulationScreen", event);
+        loadScene("SimulationScreen", event);
+    }
+
+    /**
+     * This method switches the current scene with the results scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadResultScreen(ActionEvent event) throws IOException {
+        loadScene("Results", event);
     }
 
 
@@ -137,7 +146,6 @@ public class SceneHandler {
         if(!stage.getStyle().equals(StageStyle.UNIFIED)) stage.initStyle(StageStyle.UNIFIED);
         stage.setMinHeight(minimumHeight);
         stage.setMinWidth(minimumWidth);
-//        stage.setFullScreen(true);
         stage.setResizable(true);
         stage.show();
     }
