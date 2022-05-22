@@ -16,6 +16,14 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+/**
+ * This class handles the interactions between the backend and the BattlePrep scene. As such, it guides the user to
+ * make two armies in multiple ways: constructing an army froms scratch, loading an army, or altering a saved army.
+ * Additionally, the user gets to set the terrain of the battle and when they are ready, the battle can be initiated.
+ * Furthermore, the armies selected are displayed on the scene through this class.
+ *
+ * @author Trym Hamer Gudvangen
+ */
 public class BattlePrepController {
 
     @FXML
@@ -69,29 +77,66 @@ public class BattlePrepController {
     @FXML
     private TableView<Unit> army2Table;
 
+    /**
+     * This method sets up all the information concerning the scene before loading it. This includes setting up
+     * listeners, loading variable data, and constructing the GUI aspects of the scene.
+     */
     public void initialize() {
         initialData();
         addTerrainListener();
     }
 
+    /**
+     * This method is called when the user presses the create army button. This may be for either army1 (top army) or
+     * for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to determine
+     * which army is being altered. This information is sent to the dispatcher, {@link SimulationSingleton}. After that,
+     * the scene is switched to the army construction scene
+     * {@link SceneHandler#loadArmyConstruction(ActionEvent)}.
+     * @param event         The button being pressed, given as an Event object.
+     * @throws IOException  This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void createArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
         SceneHandler.loadArmyConstruction(event);
     }
 
+    /**
+     * This method is called when the user presses the load army button. This may be for either army1 (top army) or
+     * for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to determine
+     * which army is being altered. This information is sent to the dispatcher, {@link SimulationSingleton}. After that,
+     * the scene is switched to the loadSavedArmies scene {@link SceneHandler#loadSavedArmies(ActionEvent)}.
+     * @param event         The button being pressed, given as an Event object.
+     * @throws IOException  This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void loadArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
         SceneHandler.loadSavedArmies(event);
     }
 
+    /**
+     * This method is called when the user presses the change army button. This may be for either army1 (top army) or
+     * for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to determine
+     * which army is being altered. This information is sent to the dispatcher, {@link SimulationSingleton}.
+     * After that, the scene is switched to the army construction scene {@link SceneHandler#loadArmyConstruction(ActionEvent)}
+     * with the information of which scene.
+     * @param event         The button being pressed, given as an Event object.
+     * @throws IOException  This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void changeArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
         SceneHandler.loadArmyConstruction(event);
     }
 
+    /**
+     * This method is called when the user presses the remove army button. This may be for either army1 (top army) or
+     * for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to determine
+     * which army is being altered. Therafter, the respective army in the dispatcher, {@link SimulationSingleton}, is
+     * set to null. Finally, the battle prep data is updated, {@link #updateBattlePrepData()}.
+     * @param event         The button being pressed, given as an Event object.
+     */
     @FXML
     void removeArmy(ActionEvent event) {
         if(armyNumberByButton(event) == 1) SimulationSingleton.INSTANCE.setArmy1(null);
@@ -99,11 +144,25 @@ public class BattlePrepController {
         updateBattlePrepData();
     }
 
+    /**
+     * This method is called when the user presses the back to main menu button. As the name implies, using
+     * {@link SceneHandler#loadMainMenu(ActionEvent)}, the main menu scene is loaded.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void backToMainMenu(ActionEvent event) throws IOException {
         SceneHandler.loadMainMenu(event);
     }
 
+    /**
+     * This method is called when the user presses the continue button. As the name implies, using
+     * {@link SceneHandler#loadBattlePreparation(ActionEvent)}, the battle preparation scene is loaded. Furthermore,
+     * since the tableview can be a little confusing, an information dialog pops up,
+     * {@link AlertDialog#showInformation(String, String)}.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void continueButton(ActionEvent event) throws IOException {
         SceneHandler.loadBattlePreparation(event);
@@ -112,18 +171,33 @@ public class BattlePrepController {
                 "keys!", "Accessing Army TableView in Battle Preparations");
     }
 
+    /**
+     * This method is called when the user presses the back button. Using
+     * {@link SceneHandler#loadUnitInformation(ActionEvent)}, the unit information scene is loaded.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void backToUnitInfo(ActionEvent event) throws IOException {
         SceneHandler.loadUnitInformation(event);
     }
 
-
+    /**
+     * This method is called when the user presses the fight button. As the name implies, using
+     * {@link SceneHandler#loadFightScreen(ActionEvent)}, the fight screen is loaded.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     */
     @FXML
     void simulateFight(ActionEvent event) throws IOException {
         SceneHandler.loadFightScreen(event);
     }
 
-    //TODO: check that initialData only works with initial data. Maybe make updateData method
+    /**
+     * This method is used to set all the initial information necessary throughout the class. It does so through
+     * retrieving army information from {@link SimulationSingleton}. Furthermore, it edits the GUI to contain the
+     * information that was retrieved such as the terrain background.
+     */
     private void initialData(){
         terrainComboBox.getItems().addAll(TerrainType.values());
         terrainComboBox.setValue(SimulationSingleton.INSTANCE.getCurrentTerrain());
@@ -133,9 +207,13 @@ public class BattlePrepController {
         updateBattlePrepData();
     }
 
+    /**
+     * This method updates the battle preparation data. This implies displaying the necessary armies as table views and
+     * making certain buttons accessible and others not.
+     */
     private void updateBattlePrepData(){
         if(armyNameText1 != null && armyNameText2 != null) {
-            displayArmy();
+            displayArmys();
         }
 
         if(readyToFight() && this.fightButton != null){
@@ -159,12 +237,20 @@ public class BattlePrepController {
         });
     }
 
-    //TODO: refactor to make the code more readable
-    private void displayArmy(){
+    /**
+     * This method displays both armies through the use of {@link #displayArmy1()} and {@link #displayArmy2()}.
+     */
+    private void displayArmys(){
         displayArmy1();
         displayArmy2();
     }
 
+    /**
+     * This method checks if army1 is supposed to be displayed as a tableview. It does so through monitoring the
+     * {@link SimulationSingleton} army1 to see if it is non-null. If so, then the buttons that are usually placed
+     * where the tableview is, for example the buttons create army and load army, are made invisible. The table
+     * is then filled with the units' information. Otherwise, those buttons and text fields are made visible.
+     */
     private void displayArmy1(){
         boolean displayInfo = false;
 
@@ -186,6 +272,12 @@ public class BattlePrepController {
         removeArmyButton1.setVisible(displayInfo);
     }
 
+    /**
+     * This method checks if army2 is supposed to be displayed as a tableview. It does so through monitoring the
+     * {@link SimulationSingleton} army2 to see if it is non-null. If so, then the buttons that are usually placed
+     * where the tableview is, for example the buttons create army and load army, are made invisible. The table
+     * is then filled with the units' information. Otherwise, those buttons and text fields are made visible.
+     */
     private void displayArmy2(){
         boolean displayInfo = false;
 
@@ -206,6 +298,11 @@ public class BattlePrepController {
         removeArmyButton2.setVisible(displayInfo);
     }
 
+    /**
+     * This method checks whether the user has selected two armies or not. This is done through monitoring the two
+     * armies saved in the {@link SimulationSingleton}.
+     * @return  A boolean representing whether both armies are selected, {@code true}, or not, {@code false}.
+     */
     private boolean readyToFight(){
         return SimulationSingleton.INSTANCE.getArmy1() != null && SimulationSingleton.INSTANCE.getArmy2() != null;
     }
@@ -242,23 +339,14 @@ public class BattlePrepController {
 
 /*
 TODO:
-        Fix visibility of text and try and fix the tableview in battle prep
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
-        5. Add results scene and controller
-        7. Fix the unit information screen and add proper info as well as for the help page.
-        8. Add a warning dialog that pops up if a file that was attempted to be loaded was corrupt. Make sure amount of pages is correct
-        9. Add background picture to saved armies screen
+        7. Fix the help page.
         Fix text in battle preparation to be more visible (try out text with border)
         10. Javadoc all classes and methods
         11. Look for places that need refactoring
         12. Look over all tests
         13. Try to break the simulation. (Check where error and warning boxes may be used.
-        14. If there is extra time, allow the saved files to be organized
-            - Based on Army Name, File name, save time, etc.
 
  */
-
-//     * @param army      The army that provides the information to be displayed, given as an Army object.
-//        * @param tableView The table where the information will be displayed, given as a TableView object.
