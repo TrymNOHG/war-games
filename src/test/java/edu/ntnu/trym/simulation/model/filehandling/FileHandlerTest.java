@@ -100,6 +100,32 @@ public class FileHandlerTest {
             Assertions.assertEquals(expectedNumberOfFiles, actualNumberOfFiles);
 
         }
+
+        @Test
+        void the_file_source_path(){
+            //Given/Arrange
+            String expectedFileSourcePath = "src/main/resources/army-files/fileName.csv";
+            String fileName = "fileName";
+
+            //When/Act
+            String actualFileSourcePath = FileHandler.getFileSourcePath(fileName);
+
+            //Then/Assert
+            Assertions.assertEquals(expectedFileSourcePath, actualFileSourcePath);
+        }
+
+        @Test
+        void a_file_path_without_csv(){
+            //Given/Arrange
+            String fileName = "fileName.csv";
+            String expectedNameWithoutCSV = "fileName";
+
+            //When/Act
+            String actualName = FileHandler.getFileNameWithoutExtension(fileName);
+
+            //Then/Assert
+            Assertions.assertEquals(expectedNameWithoutCSV, actualName);
+        }
     }
 
    /*
