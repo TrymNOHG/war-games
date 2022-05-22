@@ -9,9 +9,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-//TODO: Try and reduce the redundant methods
 
 /**
  * This class provides utility for spacing layouts using panes. This is done by placing panes between each node
