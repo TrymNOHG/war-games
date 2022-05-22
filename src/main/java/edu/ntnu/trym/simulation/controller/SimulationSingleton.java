@@ -1,7 +1,7 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.Battle;
+import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.TerrainType;
 
 /**

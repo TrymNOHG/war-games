@@ -1,7 +1,7 @@
 package edu.ntnu.trym.simulation;
 
 import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.Battle;
+import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;

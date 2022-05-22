@@ -1,14 +1,13 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
-import edu.ntnu.trym.simulation.model.Battle;
+import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
 import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
