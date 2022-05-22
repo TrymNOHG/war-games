@@ -2,7 +2,6 @@ package edu.ntnu.trym.simulation.model.units;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -12,7 +11,6 @@ import java.util.stream.IntStream;
  * @author Trym Hamer Gudvangen
  */
 public class UnitFactory {
-
 
     /**
      * This method takes in a UnitType and the simplified information for a unit in order to retrieve an instance of
@@ -111,7 +109,5 @@ public class UnitFactory {
                 attackValue, armorValue)));
         return listToBeReturned;
     }
-
-    //TODO: test that the getUnit works with the armyFileHandler
 
 }
