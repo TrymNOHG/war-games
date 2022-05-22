@@ -102,6 +102,14 @@ public class Army {
     }
 
     /**
+     * This method sets the current terrain of all the units in the army {@link Unit#setCurrentTerrain(TerrainType)}.
+     * @param terrain The current terrain, given as a TerrainType enumeration.
+     */
+    public void setAllUnitsTerrain(TerrainType terrain){
+        this.units.forEach(unit -> unit.setCurrentTerrain(terrain));
+    }
+
+    /**
      * This method returns a random unit, if the units List is not empty/
      * @return A random unit, represented as a Unit object
      */
@@ -155,7 +163,6 @@ public class Army {
         return this.units.stream().filter(unit -> unit.getUnitType() == unitType).toList();
     }
 
-    //TODO: make test for this method.
     /**
      * This method deep copies every unit from an Army's unit list and distinguishes between
      * default units {@link UnitFactory#getDeepCopiedDefaultUnit(Unit)} and special units
