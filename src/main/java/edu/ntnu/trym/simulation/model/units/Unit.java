@@ -35,7 +35,7 @@ public abstract class Unit {
         this.health = health;
         if(attack < 0) throw new IllegalArgumentException("Attack cannot be below 0");
         this.attack = attack;
-        if(armor < 0) throw new IllegalArgumentException("Attack cannot be below 0");
+        if(armor < 0) throw new IllegalArgumentException("Armor cannot be below 0");
         this.armor = armor;
     }
 
