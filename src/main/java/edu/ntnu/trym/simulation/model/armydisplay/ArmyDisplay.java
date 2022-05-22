@@ -76,7 +76,9 @@ public class ArmyDisplay extends VBox{
          * @return The builder itself, represented as a Builder object.
          */
         public Builder addArmyName(){
-            this.hBoxList.add(PaneSpacing.createHBoxWithSpacing(new Text(army.getName())));
+            Text armyName = new Text(army.getName());
+            armyName.setUnderline(true);
+            this.hBoxList.add(PaneSpacing.createHBoxWithSpacing(armyName));
             return this;
         }
 
