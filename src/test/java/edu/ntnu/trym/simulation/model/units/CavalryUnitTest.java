@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.model.units;
 
+import edu.ntnu.trym.simulation.model.TerrainType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-//TODO: Write tests for the different terrain!
 
 class CavalryUnitTest {
 
@@ -214,6 +213,140 @@ class CavalryUnitTest {
         }
 
     }
+
+    @Nested
+    public class A_CavalryUnit_in_the_PLAINS_terrain{
+
+        @Test
+        void gets_10_attack_bonus_added_to_default_bonus(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetCavalryUnit.setCurrentTerrain(plainsTerrain);
+            int terrainBonus = 10;
+            int expectedAttackBonusAfter1Attack = 6 + terrainBonus;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2 + terrainBonus;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetCavalryUnit.setCurrentTerrain(plainsTerrain);
+            int expectedResistBonus = 1;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCavalryUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
+
+    }
+
+    @Nested
+    public class A_CavalryUnit_in_the_FOREST_terrain{
+        @Test
+        void gets_the_same_attack_bonus_as_default(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetCavalryUnit.setCurrentTerrain(forestTerrain);
+            int expectedAttackBonusAfter1Attack = 6;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_0_resistance_bonus(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetCavalryUnit.setCurrentTerrain(forestTerrain);
+            int expectedResistBonus = 0;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCavalryUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
+    }
+
+    @Nested
+    public class A_CavalryUnit_in_the_HILL_terrain{
+
+        @Test
+        void gets_the_same_attack_bonus_as_default(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetCavalryUnit.setCurrentTerrain(hillTerrain);
+            int expectedAttackBonusAfter1Attack = 6;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCavalryUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetCavalryUnit.setCurrentTerrain(hillTerrain);
+            int expectedResistBonus = 1;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCavalryUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
+    }
+
 
     @Nested
     public class A_CavalryUnit_is_not_initialized{
