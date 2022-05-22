@@ -4,6 +4,8 @@ import javafx.scene.layout.Pane;
 
 /**
  * This class concerns itself with which background a scene should have based on the terrain.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class TerrainBackground {
 
