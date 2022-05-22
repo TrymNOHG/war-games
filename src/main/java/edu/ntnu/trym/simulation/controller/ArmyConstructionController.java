@@ -8,6 +8,7 @@ import edu.ntnu.trym.simulation.model.units.Unit;
 import edu.ntnu.trym.simulation.model.units.UnitFactory;
 import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -22,6 +23,8 @@ import java.util.*;
  * creation of an army through the creation and removal of units. Furthermore, it catches exceptions when the user
  * provides invalid information. Finally, when the army has been constructed, it prompts the user to insert a name for
  * the army file and saves it.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class ArmyConstructionController {
 
@@ -57,8 +60,11 @@ public class ArmyConstructionController {
     @FXML
     private ComboBox<UnitType> unitTypeBox = new ComboBox<>();
 
+    /**
+     * This method sets up all the information concerning the scene before loading it. This includes setting up
+     * listeners, loading variable data, and constructing the GUI aspects of the scene.
+     */
     public void initialize() {
-        System.out.println("Hello");
         initialData();
 
         //TODO: Listeners on both armor and attack input to see whether default or specialized
@@ -88,14 +94,24 @@ public class ArmyConstructionController {
 
     }
 
-    //TODO: Make the input boxes size with the screen so that default is spelled out
-
+    /**
+     * This method is called when the add unit button is pressed. It, thereafter, uses the
+     * {@link #createUnitsFromInputData()} method in order to create a unit and then adds it to the armyConstructed's
+     * unit list.
+     * @param event The button being pressed, given as an Event object.
+     */
     @FXML
     void addUnit(ActionEvent event) {
         armyConstructed.addAll(createUnitsFromInputData());
         armyTable.refresh();
     }
 
+    /**
+     * This method is called when the remove unit button is pressed. It, thereafter, checks if a unit has been selected
+     * in the TableView. If so, then it is removed from the tableview and consequently the armyConstructed. If no unit
+     * is selected, then a warning dialog is shown.
+     * @param event The button being pressed, given as an Event object.
+     */
     @FXML
     void removeUnit(ActionEvent event) {
         try {
@@ -107,6 +123,15 @@ public class ArmyConstructionController {
         }
     }
 
+    /**
+     * This method is called when the save and load button is pressed. After this, a text input dialog is created,
+     * {@link AlertDialog#createTextInputDialog(String, String, String)} asking the user what they would like to name
+     * the file. This method handles invalid inputs such as the name of the file and whether a file is being
+     * overwritten. Finally, the battle preparation is loaded again,
+     * {@link SceneHandler#loadBattlePreparation(ActionEvent)}.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the next scene is invalid.
+     */
     @FXML
     void saveLoadArmy(ActionEvent event) throws IOException {
 
@@ -150,14 +175,22 @@ public class ArmyConstructionController {
         //Save the army to file but maybe get some information from a pop-up on what the name should be.
     }
 
-
-
-
+    /**
+     * This method is called when the back to battle preparations button is pressed. As such, it will bring
+     * the user back to the battle preparations scene.
+     * @param event         The button being pressed, given as an Event object.
+     * @throws IOException  This exception is thrown if the path to the next scene is invalid.
+     */
     @FXML
     void backToBattlePrep(ActionEvent event) throws IOException {
         SceneHandler.loadBattlePreparation(event);
     }
 
+    /**
+     * This method is used to set all the initial information necessary throughout the class. It does so through
+     * retrieving army information from {@link SimulationSingleton}. Furthermore, it edits the GUI to contain the
+     * information that was retrieved.
+     */
     private void initialData(){
         //TODO: Make sure the name is changed before allowing the army to be constructed
         if(SimulationSingleton.INSTANCE.getArmyOfCurrentArmy() != null){
@@ -173,6 +206,11 @@ public class ArmyConstructionController {
         setSelectedUnit();
     }
 
+    /**
+     * This method sets up the army table, given as a TableView, through the use of the
+     * {@link edu.ntnu.trym.simulation.model.armydisplay.ArmyTable.Builder}. Furthermore, it adds all the information
+     * from the armyConstructed object into an {@link ObservableList} which is attached to the table.
+     */
     private void createArmyTable(){
 
         TableView<Unit> armyTableView = new ArmyTable.Builder()
@@ -188,7 +226,9 @@ public class ArmyConstructionController {
 
     }
 
-    //TODO: Name better?
+    /**
+     * This method adds a listener to the armyTable such that if a unit is selected, this class is notified.
+     */
     private void setSelectedUnit(){
         armyTable.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY){
@@ -198,6 +238,12 @@ public class ArmyConstructionController {
 
     }
 
+    /**
+     * This method takes the information from the various input boxes. It, then, checks that all the inputs are valid
+     * and if so, then it instantiates a unit using {@link UnitFactory#getMultipleUnits(int, UnitType, String, int)} for
+     * default units and {@link UnitFactory#getMultipleUnits(int, UnitType, String, int)} for special units.
+     * @return
+     */
     private List<Unit> createUnitsFromInputData(){
         if(!isUnitReadyToBeCreated())return null;
 
@@ -214,6 +260,7 @@ public class ArmyConstructionController {
         }
     }
 
+   
     private boolean isUnitReadyToBeCreated(){
         if(unitTypeBox.getValue() == null){
             AlertDialog.showError("Please choose a unit type before adding a unit!");
