@@ -80,12 +80,12 @@ public class FileHandler {
      * This method strips a CSV file of the extension .csv and returns just the file name.
      * @param fileName Name of the file with extension, represented as a String
      * @return         Name of the file without the extension, represented as a String
+     * @deprecated     This method was replaced by better coding standards and is no longer necessary.
      */
     @Deprecated
     public static String getFileNameWithoutExtension(String fileName){
         return fileName.replaceAll(".csv", "");
     }
-    //TODO: Write test for this method
 
     /**
      * This method checks if a given File's path ends with .csv, therefore making it a CSV file.
