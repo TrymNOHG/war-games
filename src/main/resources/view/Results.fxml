@@ -36,8 +36,16 @@
             </Pane>
             <Pane fx:id="resultsArmy2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Button id="main-button" mnemonicParsing="false" onAction="#backToBattlePrep" stylesheets="@../stylesheets/Buttons.css" text="Back to Battle Preparations" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Pane fx:id="iconArmy1" prefHeight="89.0" prefWidth="151.0" stylesheets="@../stylesheets/Icons.css" />
-            <Pane fx:id="iconArmy2" prefHeight="93.0" prefWidth="161.0" stylesheets="@../stylesheets/Icons.css" GridPane.columnIndex="2" />
+            <Pane fx:id="iconArmy1" prefHeight="89.0" prefWidth="151.0" stylesheets="@../stylesheets/Icons.css">
+               <padding>
+                  <Insets left="20.0" top="20.0" />
+               </padding>
+            </Pane>
+            <Pane fx:id="iconArmy2" prefHeight="93.0" prefWidth="161.0" stylesheets="@../stylesheets/Icons.css" GridPane.columnIndex="2">
+               <padding>
+                  <Insets right="20.0" top="20.0" />
+               </padding>
+            </Pane>
          </children>
       </GridPane>
    </children>
