@@ -19,6 +19,15 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+//TODO: make sure the number of pages after corrupted file is correct.
+
+/**
+ * This class handles the interactions between the backend and the saved army scene. As such, it displays all the armies
+ * that are saved to the army-files folder and are of the correct format. Furthermore, it allows the user to select and
+ * load one of the armies.
+ *
+ * @author Trym Hamer Gudvangen
+ */
 public class SavedArmyController {
 
     @FXML
@@ -55,7 +64,10 @@ public class SavedArmyController {
 
     private final ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
-
+    /**
+     * This method sets up all the information concerning the scene before loading it. This includes setting up
+     * listeners, loading variable data, and constructing the GUI aspects of the scene.
+     */
     public void initialize() {
         try {
             initialData();
@@ -66,15 +78,36 @@ public class SavedArmyController {
 
     }
 
+    /**
+     * This method is used to set all the initial information necessary throughout the class. This includes setting the
+     * number of pages needed based on the number of valid files {@link #numberOfPagesNeeded()}.Furthermore, it edits
+     * the GUI to contain the information of each army file {@link #setSaveSlotProperties()}.
+     *
+     * @throws IOException      This exception is thrown if the army files are invalid.
+     */
     private void initialData() throws IOException {
         currentPage = 1;
         totalPages = numberOfPagesNeeded();
         setSaveSlotProperties();
     }
 
-    //TODO: refactor this method since it is weirdly structured.
+    /**
+     * This method adds all the listeners necessary for the class to get the information in needs as the application
+     * is running.
+     * @throws IOException  This exception is thrown if the army files are invalid.
+     */
     private void addListeners() throws IOException {
         updatePage();
+
+        addPageButtonListeners();
+        addListenerToArmySlots();
+    }
+
+    /**
+     * This method adds listeners to the buttons that allow the user to change the pages. In the listeners, the current
+     * page the user is on is updated.
+     */
+    private void addPageButtonListeners(){
         this.nextPageButton.setOnMouseClicked(event -> {
             currentPage++;
             try {
@@ -92,50 +125,59 @@ public class SavedArmyController {
                 throw new RuntimeException(e);
             }
         });
-
-        addListenerToArmySlots();
     }
 
-    //TODO: maybe refactor this so that one method sets all listeners and one method sets on listener.
+    /**
+     * This method adds listeners to all the different save slots, the regions of army information. As such, if a region
+     * is clicked, the listeners will register it and set the corresponding army as the selected army.
+     */
     private void addListenerToArmySlots(){
         saveSlot1.setOnMouseClicked(mouseEvent -> {
-            //Do stuff when the slot is pressed such as make the region blue
             selectedArmy = army1;
             loadArmyButton.setId("main-load-button");
-            //TODO: Check if adding a listener to a slot being selected is possible. So if a slot isn't selected, the
-            //setId is just main-button
         });
         saveSlot2.setOnMouseClicked(mouseEvent -> {
-            //Do stuff when the slot is pressed
             selectedArmy = army2;
             loadArmyButton.setId("main-load-button");
         });
         saveSlot3.setOnMouseClicked(mouseEvent -> {
-            //Do stuff when the slot is pressed
             selectedArmy = army3;
             loadArmyButton.setId("main-load-button");
         });
         saveSlot4.setOnMouseClicked(mouseEvent -> {
-            //Do stuff when the slot is pressed
             selectedArmy = army4;
             loadArmyButton.setId("main-load-button");
 
         });
     }
 
+    /**
+     * This method updates all the slot information (such as visibility and armies) as well as the buttons.
+     * @throws IOException      This exception is thrown if the army files are invalid.
+     */
     private void updatePage() throws IOException {
         clearAllSlotsInfo();
         updateButtonVisibility();
         updateArmyOnPage();
     }
 
+    /**
+     * This method updates the visibility of the page buttons, so that if there aren't any previous or latter pages
+     * then the corresponding arrows aren't visible.
+     */
     private void updateButtonVisibility(){
         this.previousPageButton.setVisible(currentPage != 1);
         this.nextPageButton.setVisible(currentPage != totalPages);
 
     }
 
-    //TODO: This needs to be refactored and made more concise
+    /**
+     * This method goes into the army-files directory and looks at every existing file there. It, then, uses the method
+     * {@link #setArmyBasedOnPage(int, File)} in order to use that army's information and place it in one of the four
+     * slots. If the file is corrupt, then a warning alert box pops up using {@link AlertDialog#showWarning(String)}
+     * and the file is, thereafter, deleted.
+     * @throws IOException      This exception is thrown if the army files are invalid.
+     */
     private void updateArmyOnPage() throws IOException {
         AtomicInteger counter = new AtomicInteger();
         Stream<Path> fileWalk = FileHandler.getFilesInDirectory();
@@ -163,6 +205,14 @@ public class SavedArmyController {
         fileWalk.close();
     }
 
+    /**
+     * This method takes in a number from 1-4, representing the slot, and an army file in order to set the army's file
+     * within that slot. For a specific slot, this method utilizes the {@link #setSlotContent(ScrollPane, File)}.
+     * @param counter                   The slot, represented as an integer.
+     * @param file                      The army file, represented using a File object.
+     * @throws IOException              This exception is thrown if the file trying to be accessed is invalid.
+     * @throws InstantiationException   This exception is thrown if an army cannot be instantiated from the file.
+     */
     private void setArmyBasedOnPage(int counter, File file) throws IOException, InstantiationException {
         Army currentArmy = armyFileHandler.readFromArmyFile(file);
 
@@ -192,6 +242,15 @@ public class SavedArmyController {
         }
     }
 
+    /**
+     * This method takes in an army file and use the {@link ArmyDisplay.Builder#build()} in order to create a VBox
+     * containing the information of both the file and the army. This information is then attached to a given
+     * Scrollpane, the slots.
+     * @param saveSlot                  The save slot, represented using a ScrollPane object.
+     * @param file                      The army file, represented using an Army object.
+     * @throws IOException              This exception is thrown if the file trying to be accessed is invalid.
+     * @throws InstantiationException   This exception is thrown if an army cannot be instantiated from the file.
+     */
     private void setSlotContent(ScrollPane saveSlot, File file) throws IOException, InstantiationException {
         VBox armyVBox = new ArmyDisplay.Builder(file)
                 .addArmyName()
@@ -211,6 +270,9 @@ public class SavedArmyController {
         saveSlot.setContent(armyVBox);
     }
 
+    /**
+     * This method clears all the slots using {@link #clearSlotInfo(ScrollPane)} and annuls all the armies.
+     */
     private void clearAllSlotsInfo(){
         clearSlotInfo(saveSlot1);
         army1 = null;
@@ -225,11 +287,18 @@ public class SavedArmyController {
         army4 = null;
     }
 
+    /**
+     * This method takes in a save slot and sets all the content and styles attached to it back to null.
+     * @param saveSlot  The save slot to be annulled, represented using a ScrollPane object.
+     */
     private void clearSlotInfo(ScrollPane saveSlot){
         saveSlot.setContent(null);
         saveSlot.setId(null);
     }
 
+    /**
+     * This method sets all the slots' dimension properties.
+     */
     private void setSaveSlotProperties(){
         saveSlot1.fitToHeightProperty().set(true);
         saveSlot1.fitToWidthProperty().set(true);
@@ -244,21 +313,34 @@ public class SavedArmyController {
         saveSlot4.fitToWidthProperty().set(true);
     }
 
+    /**
+     * This method calculates the number of pages needed based on the number of CSV files that exist in the army-files
+     * directory. This number is found using the {@link FileHandler#getNumberOfCSVFiles()}.
+     * @return                  The number of pages needed, represented using an integer.
+     * @throws IOException      This exception is thrown if the directory path is invalid.
+     */
     private int numberOfPagesNeeded() throws IOException {
         return (int) Math.ceil(FileHandler.getNumberOfCSVFiles()/4.0);
     }
 
-    /*
-    Add listeners to the previous and next page buttons which update the pages, as well as changes the page number. This
-    can also be done for the help page!!!
+    /**
+     * This method is called when the user presses the back to battle preparations button. As the name implies, using
+     * {@link SceneHandler#loadBattlePreparation(ActionEvent)}, the battle preparations scene is loaded.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the battle preparation scene is invalid.
      */
-
-
     @FXML
     void backToBattlePrep(ActionEvent event) throws IOException {
         SceneHandler.loadBattlePreparation(event);
     }
 
+    /**
+     * This method is called when the user presses the load button. The information of the selected army is sent to
+     * the {@link SimulationSingleton}. Using {@link SceneHandler#loadBattlePreparation(ActionEvent)}, the battle
+     * preparations scene is loaded.
+     * @param event             The button being pressed, given as an Event object.
+     * @throws IOException      This exception is thrown if the path to the battle preparation scene is invalid.
+     */
     @FXML
     void loadArmy(ActionEvent event) throws IOException {
         if(selectedArmy == null) {
@@ -269,6 +351,5 @@ public class SavedArmyController {
             SceneHandler.loadBattlePreparation(event);
         }
     }
-
 
 }
