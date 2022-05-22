@@ -42,7 +42,7 @@ public class HelpPageController {
      * This method is called when the user presses the back to main menu button. As the name implies, using
      * {@link SceneHandler#loadMainMenu(ActionEvent)}, the main menu scene is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the main menu scene is invalid.
      */
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {

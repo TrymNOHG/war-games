@@ -107,7 +107,7 @@ public class BattlePrepController {
      * which army is being altered. This information is sent to the dispatcher, {@link SimulationSingleton}. After that,
      * the scene is switched to the loadSavedArmies scene {@link SceneHandler#loadSavedArmies(ActionEvent)}.
      * @param event         The button being pressed, given as an Event object.
-     * @throws IOException  This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException  This exception is thrown if the path to the saved army scene is invalid.
      */
     @FXML
     void loadArmy(ActionEvent event) throws IOException {
@@ -148,7 +148,7 @@ public class BattlePrepController {
      * This method is called when the user presses the back to main menu button. As the name implies, using
      * {@link SceneHandler#loadMainMenu(ActionEvent)}, the main menu scene is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the main menu scene is invalid.
      */
     @FXML
     void backToMainMenu(ActionEvent event) throws IOException {
@@ -161,7 +161,7 @@ public class BattlePrepController {
      * since the tableview can be a little confusing, an information dialog pops up,
      * {@link AlertDialog#showInformation(String, String)}.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the battle preparation scene is invalid.
      */
     @FXML
     void continueButton(ActionEvent event) throws IOException {
@@ -175,7 +175,7 @@ public class BattlePrepController {
      * This method is called when the user presses the back button. Using
      * {@link SceneHandler#loadUnitInformation(ActionEvent)}, the unit information scene is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the unit information scene is invalid.
      */
     @FXML
     void backToUnitInfo(ActionEvent event) throws IOException {
@@ -186,7 +186,7 @@ public class BattlePrepController {
      * This method is called when the user presses the fight button. As the name implies, using
      * {@link SceneHandler#loadFightScreen(ActionEvent)}, the fight screen is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the fight scene is invalid.
      */
     @FXML
     void simulateFight(ActionEvent event) throws IOException {

@@ -56,7 +56,7 @@ public class FightController {
      * This method is called when the user presses the skip button. Using
      * {@link SceneHandler#loadResultScreen(ActionEvent)}, the results scene is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the result scene is invalid.
      */
     @FXML
     void skipFight(ActionEvent event) throws IOException {
@@ -67,7 +67,7 @@ public class FightController {
      * This method is called when the user presses the back to battle preparations button. As the name implies, using
      * {@link SceneHandler#loadBattlePreparation(ActionEvent)}, the battle preparations scene is loaded.
      * @param event             The button being pressed, given as an Event object.
-     * @throws IOException      This exception is thrown if the path to the army construction scene is invalid.
+     * @throws IOException      This exception is thrown if the path to the battle preparation scene is invalid.
      */
     @FXML
     void backToBattlePrep(ActionEvent event) throws IOException {
