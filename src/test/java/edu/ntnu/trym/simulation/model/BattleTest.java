@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.model;
 
 import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.battle.Battle;
