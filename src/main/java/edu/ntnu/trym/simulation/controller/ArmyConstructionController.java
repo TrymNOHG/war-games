@@ -100,8 +100,7 @@ public class ArmyConstructionController implements Initializable {
             armyTable.getItems().remove(selectedUnit);
         }
         catch (NullPointerException e){
-            e.printStackTrace();
-            //TODO: add error message of some sort, maybe pop-up
+            AlertDialog.showWarning("A unit was not selected and can therefore not be removed!");
         }
     }
 
@@ -226,3 +225,5 @@ public class ArmyConstructionController implements Initializable {
 
 //Add a listener to unit type, name text field, health, and amount. Once these have been properly changed, then the
 // add unit button is not disabled
+
+//Add thing where if a unit is added, then it is auto selected in the table view.
