@@ -24,7 +24,7 @@
             </Text>
          </top>
          <center>
-            <Text fx:id="informationText" strokeType="OUTSIDE" strokeWidth="0.0" text="This application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwwwThis application attempts to mimic  ererrrrrrrrrrrrrrr. wwwwwwwwwwwwwwww" wrappingWidth="343.34716796875" BorderPane.alignment="CENTER" />
+            <Text fx:id="informationText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="343.34716796875" BorderPane.alignment="CENTER" />
          </center>
          <left>
             <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="57.0" onMouseClicked="#previousPage" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER">
@@ -32,7 +32,7 @@
                   <Insets left="25.0" />
                </BorderPane.margin>
                <image>
-                  <Image url="@../pictures/Left Arrow.png" />
+                  <Image url="@../pictures/icons/Left Arrow.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -45,7 +45,7 @@
                   <Insets right="25.0" />
                </BorderPane.margin>
                <image>
-                  <Image url="@../pictures/Right Arrow.png" />
+                  <Image url="@../pictures/icons/Right Arrow.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
