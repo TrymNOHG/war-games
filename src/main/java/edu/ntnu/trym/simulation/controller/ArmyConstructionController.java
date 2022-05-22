@@ -67,8 +67,6 @@ public class ArmyConstructionController {
     public void initialize() {
         initialData();
 
-        //TODO: Listeners on both armor and attack input to see whether default or specialized
-
         attackInput.setOnKeyTyped((action) -> {
             if(attackInput.getText().isEmpty()){
                 defaultUnit = true;
@@ -102,7 +100,12 @@ public class ArmyConstructionController {
      */
     @FXML
     void addUnit(ActionEvent event) {
-        armyConstructed.addAll(createUnitsFromInputData());
+        List<Unit> unitList = createUnitsFromInputData();
+        armyConstructed.addAll(unitList);
+        if(unitList != null) {
+            armyTable.getFocusModel().focus(armyTable.getItems().size() - 1);
+            armyTable.getSelectionModel().select(unitList.get(0));
+        }
         armyTable.refresh();
     }
 
@@ -138,14 +141,11 @@ public class ArmyConstructionController {
         String fileName = AlertDialog.createTextInputDialog("Save Army", "Type the name of the army's file",
                 "File name: ");
 
-        //TODO: check if there is a better way of telling whether the cancel button was pressed.
         if(fileName == null) return;
         if(this.armyConstructed.getAllUnits().isEmpty()){
             AlertDialog.showError("The army is empty and can, therefore, not be saved.");
             return;
         }
-
-        //Check if a file with that name already exists and if so, does the person want to overwrite it?
 
         try{
             this.armyConstructed.setName(this.armyNameText.getText());
@@ -172,7 +172,6 @@ public class ArmyConstructionController {
         }
 
         SceneHandler.loadBattlePreparation(event);
-        //Save the army to file but maybe get some information from a pop-up on what the name should be.
     }
 
     /**
@@ -192,7 +191,6 @@ public class ArmyConstructionController {
      * information that was retrieved.
      */
     private void initialData(){
-        //TODO: Make sure the name is changed before allowing the army to be constructed
         if(SimulationSingleton.INSTANCE.getArmyOfCurrentArmy() != null){
             armyConstructed = SimulationSingleton.INSTANCE.getArmyOfCurrentArmy();
             armyNameText.setText(armyConstructed.getName());
@@ -330,11 +328,4 @@ public class ArmyConstructionController {
         }
     }
 
-
-
 }
-
-//Add a listener to unit type, name text field, health, and amount. Once these have been properly changed, then the
-// add unit button is not disabled
-
-//Add thing where if a unit is added, then it is auto selected in the table view.
