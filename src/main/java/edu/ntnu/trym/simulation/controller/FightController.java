@@ -2,6 +2,8 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.Battle;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
+import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,10 +24,10 @@ public class FightController implements Initializable {
     private Army winnerArmy;
 
     @FXML
-    private ImageView iconArmy1;
+    private Pane iconArmy1;
 
     @FXML
-    private ImageView iconArmy2;
+    private Pane iconArmy2;
 
     @FXML
     private Pane resultsArmy1;
@@ -37,6 +39,7 @@ public class FightController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialData();
         if(this.battle == null) initiateFight();
+        else displayResults();
 
     }
 
@@ -54,6 +57,7 @@ public class FightController implements Initializable {
 
     private void initialData(){
         this.battle = SimulationSingleton.INSTANCE.getBattle();
+        if(this.battle != null) this.winnerArmy = new Army(this.battle.getWinnerArmy());
     }
 
     private void initiateFight(){
@@ -64,10 +68,43 @@ public class FightController implements Initializable {
     }
 
     private void conductBattle(){
-        this.winnerArmy = this.battle.simulate();
+        this.battle.simulate();
         SimulationSingleton.INSTANCE.setBattle(this.battle);
         this.skipButton.setDisable(false);
         this.skipButton.setId("main-load-button");
     }
+
+    private void displayResults(){
+        displayArmyResult(this.resultsArmy1, this.battle.getArmyOne());
+        displayArmyResult(this.resultsArmy2, this.battle.getArmyTwo());
+
+        displayResultIcons();
+    }
+
+    private void displayArmyResult(Pane armyPane, Army army){
+        armyPane.getChildren().addAll(new ArmyDisplay.Builder(army)
+                .addArmyName()
+                .addUnitInformation(UnitType.INFANTRY)
+                .addUnitInformation(UnitType.RANGED)
+                .addUnitInformation(UnitType.CAVALRY)
+                .addUnitInformation(UnitType.COMMANDER)
+                .build());
+        armyPane.setStyle("-fx-alignment: center");
+    }
+
+    private void displayResultIcons(){
+        this.iconArmy1.autosize();
+        this.iconArmy2.autosize();
+
+        if(this.battle.getArmyOne().equals(this.winnerArmy)) {
+            this.iconArmy1.setId("trophy-icon");
+            this.iconArmy2.setId("white-flag-icon");
+        }
+        else{
+            this.iconArmy2.setId("trophy-icon");
+            this.iconArmy1.setId("white-flag-icon");
+        }
+    }
+
 
 }
