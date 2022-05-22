@@ -1,11 +1,13 @@
 package edu.ntnu.trym.simulation;
 
 import edu.ntnu.trym.simulation.model.Army;
+import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
@@ -191,6 +193,39 @@ class ArmyTest {
 
             //Then/Assert
             Assertions.assertNotEquals(unitListToBeAdded, army.getAllUnits());
+        }
+
+        @ParameterizedTest (name = "Terrain tested : {0}")
+        @EnumSource(value = TerrainType.class)
+        void sets_all_units_terrain_to_given_terrain(TerrainType terrain){
+            //Given/Arrange
+            TerrainType expectedTerrain = terrain;
+            Army army = new Army("Trym's Army", fillArmyList());
+
+            //When/Act
+            army.setAllUnitsTerrain(expectedTerrain);
+
+            //Then/Assert
+            Assertions.assertTrue(army.getAllUnits().stream().allMatch(unit ->
+                    unit.getCurrentTerrain() == expectedTerrain));
+        }
+
+        @ParameterizedTest (name = "Terrain tested : {0}")
+        @EnumSource(value = TerrainType.class)
+        void doesnt_throw_exception_when_setting_terrain_for_empty_units_list(TerrainType terrain){
+            //Given/Arrange
+            TerrainType expectedTerrain = terrain;
+            Army army = new Army("Trym's Army", new ArrayList<>());
+
+            //When/Act
+            try {
+                army.setAllUnitsTerrain(expectedTerrain);
+            }
+            catch (Exception e){
+                //Then/Assert
+                fail("An exception occurred when it wasn't supposed to");
+            }
+
         }
 
         @Test
@@ -671,6 +706,5 @@ class ArmyTest {
             }); //Then/Assert
         }
     }
-
 
 }
