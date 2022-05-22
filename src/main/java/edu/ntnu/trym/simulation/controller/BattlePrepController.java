@@ -33,6 +33,12 @@ public class BattlePrepController {
     private Text armyNameText2;
 
     @FXML
+    private Button armyInformation1;
+
+    @FXML
+    private Button armyInformation2;
+
+    @FXML
     private Button createArmyButton1;
 
     @FXML
@@ -113,6 +119,21 @@ public class BattlePrepController {
     void loadArmy(ActionEvent event) throws IOException {
         SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
         SceneHandler.loadSavedArmies(event);
+    }
+
+
+    /**
+     * This method is called when the user presses the show army information button. This may be for either army1
+     * (top army) or for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to
+     * determine which army is being altered. This information is sent to the dispatcher, {@link SimulationSingleton}.
+     * After that, the scene is switched to the loadSavedArmies scene {@link SceneHandler#loadSavedArmies(ActionEvent)}.
+     * @param event         The button being pressed, given as an Event object.
+     * @throws IOException  This exception is thrown if the path to the saved army scene is invalid.
+     */
+    @FXML
+    void showArmyInformation(ActionEvent event) throws IOException {
+        SimulationSingleton.INSTANCE.setCurrentArmy(armyNumberByButton(event));
+        SceneHandler.loadArmyInformation(event);
     }
 
     /**
@@ -268,6 +289,7 @@ public class BattlePrepController {
         orText.setVisible(!displayInfo);
 
         army1Table.setVisible(displayInfo);
+        armyInformation1.setVisible(displayInfo);
         changeArmyButton1.setVisible(displayInfo);
         removeArmyButton1.setVisible(displayInfo);
     }
@@ -294,6 +316,7 @@ public class BattlePrepController {
         orText2.setVisible(!displayInfo);
 
         army2Table.setVisible(displayInfo);
+        armyInformation2.setVisible(displayInfo);
         changeArmyButton2.setVisible(displayInfo);
         removeArmyButton2.setVisible(displayInfo);
     }
@@ -339,6 +362,10 @@ public class BattlePrepController {
 
 /*
 TODO:
+        Have button in battle preparation for more information that gives name, total amount of units,
+        total for each unit, and a table view.
+        Fix corrupt file problem
+        Display information about the fight
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
