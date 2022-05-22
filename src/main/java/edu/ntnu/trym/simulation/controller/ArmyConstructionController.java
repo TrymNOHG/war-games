@@ -10,17 +10,20 @@ import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
-public class ArmyConstructionController implements Initializable {
+/**
+ * This class handles the interactions between the backend and the ArmyConstruction scene. As such, it allows for the
+ * creation of an army through the creation and removal of units. Furthermore, it catches exceptions when the user
+ * provides invalid information. Finally, when the army has been constructed, it prompts the user to insert a name for
+ * the army file and saves it.
+ */
+public class ArmyConstructionController {
 
     private Army armyConstructed;
 
@@ -54,8 +57,8 @@ public class ArmyConstructionController implements Initializable {
     @FXML
     private ComboBox<UnitType> unitTypeBox = new ComboBox<>();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
+        System.out.println("Hello");
         initialData();
 
         //TODO: Listeners on both armor and attack input to see whether default or specialized

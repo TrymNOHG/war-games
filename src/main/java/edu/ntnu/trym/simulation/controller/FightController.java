@@ -6,15 +6,12 @@ import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
 import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class FightController implements Initializable {
+public class FightController {
     @FXML
     private Button skipButton;
 
@@ -34,8 +31,7 @@ public class FightController implements Initializable {
     @FXML
     private Pane resultsArmy2;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         initialData();
         if(this.battle == null) initiateFight();
         else displayResults();

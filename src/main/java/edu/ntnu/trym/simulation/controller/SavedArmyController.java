@@ -8,23 +8,18 @@ import edu.ntnu.trym.simulation.model.filehandling.FileHandler;
 import edu.ntnu.trym.simulation.model.units.UnitType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class SavedArmyController implements Initializable {
+public class SavedArmyController {
 
     @FXML
     private Text nextPageButton;
@@ -61,8 +56,7 @@ public class SavedArmyController implements Initializable {
     private final ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         try {
             initialData();
             addListeners();

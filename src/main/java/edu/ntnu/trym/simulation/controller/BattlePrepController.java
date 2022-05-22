@@ -8,7 +8,6 @@ import edu.ntnu.trym.simulation.model.units.Unit;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
@@ -16,10 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class BattlePrepController implements Initializable {
+public class BattlePrepController {
 
     @FXML
     private Text armyNameText1;
@@ -72,8 +69,7 @@ public class BattlePrepController implements Initializable {
     @FXML
     private TableView<Unit> army2Table;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         initialData();
         addTerrainListener();
     }
@@ -135,7 +131,6 @@ public class BattlePrepController implements Initializable {
         TerrainBackground.setBackgroundByTerrain(terrainComboBox.getValue(), backgroundPane);
 
         updateBattlePrepData();
-        //TODO: This needs to be fixed since when the text is changed to no army equipped
     }
 
     private void updateBattlePrepData(){

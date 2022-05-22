@@ -2,16 +2,13 @@ package edu.ntnu.trym.simulation.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class HelpPageController implements Initializable {
+public class HelpPageController {
     private int currentPage;
 
     @FXML
@@ -27,8 +24,7 @@ public class HelpPageController implements Initializable {
     private ImageView rightArrow;
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         currentPage = 1;
 
     }
