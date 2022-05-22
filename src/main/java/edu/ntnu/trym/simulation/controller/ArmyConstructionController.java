@@ -242,33 +242,94 @@ public class ArmyConstructionController {
      * This method takes the information from the various input boxes. It, then, checks that all the inputs are valid
      * and if so, then it instantiates a unit using {@link UnitFactory#getMultipleUnits(int, UnitType, String, int)} for
      * default units and {@link UnitFactory#getMultipleUnits(int, UnitType, String, int)} for special units.
-     * @return
+     * @return  A list of newly created units, represented using a List{@code <Unit>} object
      */
     private List<Unit> createUnitsFromInputData(){
-        if(!isUnitReadyToBeCreated())return null;
+        try {
+            Objects.requireNonNull(unitTypeBox.getValue());
+            checkForValidInput();
 
-        //Default Unit
-        if(defaultUnit){
-            return UnitFactory.getMultipleUnits(Integer.parseInt(amountOfUnitsInput.getText()), unitTypeBox.getValue(),
-                    unitNameInput.getText(), Integer.parseInt(healthInput.getText()));
-        }
-        //Specialized Unit
-        else{
-            return UnitFactory.getMultipleUnits(Integer.parseInt(amountOfUnitsInput.getText()), unitTypeBox.getValue(),
-                    unitNameInput.getText(), Integer.parseInt(healthInput.getText()),
-                    Integer.parseInt(attackInput.getText()), Integer.parseInt(armorInput.getText()));
-        }
-    }
+            //Default Unit
+            if (defaultUnit) {
+                return UnitFactory.getMultipleUnits(Integer.parseInt(amountOfUnitsInput.getText()), unitTypeBox.getValue(),
+                        unitNameInput.getText(), Integer.parseInt(healthInput.getText()));
+            }
+            //Specialized Unit
+            else {
+                return UnitFactory.getMultipleUnits(Integer.parseInt(amountOfUnitsInput.getText()), unitTypeBox.getValue(),
+                        unitNameInput.getText(), Integer.parseInt(healthInput.getText()),
+                        Integer.parseInt(attackInput.getText()), Integer.parseInt(armorInput.getText()));
+            }
 
-   
-    private boolean isUnitReadyToBeCreated(){
-        if(unitTypeBox.getValue() == null){
+        }
+        catch (IllegalArgumentException e){
+            AlertDialog.showError(e.getMessage());
+            return null;
+        }
+        catch (NullPointerException e){
             AlertDialog.showError("Please choose a unit type before adding a unit!");
-            return false;
+            return null;
         }
-        //Check whether the health and such are valid
-        return true;
+
     }
+
+    /**
+     * This method checks if the input values for creating a unit are valid before being parsed. It does so by
+     * setting exceptions using {@link #setBlankEmptyTextException(String, String)} and
+     * {@link #setIntegerParseExceptions(String, String)}.
+     */
+    private void checkForValidInput() throws IllegalArgumentException{
+        setBlankEmptyTextException(amountOfUnitsInput.getText() ,"The amount of units");
+        setIntegerParseExceptions(amountOfUnitsInput.getText() ,"The amount of units");
+
+        setBlankEmptyTextException(healthInput.getText(), "The health value");
+        setIntegerParseExceptions(healthInput.getText(), "The health value");
+
+
+        if(!(checkIfBlankOrEmpty(attackInput.getText()) && checkIfBlankOrEmpty(armorInput.getText()))){
+            setBlankEmptyTextException(attackInput.getText(), "The attack value");
+            setIntegerParseExceptions(attackInput.getText(), "The attack value");
+
+            setBlankEmptyTextException(armorInput.getText(), "The armor value");
+            setIntegerParseExceptions(armorInput.getText(), "The armor value");
+        }
+
+    }
+
+    /**
+     * This method checks if the input text is blank or empty.
+     * @param text  The input text, represented as a String.
+     * @return      The status of whether the input text is blank or empty, {@code false}, or if it's not, {@code true}.
+     */
+    private boolean checkIfBlankOrEmpty(String text){
+        return text.isEmpty() || text.isBlank();
+    }
+
+    /**
+     * This method takes in an input and checks that it is valid. If not, then it creates an IllegalArgumentException
+     * with an appropriate message.
+     * @param text          The text to be checked, represented as a String
+     * @param nameOfInput   The name of the input, represented as a String.
+     */
+    private void setBlankEmptyTextException(String text, String nameOfInput){
+        if(checkIfBlankOrEmpty(text)) throw new IllegalArgumentException(nameOfInput + " cannot be blank nor empty.");
+    }
+
+    /**
+     * This method takes in an input and checks if it can be parsed as an Integer without throwing any errors. If not,
+     * then it creates an IllegalArgumentException with an appropriate message.
+     * @param text          The text to be checked, represented as a String.
+     * @param nameOfInput   The name of the input, represented as a String.
+     */
+    private void setIntegerParseExceptions(String text, String nameOfInput) throws IllegalArgumentException{
+        try{
+            Integer.parseInt(text);
+        }
+        catch (NumberFormatException e){
+            throw new IllegalArgumentException(nameOfInput + " has to be an integer!");
+        }
+    }
+
 
 
 }
