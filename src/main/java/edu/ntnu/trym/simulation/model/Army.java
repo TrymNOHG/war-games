@@ -3,6 +3,7 @@ package edu.ntnu.trym.simulation.model;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import edu.ntnu.trym.simulation.model.units.UnitFactory;
 import edu.ntnu.trym.simulation.model.units.UnitType;
+import javafx.collections.FXCollections;
 
 import java.util.*;
 
@@ -37,8 +38,8 @@ public class Army {
     public Army(String name, List<Unit> units) throws IllegalArgumentException{
         if(name.isEmpty() || name.isBlank()) throw new IllegalArgumentException("The Army name is invalid");
         this.name = name;
-        //If there are null units in the list, it could also break. Should I throw exception for that?
-        this.units = Objects.requireNonNullElseGet(units, ArrayList::new); //Should this be a deep copy so the lists aren't linked?
+        this.units = Objects.requireNonNullElseGet(units, ArrayList::new);
+        this.units = FXCollections.observableList(this.units);
     }
 
 
@@ -210,9 +211,7 @@ public class Army {
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof Army)) return false;
-
-        Army army = (Army) object;
+        if (!(object instanceof Army army)) return false;
 
         if (!Objects.equals(name, army.name)) return false;
         for(Unit unit : units){
