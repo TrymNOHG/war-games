@@ -22,7 +22,7 @@ public class UnitFactory {
      * @param healthValue   The health of the unit, represented as an integer
      * @return              A Unit object with the information specified
      */
-    public static Unit getUnit(UnitType type, String name, int healthValue){
+    public static Unit getUnit(UnitType type, String name, int healthValue) throws IllegalArgumentException{
         return switch (type) {
             case RANGED -> new RangedUnit(name, healthValue);
             case CAVALRY -> new CavalryUnit(name, healthValue);
@@ -41,7 +41,8 @@ public class UnitFactory {
      * @param armorValue    The armor value of the unit, represented as an integer
      * @return              A Unit object with the information specified
      */
-    public static Unit getUnit(UnitType type, String name, int healthValue, int attackValue, int armorValue) {
+    public static Unit getUnit(UnitType type, String name, int healthValue,
+                               int attackValue, int armorValue) throws IllegalArgumentException{
         return switch (type) {
             case RANGED -> new RangedUnit(name, healthValue, attackValue, armorValue);
             case CAVALRY -> new CavalryUnit(name, healthValue, attackValue, armorValue);
@@ -57,7 +58,7 @@ public class UnitFactory {
      * @return                          The new and copied unit, represented using a Unit object.
      * @throws NullPointerException This exception is thrown if the unit input is null
      */
-    public static Unit getDeepCopiedDefaultUnit(Unit unit) throws NullPointerException{
+    public static Unit getDeepCopiedDefaultUnit(Unit unit) throws NullPointerException, IllegalArgumentException{
         if(unit == null) throw new NullPointerException("Unit cannot be null");
         return getUnit(unit.getUnitType(), unit.getName(), unit.getHealth());
     }
@@ -83,7 +84,8 @@ public class UnitFactory {
      * @param healthValue       The health of the unit, represented as an integer
      * @return                  An arrayList filled with the same unit with the given length
      */
-    public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type, String name, int healthValue){
+    public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type,
+                                              String name, int healthValue) throws IllegalArgumentException{
         if(numberOfUnits < 0) throw new IllegalArgumentException("The desired amount of units is invalid.");
         List<Unit> listToBeReturned = new ArrayList<>();
         IntStream.range(0, numberOfUnits).forEach(i -> listToBeReturned.add(getUnit(type, name, healthValue)));
@@ -102,7 +104,7 @@ public class UnitFactory {
      * @return                  An arrayList filled with the same unit with the given length
      */
     public static List<Unit> getMultipleUnits(int numberOfUnits, UnitType type, String name, int healthValue,
-                                              int attackValue, int armorValue){
+                                              int attackValue, int armorValue) throws IllegalArgumentException {
         if(numberOfUnits < 0) throw new IllegalArgumentException("The desired amount of units is invalid.");
         List<Unit> listToBeReturned = new ArrayList<>();
         IntStream.range(0, numberOfUnits).forEach(i -> listToBeReturned.add(getUnit(type, name, healthValue,
