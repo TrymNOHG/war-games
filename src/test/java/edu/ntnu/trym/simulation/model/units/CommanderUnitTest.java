@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.model.units;
 
+import edu.ntnu.trym.simulation.model.TerrainType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-
-//TODO: Write tests for the different terrain!
 
 class CommanderUnitTest {
 
@@ -216,6 +215,137 @@ class CommanderUnitTest {
             Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
         }
 
+    }
+
+    @Nested
+    public class A_CommanderUnit_in_the_PLAINS_terrain{
+        @Test
+        void gets_10_attack_bonus_added_to_default_bonus(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetCommanderUnit.setCurrentTerrain(plainsTerrain);
+            int terrainBonus = 10;
+            int expectedAttackBonusAfter1Attack = 6 + terrainBonus;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2 + terrainBonus;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetCommanderUnit.setCurrentTerrain(plainsTerrain);
+            int expectedResistBonus = 1;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCommanderUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
+
+    }
+
+    @Nested
+    public class A_CommanderUnit_in_the_FOREST_terrain{
+        @Test
+        void gets_the_same_attack_bonus_as_default(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetCommanderUnit.setCurrentTerrain(forestTerrain);
+            int expectedAttackBonusAfter1Attack = 6;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_0_resistance_bonus(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetCommanderUnit.setCurrentTerrain(forestTerrain);
+            int expectedResistBonus = 0;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCommanderUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
+    }
+
+    @Nested
+    public class A_CommanderUnit_in_the_HILL_terrain{
+        @Test
+        void gets_the_same_attack_bonus_as_default(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetCommanderUnit.setCurrentTerrain(hillTerrain);
+            int expectedAttackBonusAfter1Attack = 6;
+            int expectedAttackBonusAfter2OrMoreAttacks = 2;
+
+            //When/Act
+            //Since the attack bonus decreases when called during attacks, this will be tested by calling the attack
+            //bonus.
+            int actualAttackBonusAfter1AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter2AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+            int actualAttackBonusAfter3AttackPresetUnit = presetCommanderUnit.getAttackBonus();
+
+            //Then/Assert
+            //First attack
+            Assertions.assertEquals(expectedAttackBonusAfter1Attack, actualAttackBonusAfter1AttackPresetUnit);
+            //Second attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter2AttackPresetUnit);
+            //Third attack
+            Assertions.assertEquals(expectedAttackBonusAfter2OrMoreAttacks, actualAttackBonusAfter3AttackPresetUnit);
+        }
+
+        @Test
+        void gets_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetCommanderUnit.setCurrentTerrain(hillTerrain);
+            int expectedResistBonus = 1;
+
+            //When/Act
+            int actualResistBonusFromPresetUnit = presetCommanderUnit.getResistBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+        }
     }
 
     @Nested
