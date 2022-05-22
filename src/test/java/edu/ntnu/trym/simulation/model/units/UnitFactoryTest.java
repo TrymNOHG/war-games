@@ -1,4 +1,4 @@
-package edu.ntnu.trym.simulation;
+package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.units.UnitFactory;
 import edu.ntnu.trym.simulation.model.units.UnitType;
