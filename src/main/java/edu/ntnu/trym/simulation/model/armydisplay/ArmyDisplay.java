@@ -132,6 +132,17 @@ public class ArmyDisplay extends VBox{
         }
 
         /**
+         * This method creates an HBox out of the number of units found in the army.
+         * @return          A horizontal layout with the unit information,represented using an HBox object
+         */
+        public Builder addAmountOfUnitInformation(){
+            Text unitNameText = new Text( "This army contains : ");
+            Text unitNumberText = new Text(this.army.getAllUnits().size() + " units");
+            this.hBoxList.add(PaneSpacing.createHBoxWithSpacing(unitNameText, unitNumberText));
+            return this;
+        }
+
+        /**
          * This method retrieves the location and army information from the army file.
          * @throws IOException This exception is thrown if the file read is invalid.
          */
