@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.controller;
 
+import edu.ntnu.trym.simulation.model.AlertDialog;
 import edu.ntnu.trym.simulation.model.TerrainBackground;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.TerrainType;
@@ -99,7 +100,7 @@ public class BattlePrepController implements Initializable {
     void removeArmy(ActionEvent event) {
         if(armyNumberByButton(event) == 1) SimulationSingleton.INSTANCE.setArmy1(null);
         else SimulationSingleton.INSTANCE.setArmy2(null);
-        updateData();
+        updateBattlePrepData();
     }
 
     @FXML
@@ -110,6 +111,9 @@ public class BattlePrepController implements Initializable {
     @FXML
     void continueButton(ActionEvent event) throws IOException {
         SceneHandler.loadBattlePreparation(event);
+        AlertDialog.showInformation("In order to look through all the items in the tableview, you may" +
+                " need to use tab. This will allow you to select the tableview. From there, you can use the arrow" +
+                "keys!", "Accessing Army TableView in Battle Preparations");
     }
 
     @FXML
@@ -130,12 +134,14 @@ public class BattlePrepController implements Initializable {
 
         TerrainBackground.setBackgroundByTerrain(terrainComboBox.getValue(), backgroundPane);
 
-        updateData();
+        updateBattlePrepData();
         //TODO: This needs to be fixed since when the text is changed to no army equipped
     }
 
-    private void updateData(){
-        if(armyNameText1 != null && armyNameText2 != null) displayArmy();
+    private void updateBattlePrepData(){
+        if(armyNameText1 != null && armyNameText2 != null) {
+            displayArmy();
+        }
 
         if(readyToFight() && this.fightButton != null){
             fightButton.setDisable(false);
@@ -241,6 +247,7 @@ public class BattlePrepController implements Initializable {
 
 /*
 TODO:
+        Fix visibility of text and try and fix the tableview in battle prep
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
