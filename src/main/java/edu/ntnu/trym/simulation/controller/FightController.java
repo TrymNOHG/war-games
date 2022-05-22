@@ -2,13 +2,19 @@ package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.TerrainType;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
+import edu.ntnu.trym.simulation.model.units.Unit;
 import edu.ntnu.trym.simulation.model.units.UnitType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -25,9 +31,8 @@ public class FightController {
     @FXML
     private Button skipButton;
 
-    private Battle battle;
-
-    private Army winnerArmy;
+    @FXML
+    private Button startButton;
 
     @FXML
     private Pane iconArmy1;
@@ -41,15 +46,38 @@ public class FightController {
     @FXML
     private Pane resultsArmy2;
 
+    @FXML
+    private TableView<Unit> armyTable1;
+
+    @FXML
+    private TableView<Unit> armyTable2;
+
+    @FXML
+    private Text informationText;
+
+    private Battle battle;
+
+    private Army winnerArmy;
+
+    private Army army1;
+
+    private Army army2;
+
     /**
      * This method sets up all the information concerning the scene before loading it. This includes setting up
      * listeners, loading variable data, and constructing the GUI aspects of the scene.
      */
     public void initialize() {
         initialData();
-        if(this.battle == null) initiateFight();
+        if(this.battle == null) setUpArmyTables();
         else displayResults();
 
+    }
+
+    @FXML
+    void startBattle(ActionEvent event) {
+        this.startButton.setVisible(false);
+        initiateFight();
     }
 
     /**
@@ -81,8 +109,37 @@ public class FightController {
      * information that was retrieved such as the results of the simulation.
      */
     private void initialData(){
+        army1 = new Army(SimulationSingleton.INSTANCE.getArmy1());
+        army2 = new Army(SimulationSingleton.INSTANCE.getArmy1());
         this.battle = SimulationSingleton.INSTANCE.getBattle();
         if(this.battle != null) this.winnerArmy = new Army(this.battle.getWinnerArmy());
+    }
+
+    /**
+     * This method sets up both army tables through the use of {@link #setUpArmyTable(TableView, Army)}.
+     */
+    private void setUpArmyTables(){
+        setUpArmyTable(armyTable1, army1);
+        setUpArmyTable(armyTable2, army2);
+    }
+
+    /**
+     * This method sets up the army table and observable list of the units, allowing the tracking of the units as the
+     * simulation is running. The table was constructed using {@link ArmyTable#ArmyTable(ArmyTable.Builder)}.
+     * @param armyTable     The table to be set up, represented using a TableView{@code <Unit>} object.
+     * @param army          The army to be placed in the table, represented using an Army object.
+     */
+    private void setUpArmyTable(TableView<Unit>  armyTable, Army army){
+        TableView<Unit> armyTableView = new ArmyTable.Builder()
+                .addUnitColumn("Unit Type", "unitType")
+                .addUnitColumn("Name", "name")
+                .addUnitColumn("Health", "health")
+                .addUnitColumn("Attack", "attack")
+                .addUnitColumn("Armor", "armor")
+                .build();
+
+        armyTable.getColumns().addAll(armyTableView.getColumns());
+        armyTable.setItems((ObservableList<Unit>) army.getAllUnits());
     }
 
     /**
@@ -90,9 +147,7 @@ public class FightController {
      * {@link Battle#Battle(Army, Army, TerrainType)} and {@link #conductBattle()}.
      */
     private void initiateFight(){
-        this.battle = new Battle(new Army(SimulationSingleton.INSTANCE.getArmy1()),
-                new Army(SimulationSingleton.INSTANCE.getArmy2()),
-                SimulationSingleton.INSTANCE.getCurrentTerrain());
+        this.battle = new Battle(army1, army2, SimulationSingleton.INSTANCE.getCurrentTerrain());
         conductBattle();
     }
 
