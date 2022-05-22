@@ -12,10 +12,12 @@ public class Battle {
     private Army armyOne;
     private Army armyTwo;
     private Army[] armyArr;
+    private Army winnerArmy;
     private int armyFightCount;
     private TerrainType battleTerrain;
 
     //TODO: Create tests for battleTerrain variable. Does it need exception handling?
+    //TODO: create test for battle and checking that all the units in both armies was set to the correct battle terrain.
 
     /**
      * This constructor creates a Battle object, with the necessary information such as what two armies are
@@ -26,6 +28,10 @@ public class Battle {
     public Battle(Army armyOne, Army armyTwo, TerrainType battleTerrain) {
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
+
+        this.armyOne.setAllUnitsTerrain(battleTerrain);
+        this.armyTwo.setAllUnitsTerrain(battleTerrain);
+
         this.armyArr = new Army[]{armyOne, armyTwo};
         this.battleTerrain = battleTerrain;
         this.armyFightCount = randomStartArmy();
@@ -42,15 +48,17 @@ public class Battle {
     /**
      * This method enacts a battle between two armies. The armies take turns fighting and the two opponents are chosen
      * at random from both armies. Once a Unit's health goes below 0, it is removed from its respective army. Once an
-     * army has lost all of its Units, the other army is declared the winner.
+     * army has lost all of its Units, the other army is declared the winner {@link #checkWinnerArmy()}.
      * @return The winning army, represented as an Army object
      */
     public Army simulate(){
+
         //Checks that both sides have units to begin with
         while(armyOne.hasUnits() && armyTwo.hasUnits()) {
             //Choosing fighters
             Unit fightingOpponent = armyArr[armyFightCount % 2].getRandom();
             Unit defendingOpponent = armyArr[(armyFightCount + 1) % 2].getRandom();
+
 
             //The fight
             fightingOpponent.attack(defendingOpponent);
@@ -62,16 +70,7 @@ public class Battle {
             this.armyFightCount++;
         }
 
-        //Check if armyOne has units
-        if (armyOne.hasUnits()) {
-            return armyOne;
-        }
-        //If armyOne doesn't have any, check armyTwo
-        else if (armyTwo.hasUnits()) {
-            return armyTwo;
-        }
-        //Return null if neither has any units, this would mean no battle was engaged.
-        return null;
+        return checkWinnerArmy();
     }
 
     /**
@@ -81,6 +80,52 @@ public class Battle {
     public TerrainType getBattleTerrain() {
         return battleTerrain;
     }
+
+    /**
+     * This method retrieves the Army object armyOne.
+     * @return The Army object named armyOne
+     */
+    public Army getArmyOne() {
+        return armyOne;
+    }
+
+    /**
+     * This method retrieves the Army object armyOne.
+     * @return The Army object named armyOne
+     */
+    public Army getArmyTwo() {
+        return armyTwo;
+    }
+
+    /**
+     * This method retrieves the winner army.
+     * @return Winner army, given as an Army object.
+     */
+    public Army getWinnerArmy() {
+        return winnerArmy;
+    }
+
+    //Make getter for winner
+
+    /**
+     * This method checks which army still has units after fighting. That army is declared the winner.
+     * @return The winning army, represented using an Army object.
+     */
+    private Army checkWinnerArmy(){
+        //Check if armyOne has units
+        if (armyOne.hasUnits()) {
+            this.winnerArmy = armyOne;
+            return armyOne;
+        }
+        //If armyOne doesn't have any, check armyTwo
+        else if (armyTwo.hasUnits()) {
+            this.winnerArmy = armyTwo;
+            return armyTwo;
+        }
+        //Return null if neither has any units, this would mean no battle was engaged.
+        return null;
+    }
+
 
     @Override
     public String toString() {
