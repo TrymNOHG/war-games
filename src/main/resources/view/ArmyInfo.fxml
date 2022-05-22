@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ntnu.trym.simulation.controller.ArmyInfoController">
    <children>
-      <Pane fx:id="informationPane" layoutX="226.0" layoutY="69.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox layoutX="243.0" layoutY="74.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane fx:id="informationPane" prefHeight="400.0" prefWidth="600.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button id="main-button" mnemonicParsing="false" onAction="#backToBattlePrep" stylesheets="@../stylesheets/Buttons.css" text="Back To Battle Preparations" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
