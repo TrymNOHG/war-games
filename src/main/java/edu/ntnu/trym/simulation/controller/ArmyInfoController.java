@@ -1,8 +1,10 @@
 package edu.ntnu.trym.simulation.controller;
 
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
+import edu.ntnu.trym.simulation.model.armydisplay.ArmyTable;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import edu.ntnu.trym.simulation.model.units.UnitType;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
@@ -44,6 +46,16 @@ public class ArmyInfoController {
 
     private void setArmyTable(){
 
+        TableView<Unit> armyTableView = new ArmyTable.Builder()
+                .addUnitColumn("Unit Type", "unitType")
+                .addUnitColumn("Name", "name")
+                .addUnitColumn("Health", "health")
+                .addUnitColumn("Attack", "attack")
+                .addUnitColumn("Armor", "armor")
+                .build();
+
+        armyTable.getColumns().addAll(armyTableView.getColumns());
+        armyTable.setItems(FXCollections.observableList(SimulationSingleton.INSTANCE.getArmyOfCurrentArmy().getAllUnits()));
     }
 
 
