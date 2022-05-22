@@ -3,7 +3,6 @@ package edu.ntnu.trym.simulation.model.armydisplay;
 import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.filehandling.ArmyFileHandler;
 import edu.ntnu.trym.simulation.model.units.UnitType;
-import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
@@ -14,27 +13,31 @@ import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Fix javadoc for class!!!
-
-
 /**
- * This class represents a depiction of an army saved to a file. The file and the army's information will be
- * instantiated as text and displayed in the GUI.
+ * This class represents a depiction of an army. This army can come in both the form of an Army file as well as just an
+ * army object. From there, a builder, {@link Builder}, allows the user to choose what information concerning the army
+ * file and/or army. The file and the army's information will be instantiated as text and displayed in the GUI.
+ * Additionally, this class extends the {@link VBox} class, which means an object of ArmyDisplay can be treated the
+ * same as a VBox.
+ *
+ * @author Trym Hamer Gudvangen
  */
 public class ArmyDisplay extends VBox{
 
-
     /**
      * This constructor represents a display filled with a given army's information. It utilizes a builder object,
-     * taken as a parameter, in order to attain all the nodes which need to be attached to the ArmyDisplay object.
-     * @param armyFile      The file containing the army, represented using a File object.
-     * @throws IOException  This exception is thrown if the file stated is invalid.
+     * {@link Builder#Builder(Army)} taken as a parameter, in order to attain all the nodes which need to be attached
+     * to the ArmyDisplay object.
      */
     public ArmyDisplay(Builder builder) {
         super(PaneSpacing.createVBoxWithSpacing(builder.hBoxList));
         this.autosize();
     }
 
+    /**
+     * This static class employs the builder design pattern. It allows for a person to construct a display by adding
+     * on the desired parts of information. It, therefore, includes multiple methods for adding army information.
+     */
     public static class Builder{
         private File armyFile;
 
@@ -44,19 +47,32 @@ public class ArmyDisplay extends VBox{
 
         private final List<HBox> hBoxList;
 
+        /**
+         * This is the constructor for the builder class which takes in a file as input. With this constructor,
+         * information not only surrounding the army in the file but the file itself can be extracted. This information
+         * is set during the initialization phase using the method {@link #setArmyInformation()}.
+         * @param armyFile                  The file containing the army, represented using a File object.
+         * @throws IOException              This exception is thrown if the file stated is invalid.
+         * @throws InstantiationException   This exception is thrown if the file being read is
+         */
         public Builder(File armyFile) throws IOException, InstantiationException {
             this.armyFile = armyFile;
             this.hBoxList = new ArrayList<>();
             setArmyInformation();
         }
 
+        /**
+         * This is the constructor for the builder class which takes in an Army object as input. With this constructor,
+         * information only information surrounding the given army can be used.
+         * @param army  The army whose information will be displayed, represented using an Army object.
+         */
         public Builder(Army army) {
             this.army = army;
             this.hBoxList = new ArrayList<>();
         }
 
         /**
-         * This method adds an hbox containing the army name to the hBoxList.
+         * This method adds an HBox containing the army name to the hBoxList.
          * @return The builder itself, represented as a Builder object.
          */
         public Builder addArmyName(){
@@ -124,11 +140,14 @@ public class ArmyDisplay extends VBox{
             this.army = new ArmyFileHandler().readFromArmyFile(this.armyFile);
         }
 
+        /**
+         * This method finalizes all the information that has been added and creates a new ArmyDisplay object,
+         * {@link ArmyDisplay#ArmyDisplay(Builder)}.
+         * @return  An army display with all the information added, represented as a VBox.
+         */
         public VBox build(){
             return new ArmyDisplay(this);
         }
     }
 
 }
-
-//TODO: test the setArmyInformation method by checking that the location and army is correct.
