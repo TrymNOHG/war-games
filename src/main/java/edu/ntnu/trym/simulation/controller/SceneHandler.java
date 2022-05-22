@@ -116,6 +116,15 @@ public class SceneHandler {
     }
 
     /**
+     * This method switches the current scene with the army information scene {@link #loadScene(String, ActionEvent)}
+     * @param event         The action that caused the switch, represented as an Event object
+     * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
+     */
+    public static void loadArmyInformation(ActionEvent event) throws IOException {
+        loadScene("ArmyInfo", event);
+    }
+
+    /**
      * This method switches the current scene with the fight scene {@link #loadScene(String, ActionEvent)}
      * @param event         The action that caused the switch, represented as an Event object
      * @throws IOException  This exception is thrown in case the path for FXML loading is invalid
