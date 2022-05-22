@@ -263,6 +263,7 @@
               </rowConstraints>
                <children>
                   <Button id="main-button" mnemonicParsing="false" onAction="#backToUnitInfo" prefHeight="38.0" prefWidth="68.0" stylesheets="@../stylesheets/Buttons.css" text="Back" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="armyInformation2" mnemonicParsing="false" onAction="#showArmyInformation" text="Army Information" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
                </children>
             </GridPane>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -336,6 +337,7 @@
                </children>
             </VBox>
             <Button id="main-button" fx:id="fightButton" disable="true" mnemonicParsing="false" onAction="#simulateFight" stylesheets="@../stylesheets/Buttons.css" text="Fight!" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="armyInformation1" mnemonicParsing="false" onAction="#showArmyInformation" text="Army Information" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
          </children>
          <padding>
             <Insets top="20.0" />
