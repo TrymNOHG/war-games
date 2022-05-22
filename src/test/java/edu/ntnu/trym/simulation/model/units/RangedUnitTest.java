@@ -1,5 +1,6 @@
 package edu.ntnu.trym.simulation.model.units;
 
+import edu.ntnu.trym.simulation.model.TerrainType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-//TODO: Write tests for the different terrain!
 
 class RangedUnitTest {
 
@@ -63,9 +62,6 @@ class RangedUnitTest {
         }
 
     }
-
-    //Make sure you test both positive and negative. For example, creating constructor with positive health, positive attack
-    //Check different states of attacking, for example, when the opponent health would go negative.
 
     @Nested
     public class A_RangedUnit_with_valid_input_values{
@@ -171,16 +167,16 @@ class RangedUnitTest {
         
 
         @Test
-        void gets_2_attack_bonus(){
+        void gets_3_attack_bonus(){
             //Given/Arrange
-            InfantryUnit presetInfantryUnit = new InfantryUnit("Pikeman", 10);
-            int expectedResistBonus = 1;
+            RangedUnit presetRangedUnit = new RangedUnit("Archer", 10);
+            int expectedAttackBonus = 3;
 
             //When/Act
-            int actualResistBonusFromPresetUnit = presetInfantryUnit.getResistBonus();
+            int actualAttackBonusFromPresetUnit = presetRangedUnit.getAttackBonus();
 
             //Then/Assert
-            Assertions.assertEquals(expectedResistBonus, actualResistBonusFromPresetUnit);
+            Assertions.assertEquals(expectedAttackBonus, actualAttackBonusFromPresetUnit);
         }
 
         @Test
@@ -235,6 +231,140 @@ class RangedUnitTest {
             Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter4DefensePresetUnit);
         }
         
+    }
+
+    @Nested
+    public class A_RangedUnit_in_the_PLAINS_terrain{
+        @Test
+        void has_the_same_attack_bonus_as_default(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Archer", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetRangedUnit.setCurrentTerrain(plainsTerrain);
+            int expectedAttackBonus = 3;
+
+            //When/Act
+            int actualAttackBonusFromPresetUnit = presetRangedUnit.getAttackBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedAttackBonus, actualAttackBonusFromPresetUnit);
+        }
+
+        @Test
+        void has_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
+            TerrainType plainsTerrain = TerrainType.PLAINS;
+            presetRangedUnit.setCurrentTerrain(plainsTerrain);
+            int expectedResistanceBonusAfter1Defense = 6;
+            int expectedResistanceBonusAfter2Defense = 4;
+            int expectedResistanceBonusAfter3OrMoreDefense = 2;
+
+
+            //When/Act
+            int actualResistanceBonusAfter1DefensePresetUnit = presetRangedUnit.getResistBonus();//First defense
+            int actualResistanceBonusAfter2DefensePresetUnit = presetRangedUnit.getResistBonus();//Second defense
+            int actualResistanceBonusAfter3DefensePresetUnit = presetRangedUnit.getResistBonus();//Third defense
+            int actualResistanceBonusAfter4DefensePresetUnit = presetRangedUnit.getResistBonus();//Fourth defense
+
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistanceBonusAfter1Defense, actualResistanceBonusAfter1DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter2Defense, actualResistanceBonusAfter2DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter3DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter4DefensePresetUnit);
+
+        }
+    }
+
+    @Nested
+    public class A_RangedUnit_in_the_FOREST_terrain{
+
+        @Test
+        void gets_1_attack_bonus(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Archer", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetRangedUnit.setCurrentTerrain(forestTerrain);
+            int expectedAttackBonus = 1;
+
+            //When/Act
+            int actualAttackBonusFromPresetUnit = presetRangedUnit.getAttackBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedAttackBonus, actualAttackBonusFromPresetUnit);
+        }
+
+        @Test
+        void has_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
+            TerrainType forestTerrain = TerrainType.FOREST;
+            presetRangedUnit.setCurrentTerrain(forestTerrain);
+            int expectedResistanceBonusAfter1Defense = 6;
+            int expectedResistanceBonusAfter2Defense = 4;
+            int expectedResistanceBonusAfter3OrMoreDefense = 2;
+
+
+            //When/Act
+            int actualResistanceBonusAfter1DefensePresetUnit = presetRangedUnit.getResistBonus();//First defense
+            int actualResistanceBonusAfter2DefensePresetUnit = presetRangedUnit.getResistBonus();//Second defense
+            int actualResistanceBonusAfter3DefensePresetUnit = presetRangedUnit.getResistBonus();//Third defense
+            int actualResistanceBonusAfter4DefensePresetUnit = presetRangedUnit.getResistBonus();//Fourth defense
+
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistanceBonusAfter1Defense, actualResistanceBonusAfter1DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter2Defense, actualResistanceBonusAfter2DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter3DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter4DefensePresetUnit);
+
+        }
+    }
+
+    @Nested
+    public class A_RangedUnit_in_the_HILL_terrain{
+
+        @Test
+        void gets_13_attack_bonus(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Archer", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetRangedUnit.setCurrentTerrain(hillTerrain);
+            int expectedAttackBonus = 13;
+
+            //When/Act
+            int actualAttackBonusFromPresetUnit = presetRangedUnit.getAttackBonus();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedAttackBonus, actualAttackBonusFromPresetUnit);
+        }
+
+        @Test
+        void has_the_same_resistance_bonus_as_default(){
+            //Given/Arrange
+            RangedUnit presetRangedUnit = new RangedUnit("Crossbowman", 10);
+            TerrainType hillTerrain = TerrainType.HILL;
+            presetRangedUnit.setCurrentTerrain(hillTerrain);
+            int expectedResistanceBonusAfter1Defense = 6;
+            int expectedResistanceBonusAfter2Defense = 4;
+            int expectedResistanceBonusAfter3OrMoreDefense = 2;
+
+
+            //When/Act
+            int actualResistanceBonusAfter1DefensePresetUnit = presetRangedUnit.getResistBonus();//First defense
+            int actualResistanceBonusAfter2DefensePresetUnit = presetRangedUnit.getResistBonus();//Second defense
+            int actualResistanceBonusAfter3DefensePresetUnit = presetRangedUnit.getResistBonus();//Third defense
+            int actualResistanceBonusAfter4DefensePresetUnit = presetRangedUnit.getResistBonus();//Fourth defense
+
+
+            //Then/Assert
+            Assertions.assertEquals(expectedResistanceBonusAfter1Defense, actualResistanceBonusAfter1DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter2Defense, actualResistanceBonusAfter2DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter3DefensePresetUnit);
+            Assertions.assertEquals(expectedResistanceBonusAfter3OrMoreDefense, actualResistanceBonusAfter4DefensePresetUnit);
+
+        }
     }
 
     @Nested
