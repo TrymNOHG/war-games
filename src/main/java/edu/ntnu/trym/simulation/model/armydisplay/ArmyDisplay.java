@@ -139,7 +139,9 @@ public class ArmyDisplay extends VBox{
          */
         public Builder addAmountOfUnitInformation(){
             Text unitNameText = new Text( "This army contains : ");
-            Text unitNumberText = new Text(this.army.getAllUnits().size() + " units");
+            Text unitNumberText;
+            if(this.army.getAllUnits().size() == 1) unitNumberText = new Text(this.army.getAllUnits().size() + " unit");
+            else unitNumberText = new Text(this.army.getAllUnits().size() + " units");
             this.hBoxList.add(PaneSpacing.createHBoxWithSpacing(unitNameText, unitNumberText));
             return this;
         }
