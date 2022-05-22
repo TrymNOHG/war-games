@@ -49,6 +49,16 @@ public class AlertDialog {
     }
 
     /**
+     * This method produces an information dialog with the input message displayed. In order to create the dialog, the
+     * method {@link #createAlert(Alert.AlertType, String, String)} was used.
+     * @param message   The information the user will read, represented as a String
+     * @param header    The header, or brief information on the dialog, represented as a String.
+     */
+    public static void showInformation(String message, String header){
+        createAlert(Alert.AlertType.INFORMATION, message, header);
+    }
+
+    /**
      * This method produces a text input dialog, where the user has the ability to enter a String input. In order to
      * create the dialog, the method {@link #setDialogInformation(Dialog, String, String, String)} was used.
      * @param title     The title of the dialog, represented as a String.
