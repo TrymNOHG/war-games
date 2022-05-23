@@ -18,9 +18,6 @@ public class Battle {
     private int armyFightCount;
     private TerrainType battleTerrain;
 
-    //TODO: Create tests for battleTerrain variable. Does it need exception handling?
-    //TODO: create test for battle and checking that all the units in both armies was set to the correct battle terrain.
-
     /**
      * This constructor creates a Battle object, with the necessary information such as what two armies are
      * participating and who starts the battle {@link #randomStartArmy()}.
