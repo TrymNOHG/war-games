@@ -154,7 +154,7 @@ public class BattlePrepController {
     /**
      * This method is called when the user presses the remove army button. This may be for either army1 (top army) or
      * for army2 (bottom army). This method uses the {@link #armyNumberByButton(ActionEvent)} in order to determine
-     * which army is being altered. Therafter, the respective army in the dispatcher, {@link SimulationSingleton}, is
+     * which army is being altered. Thereafter, the respective army in the dispatcher, {@link SimulationSingleton}, is
      * set to null. Finally, the battle prep data is updated, {@link #updateBattlePrepData()}.
      * @param event         The button being pressed, given as an Event object.
      */
@@ -362,14 +362,11 @@ public class BattlePrepController {
 
 /*
 TODO:
-        Have button in battle preparation for more information that gives name, total amount of units,
-        total for each unit, and a table view.
         Fix corrupt file problem
         Display information about the fight
         4. Add methods for actually conducting the fight in the fight controller.
                     - Attempt to create a text that rolls down the screen for different events
                     (with a skip button that appears when the match is actually complete)
-        7. Fix the help page.
         Fix text in battle preparation to be more visible (try out text with border)
         10. Javadoc all classes and methods
         11. Look for places that need refactoring

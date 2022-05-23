@@ -74,6 +74,11 @@ public class FightController {
 
     }
 
+    /**
+     * This method is called when the start button is pressed. When this method is called, the start button becomes
+     * invisible and the simulations beings using {@link Battle#simulate()}.
+     * @param event             The button being pressed, given as an Event object.
+     */
     @FXML
     void startBattle(ActionEvent event) {
         this.startButton.setVisible(false);
