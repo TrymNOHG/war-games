@@ -5,6 +5,7 @@ import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -138,5 +139,72 @@ class BattleTest {
         //Then/Assert
         Assertions.assertEquals(expectedResult, actualVictor);
     }
+
+    @Nested
+    public class A_Battle_object_can_simulate{
+        @Test
+        void a_fight_in_plains_terrain(){
+            //Given/Arrange
+            Army armyOne = fillArmy1();
+            Army armyTwo = fillArmy2();
+            TerrainType terrainType = TerrainType.PLAINS;
+
+            Battle battle = new Battle(armyOne, armyTwo, terrainType);
+
+            //When/Act
+            Army actualVictor = battle.simulate();
+
+            //Then/Assert
+            if(actualVictor.getName().equals(armyOne.getName()) || actualVictor.getName().equals(armyTwo.getName())){
+                Assertions.assertTrue(true);
+            }
+            else{
+                fail("Neither army won, error!");
+            }
+        }
+
+        @Test
+        void a_fight_in_hill_terrain(){
+            //Given/Arrange
+            Army armyOne = fillArmy1();
+            Army armyTwo = fillArmy2();
+            TerrainType terrainType = TerrainType.HILL;
+
+            Battle battle = new Battle(armyOne, armyTwo, terrainType);
+
+            //When/Act
+            Army actualVictor = battle.simulate();
+
+            //Then/Assert
+            if(actualVictor.getName().equals(armyOne.getName()) || actualVictor.getName().equals(armyTwo.getName())){
+                Assertions.assertTrue(true);
+            }
+            else{
+                fail("Neither army won, error!");
+            }
+        }
+
+        @Test
+        void a_fight_in_forest_terrain(){
+            //Given/Arrange
+            Army armyOne = fillArmy1();
+            Army armyTwo = fillArmy2();
+            TerrainType terrainType = TerrainType.FOREST;
+
+            Battle battle = new Battle(armyOne, armyTwo, terrainType);
+
+            //When/Act
+            Army actualVictor = battle.simulate();
+
+            //Then/Assert
+            if(actualVictor.getName().equals(armyOne.getName()) || actualVictor.getName().equals(armyTwo.getName())){
+                Assertions.assertTrue(true);
+            }
+            else{
+                fail("Neither army won, error!");
+            }
+        }
+    }
+
 
 }
