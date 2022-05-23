@@ -1,19 +1,18 @@
 package edu.ntnu.trym.simulation.model;
 
-import edu.ntnu.trym.simulation.model.Army;
 import edu.ntnu.trym.simulation.model.battle.Battle;
-import edu.ntnu.trym.simulation.model.TerrainType;
 import edu.ntnu.trym.simulation.model.units.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-//TODO: Write tests for the different terrain!
 
 class BattleTest {
     Army fillArmy1(){
@@ -36,29 +35,51 @@ class BattleTest {
         return army;
     }
 
-    @Test
-    void A_Battle_Object_can_be_constructed(){
-        //Given/Arrange
-        Army army1 = fillArmy1();
-        Army army2 = fillArmy2();
-        TerrainType terrainType = TerrainType.DEFAULT;
+    @Nested
+    public class An_instantiated_battle_object{
 
-        //When/Act
-        Battle battle = null;
-        try {
-            battle = new Battle(army1, army2, terrainType);
+        @Test
+        void can_be_constructed(){
+            //Given/Arrange
+            Army army1 = fillArmy1();
+            Army army2 = fillArmy2();
+            TerrainType terrainType = TerrainType.DEFAULT;
+
+            //When/Act
+            Battle battle = null;
+            try {
+                battle = new Battle(army1, army2, terrainType);
+            }
+            catch (Exception e){
+                fail("The constructor was not instantiated properly");
+            }
+
+            //Then/Assert
+            //Since no errors were thrown during the instantiation of the constructor,
+            //it is assumed that it is functioning properly.
+            Assertions.assertTrue(true);
+
         }
-        catch (Exception e){
-            fail("The constructor was not instantiated properly");
+
+        @ParameterizedTest(name = "Terrain tested : {0}")
+        @EnumSource(value = TerrainType.class)
+        void sets_all_army_units_to_have_battleTerrain_as_currentTerrain(TerrainType terrain){
+            //Given/Arrange
+            Army armyOne = fillArmy1();
+            Army armyTwo = fillArmy2();
+            TerrainType expectedTerrain = terrain;
+
+            //When/Act
+            Battle battle = new Battle(armyOne, armyTwo, expectedTerrain);
+
+            //Then/Assert
+            Assertions.assertTrue(armyOne.getAllUnits().stream().allMatch(unit ->
+                    unit.getCurrentTerrain() == expectedTerrain));
+            Assertions.assertTrue(armyTwo.getAllUnits().stream().allMatch(unit ->
+                    unit.getCurrentTerrain() == expectedTerrain));
         }
-
-        //Then/Assert
-        //Since no errors were thrown during the instantiation of the constructor,
-        //it is assumed that it is functioning properly.
-        Assertions.assertTrue(true);
-
-
     }
+
 
     //When a unit has max int health and is attacked by a unit who has less damage than their resistance,
     //there is a rollover problem and the unit's health drops from max to 0.
@@ -206,5 +227,21 @@ class BattleTest {
         }
     }
 
+
+    @Nested
+    public class A_Battle_object_is_not_initialized_if{
+        @Test
+        void an_army_input_is_null(){
+            //Given/Arrange
+            Army army1 = fillArmy1();
+            Army nullArmy = null;
+            TerrainType terrainType = TerrainType.DEFAULT;
+
+            //When/Act
+            Assertions.assertThrows(NullPointerException.class, () ->{
+                Battle battle = new Battle(army1, nullArmy, terrainType);
+            }); //Then/Assert
+        }
+    }
 
 }
