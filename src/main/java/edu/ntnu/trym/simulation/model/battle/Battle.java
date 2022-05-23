@@ -24,10 +24,12 @@ public class Battle {
     /**
      * This constructor creates a Battle object, with the necessary information such as what two armies are
      * participating and who starts the battle {@link #randomStartArmy()}.
-     * @param armyOne An army participating in the battle, represented as the object Army
-     * @param armyTwo Another army participating in the battle, represented as the object Army
+     * @param armyOne                       An army participating in the battle, represented as the object Army
+     * @param armyTwo                       Another army participating in the battle, represented as the object Army
+     * @throws NullPointerException         This exception is thrown if an army is null
      */
-    public Battle(Army armyOne, Army armyTwo, TerrainType battleTerrain) {
+    public Battle(Army armyOne, Army armyTwo, TerrainType battleTerrain) throws NullPointerException{
+        if(armyOne == null || armyTwo == null) throw new NullPointerException("No army can be null!");
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
 
