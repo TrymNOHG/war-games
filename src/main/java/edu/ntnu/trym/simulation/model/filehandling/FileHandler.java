@@ -97,7 +97,6 @@ public class FileHandler {
         String extensionText = fileName.substring(fileName.length() - 4);
         return extensionText.equals(".csv");
     }
-    //TODO: Test that this actually returns the correct booleans.
 
 
 }

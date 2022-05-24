@@ -358,19 +358,3 @@ public class BattlePrepController {
         return 2;
     }
 }
-
-
-/*
-TODO:
-        Fix corrupt file problem
-        Display information about the fight
-        4. Add methods for actually conducting the fight in the fight controller.
-                    - Attempt to create a text that rolls down the screen for different events
-                    (with a skip button that appears when the match is actually complete)
-        Fix text in battle preparation to be more visible (try out text with border)
-        10. Javadoc all classes and methods
-        11. Look for places that need refactoring
-        12. Look over all tests
-        13. Try to break the simulation. (Check where error and warning boxes may be used.
-
- */

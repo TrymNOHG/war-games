@@ -3,8 +3,6 @@ package edu.ntnu.trym.simulation.model.units;
 
 import edu.ntnu.trym.simulation.model.TerrainType;
 
-//TODO: create tests for setting of unit type for all units
-
 /**
  * This class represents a cavalry unit. A cavalry unit has medium-high base stats for both attack (20) and armor (12).
  * A cavalry unit excels in charges, which is shown through the additional attack bonus that the unit gets during the

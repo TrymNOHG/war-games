@@ -7,7 +7,6 @@ import edu.ntnu.trym.simulation.model.battle.Battle;
 import edu.ntnu.trym.simulation.model.armydisplay.ArmyDisplay;
 import edu.ntnu.trym.simulation.model.units.Unit;
 import edu.ntnu.trym.simulation.model.units.UnitType;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-
-//TODO: add battlelog information to javadocs
 
 /**
  * This class handles the interactions between the backend, the Fight scene, and the Results scene. As such, it runs
@@ -115,7 +112,7 @@ public class FightController {
      */
     private void initialData(){
         army1 = new Army(SimulationSingleton.INSTANCE.getArmy1());
-        army2 = new Army(SimulationSingleton.INSTANCE.getArmy1());
+        army2 = new Army(SimulationSingleton.INSTANCE.getArmy2());
         this.battle = SimulationSingleton.INSTANCE.getBattle();
         if(this.battle != null) this.winnerArmy = new Army(this.battle.getWinnerArmy());
     }
@@ -212,5 +209,4 @@ public class FightController {
             this.iconArmy1.setId("white-flag-icon");
         }
     }
-
 }

@@ -19,8 +19,6 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-//TODO: make sure the number of pages after corrupted file is correct.
-
 /**
  * This class handles the interactions between the backend and the saved army scene. As such, it displays all the armies
  * that are saved to the army-files folder and are of the correct format. Furthermore, it allows the user to select and

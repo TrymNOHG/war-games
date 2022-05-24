@@ -13,6 +13,3 @@ public enum TerrainType {
     FOREST
 }
 
-//Maybe attach values to these enumerations
-//Should I have a default?
-

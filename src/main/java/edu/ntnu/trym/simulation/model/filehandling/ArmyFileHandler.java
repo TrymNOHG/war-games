@@ -83,14 +83,6 @@ public class ArmyFileHandler {
         }
     }
 
-    //Create own exception for certain things, new file
-
-    //TODO: make sure file only contains one army (throw exception if another army is trying to be added)
-    //TODO: Check for duplicates (so it isn't doubled) and maybe throw specific exception
-
-
-    //TODO: When reading the files maybe catch changes?
-
     /**
      * This method takes a given army file and initializes an Army object with the correct information. This is done
      * by taking the first line of the file, which contains the army name, and filling an army list with the appropriate
@@ -125,20 +117,8 @@ public class ArmyFileHandler {
                 else throw new StreamCorruptedException("Corrupt format");
             }
         }
-        //TODO: add CorruptFileException here, which can be thrown further and used to remove files.
         return new Army(armyName, unitList);
     }
-
-    //TODO: Create extra test for corrupt file with non-3 nor 5 information format
-    //TODO: Ensure that the UnitFactory is used for default and special
-    //TODO: Test that special units are kept special and default are kept default
-
-
-
-
-    //TODO: Write test for extracting the correct UnitType
-    //TODO: Check if comma in unit name breaks code
-    //TODO: Add exception handling to the method below
 
     /**
      * This method takes in the Unit Class info, given as a String. This method checks what UnitType the information
@@ -156,9 +136,3 @@ public class ArmyFileHandler {
     }
 
 }
-
-//TODO: Ask about formatting of information
-//TODO: Read through tips
-//TODO: Check that tests directly address requirements: (e.g. only one army per CSV)
-//TODO: Test for difference between default and special units
-//TODO: Make tests for default units

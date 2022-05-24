@@ -20,13 +20,6 @@ class ArmyFileHandlerTest{
 
     ArmyFileHandler armyFileHandler = new ArmyFileHandler();
 
-    //TODO: Remove helper method below
-//    @Test
-//    void presetClasses() throws IOException {
-//        Army army = new Army("Trym's Army", fillArmyList());
-//        armyFileHandler.createAndWriteNewArmyFile(army, getValidFile("Corrupt CSV Format"));
-//    }
-
     public File getValidFile(String fileName) {
         return new File(FileSystems.getDefault()
                 .getPath("src", "test", "resources", "armytestfiles", fileName) + ".csv");
