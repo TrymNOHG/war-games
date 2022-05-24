@@ -58,6 +58,7 @@
                      </GridPane.margin>
                   </TableView>
                   <Pane id="fight-icon" prefHeight="200.0" prefWidth="200.0" stylesheets="@../stylesheets/Icons.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button id="main-load-button" fx:id="startButton" mnemonicParsing="false" onAction="#startBattle" stylesheets="@../stylesheets/Buttons.css" text="Start!" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                </children>
                <opaqueInsets>
                   <Insets />
