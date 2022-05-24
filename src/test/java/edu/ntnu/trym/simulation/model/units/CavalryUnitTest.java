@@ -118,6 +118,19 @@ class CavalryUnitTest {
         }
 
         @Test
+        void has_UnitType_CavalryUnit_after_instantiation(){
+            //Given/Arrange
+            UnitType expectedUnitType = UnitType.CAVALRY;
+
+            //When/Act
+            CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);
+            UnitType actualUnitType = presetCavalryUnit.getUnitType();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedUnitType, actualUnitType);
+        }
+
+        @Test
         void reduces_an_Opponents_Health_above_0(){
             //Given/Arrange
             CavalryUnit presetCavalryUnit = new CavalryUnit("Knight", 10);

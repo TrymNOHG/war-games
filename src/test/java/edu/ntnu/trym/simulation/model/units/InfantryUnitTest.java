@@ -78,6 +78,19 @@ class InfantryUnitTest {
         }
 
         @Test
+        void has_UnitType_InfantryUnit_after_instantiation(){
+            //Given/Arrange
+            UnitType expectedUnitType = UnitType.INFANTRY;
+
+            //When/Act
+            InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);
+            UnitType actualUnitType = specialInfantryUnit.getUnitType();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedUnitType, actualUnitType);
+        }
+
+        @Test
         void returns_health_value(){
             //Given/Arrange
             InfantryUnit specialInfantryUnit = new InfantryUnit("Pikeman", 10, 17, 10);

@@ -79,6 +79,19 @@ class CommanderUnitTest {
         }
 
         @Test
+        void has_UnitType_CommanderUnit_after_instantiation(){
+            //Given/Arrange
+            UnitType expectedUnitType = UnitType.COMMANDER;
+
+            //When/Act
+            CommanderUnit presetCommanderUnit = new CommanderUnit("King", 10);
+            UnitType actualUnitType = presetCommanderUnit.getUnitType();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedUnitType, actualUnitType);
+        }
+
+        @Test
         void returns_health_value(){
             //Given/Arrange
             CommanderUnit specialCommanderUnit = new CommanderUnit("King", 10, 17, 10);

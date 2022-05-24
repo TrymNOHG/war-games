@@ -80,6 +80,19 @@ class RangedUnitTest {
         }
 
         @Test
+        void has_UnitType_RangedUnit_after_instantiation(){
+            //Given/Arrange
+            UnitType expectedUnitType = UnitType.RANGED;
+
+            //When/Act
+            RangedUnit specialRangedUnit = new RangedUnit("Archer", 10, 17, 10);
+            UnitType actualUnitType = specialRangedUnit.getUnitType();
+
+            //Then/Assert
+            Assertions.assertEquals(expectedUnitType, actualUnitType);
+        }
+
+        @Test
         void returns_health_value(){
             //Given/Arrange
             RangedUnit specialRangedUnit = new RangedUnit("Archer", 10, 17, 10);
