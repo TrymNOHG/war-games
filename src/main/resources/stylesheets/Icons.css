@@ -1,0 +1,12 @@
+#trophy-icon{
+    -fx-background-image: url('/pictures/icons/Trophy_icon.png') center no-repeat;
+    -fx-background-size : stretch;
+}
+#white-flag-icon{
+    -fx-background-image: url('/pictures/icons/White_flag.png') center no-repeat;
+    -fx-background-size : stretch;
+}
+#fight-icon{
+    -fx-background-image: url('/pictures/icons/Fight_icon.png') center no-repeat;
+    -fx-background-size : stretch;
+}

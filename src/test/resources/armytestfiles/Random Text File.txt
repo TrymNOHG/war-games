@@ -1,0 +1,2 @@
+This text file is meant to be used in order to test what happens if a non-csv file appears in the armytestfiles
+directory.
